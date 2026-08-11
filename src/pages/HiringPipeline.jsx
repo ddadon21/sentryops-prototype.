@@ -1,1177 +1,630 @@
 import React, { useState } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, ArrowRight, Calendar, Phone, Mail, MapPin, Star, ChevronDown, ChevronUp, FileCheck, ClipboardCheck, GraduationCap, BarChart3, Target, AlertTriangle, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { formatStatus } from '@/utils/formatStatus';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 
+// ── Pipeline by stage ──────────────────────────────────────────
+// Every candidate in process sits in exactly one stage, so the in-process
+// count, the aging total and the track tabs are all sums of these rows.
+//
+// `median` is days in stage against that stage's own target — the pair is what
+// makes a bottleneck legible. `passRate` is the share advancing from the stage.
+
+const TRACKS = ['Deputy sheriff', 'Detention officer', 'Communications', 'Civilian'];
+
+const stages = [
+  {
+    stage: 'Application received', note: 'Minimum-qualification screen · automated',
+    median: 4, target: 10, aging: 0, passRate: 67, byTrack: [28, 27, 7, 2],
+  },
+  {
+    stage: 'Written examination', note: 'Monthly test date · next Aug 22',
+    median: 16, target: 21, aging: 2, passRate: 71, byTrack: [17, 16, 4, 1],
+  },
+  {
+    stage: 'Physical assessment', note: 'POST standard battery · retest permitted once',
+    median: 11, target: 14, aging: 1, passRate: 74, byTrack: [12, 11, 3, 1],
+  },
+  {
+    stage: 'Oral board', note: 'Three-member panel · scheduled weekly',
+    median: 13, target: 18, aging: 1, passRate: 82, byTrack: [8, 8, 2, 1],
+  },
+  {
+    stage: 'Conditional offer', note: 'Offer letter · 10-day acceptance window',
+    median: 6, target: 10, aging: 0, passRate: 89, byTrack: [6, 5, 2, 1],
+  },
+  {
+    stage: 'Background investigation', short: 'Background', flag: 'BOTTLENECK',
+    note: 'Four investigators · 47 active against a capacity of 40', noteTone: 'amber',
+    median: 63, target: 45, aging: 22, passRate: 66, byTrack: [21, 20, 4, 2],
+    detail: 'This is the binding constraint on the entire pipeline. Four investigators carry 47 active cases against a working capacity of 40, and the median has run 63 days against a 45-day target for two consecutive quarters. Twenty-two cases are past target. Every day added here is a day a candidate with a competing offer is unattended: three of the last nine withdrawals occurred during background, all after day 50. A fifth investigator, or contracting the civilian-track cases, is the only lever that moves the pipeline median.',
+    withdrawalsHere: '3 of 9 in 90 days',
+  },
+  {
+    stage: 'Polygraph · psych · medical', short: 'Poly · psych · med', flag: 'SLOWING',
+    note: 'Contract vendor · scheduling constrained to one day a week', noteTone: 'amber',
+    median: 24, target: 21, aging: 4, passRate: 77, byTrack: [6, 8, 1, 1],
+    detail: 'A single contract vendor schedules one day a week. The stage runs three days past its target with four candidates aging, but the volume is small enough that a second vendor day clears it without a contract amendment.',
+    withdrawalsHere: '1 of 9 in 90 days',
+  },
+  {
+    stage: 'Academy seat assignment', short: 'Academy seat', flag: 'WAITING',
+    note: 'Next cohort May 4 · 9 cleared and waiting', noteTone: 'red',
+    median: 19, target: 14, aging: 3, passRate: null, byTrack: [5, 4, 0, 0],
+    detail: 'Nine candidates have cleared every stage and are waiting on a start date. Five are deputies with seats in the current cohort; four are detention, where no academy is scheduled at all. The agency has already spent the full cost of hire on each of them.',
+    withdrawalsHere: '4 of 9 in 90 days',
+  },
+];
+
+const hire = {
+  medianDays: 168,
+  target: 150,
+  twelveMonthsAgo: 138,
+  backgroundNow: 63,
+  backgroundThen: 41,
+};
+
+// ── Candidates requiring action ────────────────────────────────
+
+const candidates = [
+  { id: 'A-26-1184', req: 'Deputy Sheriff',    note: 'Competing offer from Cobb County · decision requested', stage: 'Background',         blocker: 'Investigator load',  inStage: 71, decision: 'OVERDUE' },
+  { id: 'A-26-1209', req: 'Detention Officer', note: 'Prior-employer verification outstanding 24 days',       stage: 'Background',         blocker: 'Investigator load',  inStage: 66, decision: 'OVERDUE' },
+  { id: 'A-26-1156', req: 'Deputy Sheriff',    note: 'Cleared all stages Jun 18 · waiting on a seat',         stage: 'Academy wait',       blocker: 'No cohort seat',     inStage: 54, decision: 'AT RISK' },
+  { id: 'A-26-1163', req: 'Detention Officer', note: 'Detention academy has no scheduled start',              stage: 'Academy wait',       blocker: 'Cohort unscheduled', inStage: 47, decision: 'AT RISK' },
+  { id: 'A-26-1247', req: 'Deputy Sheriff',    note: 'Scheduled Aug 19 · earliest available vendor slot',     stage: 'Poly · psych · med', blocker: 'Vendor slot',        inStage: 31, decision: '7 DAYS'  },
+  { id: 'A-26-1288', req: 'Communications',    note: 'Offer expires Aug 14 · no response to two contacts',    stage: 'Conditional offer',  blocker: 'Acceptance window',  inStage: 8,  decision: '3 DAYS'  },
+  { id: 'A-26-1198', req: 'Deputy Sheriff',    note: 'Out-of-state records request pending since Jul 3',      stage: 'Background',         blocker: 'Records request',    inStage: 58, decision: '14 DAYS' },
+  { id: 'A-26-1221', req: 'Detention Officer', note: 'Board scheduled Aug 20 · panel member on leave',        stage: 'Oral board',         blocker: 'Panel availability', inStage: 17, decision: '10 DAYS' },
+];
+
+// ── Right column ───────────────────────────────────────────────
+
+const CASES_PER_INVESTIGATOR = 10;
+const investigators = [
+  { name: 'Inv. Halloran',  note: 'Oldest case 71 days · 6 past target',        active: 14 },
+  { name: 'Inv. Sedgwick',  note: 'Oldest case 66 days · 6 past target',        active: 13 },
+  { name: 'Inv. Brannigan', note: 'Oldest case 52 days · 5 past target',        active: 11 },
+  { name: 'Inv. Okoro',     note: 'Returned from leave Jul 28 · 5 past target', active: 9  },
+];
+
+// `agency` marks losses that trace to process delay or capacity rather than to
+// a candidate failing a standard — the ones that are actually actionable.
+const attrition = [
+  { reason: 'Accepted competing offer',            note: 'Cobb 5 · Atlanta PD 4 · DeKalb 3 · other 2', count: 14, agency: true  },
+  { reason: 'Withdrew during background',          note: 'All after day 50 in stage',                  count: 9,  agency: true  },
+  { reason: 'Failed background',                   note: 'Disqualifying history · policy 2.4',         count: 8,  agency: false },
+  { reason: 'Failed written or physical',          note: 'Retest available on both',                   count: 11, agency: false },
+  { reason: 'Withdrew awaiting academy',           note: 'Cleared all stages, no seat available',      count: 4,  agency: true  },
+  { reason: 'Polygraph or psych disqualification', note: 'Contract vendor determination',              count: 6,  agency: false },
+  { reason: 'Non-responsive',                      note: 'No contact through two attempts',            count: 7,  agency: false },
+];
+
+const cohorts = [
+  { cohort: 'Deputy Academy 26-C',    dates: 'May 4 – Sep 12',  seated: 19, capacity: 24, note: '5 seats open · 5 candidates cleared and eligible' },
+  { cohort: 'Detention Academy 26-B', dates: 'Unscheduled',     seated: 0,  capacity: 20, note: 'Instructor unassigned · 4 candidates waiting', unscheduled: true },
+  { cohort: 'Communications 26-A',    dates: 'Sep 8 – Nov 14',  seated: 6,  capacity: 8,  note: '2 seats open · pipeline supports 2' },
+  { cohort: 'Deputy Academy 27-A',    dates: 'Jan 12 – May 22', seated: 0,  capacity: 24, note: 'Opens for assignment Oct 1' },
+];
+
+// Rolling median time to hire, oldest month first.
+const timeToHire = [
+  { month: 'Sep 2025', days: 138 }, { month: 'Oct', days: 141 }, { month: 'Nov', days: 144 },
+  { month: 'Dec', days: 147 },      { month: 'Jan', days: 152 }, { month: 'Feb', days: 149 },
+  { month: 'Mar', days: 155 },      { month: 'Apr', days: 158 }, { month: 'May', days: 161 },
+  { month: 'Jun', days: 163 },      { month: 'Jul', days: 166 }, { month: 'Aug 2026', days: 168 },
+];
+
+const intelligence = [
+  {
+    title: 'Background is the whole problem', tone: 'red',
+    body: null, // templated from the trend
+    action: 'Fund a fifth background investigator in the FY27 request; contract civilian-track cases now.',
+    sources: 'Applicant tracking · background case management · 12-month trend',
+  },
+  {
+    title: 'Nine candidates cleared, no seat', tone: 'red',
+    body: null, // templated from the academy stage split
+    action: 'Assign a detention academy instructor and set a start date before the next withdrawal.',
+    sources: 'Academy schedule · applicant tracking · Training Division',
+  },
+  {
+    title: 'Testing cadence costs eleven days', tone: 'amber',
+    body: 'Monthly written exams mean a candidate applying just after a test date waits five weeks. The exam is proctored by existing training staff, so a second monthly date adds no headcount.',
+    action: 'Move to twice-monthly written testing beginning September.',
+    sources: 'Training Division schedule · stage median analysis',
+  },
+];
+
+// ── Helpers ────────────────────────────────────────────────────
+
+const pct = (n, d) => (d ? (n / d) * 100 : 0);
+
+const flowOf = (s) => {
+  if (s.flag === 'BOTTLENECK') return 'BOTTLENECK';
+  if (s.flag === 'WAITING') return 'WAITING';
+  return s.median > s.target ? 'SLOWING' : 'WITHIN TARGET';
+};
+const flowTone = {
+  'WITHIN TARGET': 'text-emerald-400',
+  SLOWING:         'text-amber-400',
+  BOTTLENECK:      'text-red-400',
+  WAITING:         'text-amber-400',
+};
+const flagTone = {
+  BOTTLENECK: 'border-red-500/60 text-red-400',
+  SLOWING:    'border-amber-500/60 text-amber-400',
+  WAITING:    'border-amber-500/60 text-amber-400',
+};
+const decisionTone = (d) =>
+  d === 'OVERDUE' ? 'text-red-400' : d === 'AT RISK' ? 'text-amber-400' : 'text-amber-400/80';
+
+const dotTone = { emerald: 'bg-emerald-400', amber: 'bg-amber-400', red: 'bg-red-500', slate: 'bg-slate-600' };
+const textTone = { emerald: 'text-emerald-400', amber: 'text-amber-400', red: 'text-red-400', slate: 'text-slate-400' };
+
+function SectionLabel({ children, right }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 mb-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">{children}</p>
+      {right}
+    </div>
+  );
+}
+
+function Meter({ value, tone = 'bg-slate-600' }) {
+  return (
+    <span className="block h-1 bg-zinc-800/70 rounded-full">
+      <span className={`block h-full rounded-full ${tone}`} style={{ width: `${Math.min(value, 100)}%` }} />
+    </span>
+  );
+}
+
 export default function HiringPipeline() {
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('hiring-pipeline');
-  const [chatOpen, setChatOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [selectedStage, setSelectedStage] = useState(null);
-  const [expandedCandidate, setExpandedCandidate] = useState(null);
-  const [selectedPosition, setSelectedPosition] = useState('all');
-  const [activeView, setActiveView] = useState('funnel');
-  const [expandedMetrics, setExpandedMetrics] = useState(false);
-  const [expandedBottlenecks, setExpandedBottlenecks] = useState(true);
+  const [openStage, setOpenStage] = useState('Background investigation');
+  const [track, setTrack] = useState('All tracks');
 
-  const navigation = [
-    { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, page: 'HRDashboard' },
-    { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
-    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
-    { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp },
-    { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
-    { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
-    { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, page: 'TrainingCertifications' },
-    { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
-    { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
-    { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
-    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' }
+  // ── Pipeline roll-up ────────────────────────────────────────
+  const withTotals = stages.map((s) => ({
+    ...s,
+    inStage: s.byTrack.reduce((a, n) => a + n, 0),
+    flow: flowOf(s),
+  }));
+  const inProcess = withTotals.reduce((a, s) => a + s.inStage, 0);
+  const agingTotal = withTotals.reduce((a, s) => a + s.aging, 0);
+  const tabs = [
+    { track: 'All tracks', n: inProcess },
+    ...TRACKS.map((t, i) => ({ track: t, n: stages.reduce((a, s) => a + s.byTrack[i], 0) })),
   ];
+  const trackIndex = TRACKS.indexOf(track);
 
-  const notifications = [
-    { id: 1, title: 'Interview Panel Confirmed', message: 'Feb 06 Deputy oral board - Major Davis, Lt. Williams, Lt. Thompson confirmed', time: '30 min ago', urgent: false },
-    { id: 2, title: 'Offer Response Deadline', message: 'J. Wilson offer expires Feb 05 - follow-up call needed', time: '1 hour ago', urgent: true },
-    { id: 3, title: 'Physical Fitness Test', message: '14 candidates scheduled for Feb 07 testing at Training Center', time: '2 hours ago', urgent: false }
-  ];
+  const background = withTotals.find((s) => s.stage === 'Background investigation');
+  const academy = withTotals.find((s) => s.stage === 'Academy seat assignment');
 
-  // Position-specific applicant counts
-  const positionBreakdown = {
-    deputySheriff: { applicants: 23, vacancies: 8, ratio: 2.9 },
-    backgroundInvestigator: { applicants: 12, vacancies: 2, ratio: 6.0 },
-    detentionOfficer: { applicants: 8, vacancies: 1, ratio: 8.0 },
-    adminAssistant: { applicants: 4, vacancies: 1, ratio: 4.0 }
-  };
+  // ── Background load ─────────────────────────────────────────
+  const bgActive = investigators.reduce((a, i) => a + i.active, 0);
+  const bgCapacity = investigators.length * CASES_PER_INVESTIGATOR;
+  const bgOver = investigators.filter((i) => i.active > CASES_PER_INVESTIGATOR).length;
 
-  const totalApplicants = 77;
-  const totalVacancies = 12;
+  // ── Attrition ───────────────────────────────────────────────
+  const lost = attrition.reduce((a, r) => a + r.count, 0);
+  const actionable = attrition.filter((r) => r.agency).reduce((a, r) => a + r.count, 0);
 
-  // Realistic pipeline stages with GCSO-specific data
-  const pipelineStages = [
-    {
-      id: 'application',
-      name: 'Application Review',
-      count: 47,
-      icon: FileText,
-      color: 'blue',
-      percentOfPipeline: 61.0,
-      description: 'Applications submitted, awaiting initial HR review',
-      breakdown: {
-        deputySheriff: { received: 23, passed: 17, disqualified: 6 },
-        backgroundInvestigator: { received: 12, passed: 9, disqualified: 3 },
-        detentionOfficer: { received: 8, passed: 6, disqualified: 2 },
-        adminAssistant: { received: 4, passed: 3, disqualified: 1 }
-      },
-      passRate: 73.7,
-      nextActions: [
-        'Complete initial screening for all 47 applications',
-        'Notify disqualified applicants with reason for disqualification',
-        'Advance qualified applicants to next stage'
-      ],
-      candidates: [
-        { id: 1, name: 'Marcus Johnson', position: 'Deputy Sheriff', daysInStage: 2, status: 'Pending Review', nextAction: 'Initial screening', actionDate: '2026-02-05', qualifications: 'POST Certified, 2 years patrol experience' },
-        { id: 2, name: 'Lisa Williams', position: 'Deputy Sheriff', daysInStage: 1, status: 'New Application', nextAction: 'Document verification', actionDate: '2026-02-05', qualifications: 'Recent POST Academy graduate' },
-        { id: 3, name: 'Jennifer Taylor', position: 'Administrative Assistant', daysInStage: 3, status: 'Documents Received', nextAction: 'Skills assessment scheduling', actionDate: '2026-02-06', qualifications: '5 years admin experience, Excel proficient' }
-      ]
-    },
-    {
-      id: 'screening',
-      name: 'Initial Screening',
-      count: 28,
-      icon: Search,
-      color: 'purple',
-      percentOfPipeline: 36.4,
-      description: 'Passed application review, preparing for physical test/interview',
-      physicalTestSchedule: {
-        date: 'February 07, 2026',
-        time: '08:00 AM',
-        location: 'GCSO Training Center, 2900 Commons Dr',
-        candidatesScheduled: 14,
-        maxCapacity: 15,
-        test: 'Cooper Standards (1.5-mile run, push-ups, sit-ups, 300m sprint)'
-      },
-      breakdown: {
-        deputySheriff: { total: 17, completedPT: 9, scheduledPT: 8 },
-        backgroundInvestigator: { total: 9, noPTRequired: true },
-        detentionOfficer: { total: 6, awaitingPT: 6 },
-        adminAssistant: { total: 3, awaitingInterview: 3 }
-      },
-      passRate: 85.0,
-      candidates: [
-        { id: 4, name: 'David Brown', position: 'Deputy Sheriff', daysInStage: 5, status: 'PT Scheduled', nextAction: 'Physical fitness test', actionDate: '2026-02-07', qualifications: 'POST Certified, Forsyth County SO - 3 years' },
-        { id: 5, name: 'Michelle Lee', position: 'Background Investigator', daysInStage: 3, status: 'Interview Scheduled', nextAction: 'Oral board interview', actionDate: '2026-02-11', qualifications: 'GCSO Deputy - 6 years, IA experience' }
-      ]
-    },
-    {
-      id: 'interview',
-      name: 'Oral Board Interviews',
-      count: 15,
-      icon: Users,
-      color: 'amber',
-      percentOfPipeline: 19.5,
-      description: 'Passed screening/physical test, scheduled for oral board interviews',
-      scheduledInterviews: [
-        {
-          position: 'Deputy Sheriff',
-          date: 'February 06, 2026',
-          time: '09:00 AM - 16:00 PM',
-          location: 'GCSO Headquarters, Conference Room B',
-          candidates: 8,
-          panel: ['Major R. Davis (Chair)', 'Lt. K. Williams', 'Lt. M. Thompson'],
-          format: '30 standardized questions, scenario-based, writing sample',
-          materialsReady: true
-        },
-        {
-          position: 'Background Investigator',
-          date: 'February 11, 2026',
-          time: '10:00 AM - 15:00 PM',
-          location: 'GCSO Headquarters, Sheriff\'s Conference Room',
-          candidates: 9,
-          panel: ['Major R. Davis (Chair)', 'HR Director', 'Lt. K. Hayes'],
-          format: 'Structured interview, investigative scenario, writing sample',
-          internalApplicants: 7,
-          externalApplicants: 2,
-          materialsReady: true
-        },
-        {
-          position: 'Detention Officer',
-          date: 'February 13, 2026',
-          time: '09:00 AM - 14:00 PM',
-          location: 'GCSO Detention Center, Admin Conference Room',
-          candidates: 6,
-          panel: ['Capt. J. Smith (Chair)', 'HR Representative', 'Shift Supervisor'],
-          format: 'Structured interview, detention scenarios',
-          materialsReady: false,
-          note: 'Awaiting physical fitness test completion'
-        }
-      ],
-      passRate: 77.5,
-      candidates: [
-        { id: 6, name: 'Sarah Chen', position: 'Deputy Sheriff', daysInStage: 8, status: 'Interview Complete', nextAction: 'Panel scoring review', actionDate: '2026-02-04', score: '144/150', rank: '#1 of 9', qualifications: 'DeKalb County PD - 4 years, POST Certified' },
-        { id: 7, name: 'Robert Martinez', position: 'Deputy Sheriff', daysInStage: 6, status: 'Interview Scheduled', nextAction: 'Oral board Feb 06', actionDate: '2026-02-06', qualifications: 'Cobb County SO - 5 years, patrol/traffic' },
-        { id: 8, name: 'Amanda Garcia', position: 'Background Investigator', daysInStage: 4, status: 'Interview Scheduled', nextAction: 'Command panel Feb 11', actionDate: '2026-02-11', qualifications: 'GCSO Deputy - 8 years, detective experience' }
-      ]
-    },
-    {
-      id: 'assessment',
-      name: 'Skills Assessment',
-      count: 12,
-      icon: Award,
-      color: 'cyan',
-      percentOfPipeline: 15.6,
-      description: 'Position-specific skills assessments based on role type',
-      assessmentTypes: [
-        {
-          position: 'Sworn Positions (Deputy, Detention)',
-          assessments: ['Physical Fitness Test (Stage 2)', 'Writing Sample (during interview)'],
-          note: 'No additional skills assessment beyond interview'
-        },
-        {
-          position: 'Background Investigator',
-          assessments: ['Writing Sample - Investigative summary from mock case file', 'Panel evaluates organization, grammar, report format'],
-          note: 'Conducted during oral board interview'
-        },
-        {
-          position: 'Administrative Assistant',
-          assessments: ['Typing Test - 45 WPM minimum', 'Microsoft Office Proficiency (Word, Excel, Outlook)'],
-          note: 'Practical exercises during skills assessment'
-        }
-      ],
-      candidates: [
-        { id: 9, name: 'Thomas White', position: 'Deputy Sheriff', daysInStage: 2, status: 'PT Complete', nextAction: 'Advance to interview', actionDate: '2026-02-06', testResult: 'Passed all standards' },
-        { id: 10, name: 'Patricia Davis', position: 'Administrative Assistant', daysInStage: 1, status: 'Assessment Scheduled', nextAction: 'Typing/Office skills test', actionDate: '2026-02-06', qualifications: '3 years clerical experience' }
-      ]
-    },
-    {
-      id: 'background',
-      name: 'Background Investigation',
-      count: 8,
-      icon: Shield,
-      color: 'indigo',
-      percentOfPipeline: 10.4,
-      description: 'Passed interview, comprehensive POST-compliant background investigation in progress',
-      isCriticalBottleneck: true,
-      investigatorCapacity: {
-        investigators: [
-          { name: 'Lt. K. Hayes', title: 'Senior Background Investigator', activeCases: 3, maxCapacity: 4 },
-          { name: 'Cpl. J. Adams', title: 'Background Investigator', activeCases: 2, maxCapacity: 4 }
-        ],
-        totalActive: 5,
-        totalCapacity: 8,
-        avgDuration: 67,
-        minDuration: 45,
-        maxDuration: 90
-      },
-      activeInvestigations: [
-        { name: 'J. Martinez', position: 'Deputy Sheriff', daysInProgress: 49, investigator: 'Lt. K. Hayes', status: 'Reference interviews in progress' },
-        { name: 'K. Thompson', position: 'Deputy Sheriff', daysInProgress: 44, investigator: 'Lt. K. Hayes', status: 'Employment verification pending' },
-        { name: 'R. Williams', position: 'Deputy Sheriff', daysInProgress: 28, investigator: 'Lt. K. Hayes', status: 'Polygraph scheduled Feb 10' },
-        { name: 'S. Chen', position: 'Deputy Sheriff', daysInProgress: 23, investigator: 'Cpl. J. Adams', status: 'Criminal history check complete' },
-        { name: 'M. Rodriguez', position: 'Deputy Sheriff', daysInProgress: 18, investigator: 'Cpl. J. Adams', status: 'Initial document collection' }
-      ],
-      postRequirements: [
-        'Criminal history check (GCIC/NCIC, FBI fingerprint)',
-        'Driving record check (GA DDS)',
-        'Employment verification (all prior employers, 10 years)',
-        'Education verification (transcripts)',
-        'Reference interviews (minimum 5 personal/professional)',
-        'Residence verification (current and prior addresses)',
-        'Credit history check (financial integrity)',
-        'Social media review (public profiles)',
-        'Polygraph examination',
-        'Investigative report with hire/no-hire recommendation'
-      ],
-      passRate: 67.5,
-      disqualificationReasons: [
-        { reason: 'Prior drug use beyond policy thresholds', percentage: 20 },
-        { reason: 'Deceptive during polygraph examination', percentage: 15 },
-        { reason: 'Domestic violence incidents', percentage: 10 },
-        { reason: 'Excessive debt / poor credit', percentage: 10 },
-        { reason: 'Prior LE termination not disclosed', percentage: 5 },
-        { reason: 'Failed to disclose prior arrests', percentage: 5 },
-        { reason: 'Poor references from prior employers', percentage: 5 },
-        { reason: 'Other integrity violations', percentage: 30 }
-      ],
-      candidates: [
-        { id: 11, name: 'Daniel Wilson', position: 'Deputy Sheriff', daysInStage: 49, status: 'Investigation Active', nextAction: 'Reference interviews', investigator: 'Lt. K. Hayes', completedItems: 6, totalItems: 10 },
-        { id: 12, name: 'Emily Johnson', position: 'Deputy Sheriff', daysInStage: 23, status: 'Investigation Active', nextAction: 'Polygraph scheduled', investigator: 'Cpl. J. Adams', completedItems: 4, totalItems: 10 }
-      ]
-    },
-    {
-      id: 'offer',
-      name: 'Offer Extended',
-      count: 3,
-      icon: CheckCircle,
-      color: 'green',
-      percentOfPipeline: 3.9,
-      description: 'Background cleared, medical/psych passed, Sheriff approved, conditional offer extended',
-      offersPending: [
-        {
-          name: 'J. Wilson',
-          position: 'Deputy Sheriff',
-          refNumber: '2026-APP-0087',
-          offerDate: 'January 28, 2026',
-          salary: '$48,000 (Step 1 - entry level)',
-          startDateOffered: 'March 10, 2026',
-          responseDeadline: 'February 05, 2026',
-          daysRemaining: 0,
-          status: 'NO RESPONSE - Follow-up needed',
-          urgent: true,
-          notes: 'Candidate mentioned exploring other agency options during background interview'
-        },
-        {
-          name: 'K. Anderson',
-          position: 'Deputy Sheriff',
-          refNumber: '2026-APP-0103',
-          offerDate: 'January 30, 2026',
-          acceptedDate: 'January 30, 2026',
-          salary: '$48,000 (Step 1 - POST Academy graduate)',
-          startDate: 'February 24, 2026',
-          status: 'ACCEPTED - Onboarding in progress',
-          urgent: false
-        },
-        {
-          name: 'T. Parker',
-          position: 'Deputy Sheriff',
-          refNumber: '2026-APP-0124',
-          offerDate: 'February 01, 2026',
-          acceptedDate: 'February 01, 2026',
-          salary: '$55,200 (Step 5 - lateral transfer, 8 years exp)',
-          startDate: 'March 03, 2026',
-          status: 'ACCEPTED - Serving 2-week notice to Clayton County',
-          urgent: false
-        }
-      ],
-      acceptanceRate: {
-        last12Months: { extended: 10, accepted: 8, declined: 2, rate: 80 },
-        declineReasons: ['Accepted higher-paying agency (Gwinnett County Police, Fulton County Sheriff)', 'Relocated out of state']
-      },
-      salaryCompetitiveness: {
-        gcsoDeputy: 48000,
-        gwinnettPD: 54120,
-        gwinnettPDDiff: '+12.8%',
-        fultonSO: 52500,
-        fultonSODiff: '+9.4%'
-      },
-      candidates: [
-        { id: 13, name: 'J. Wilson', position: 'Deputy Sheriff', daysInStage: 8, status: 'Awaiting Response', nextAction: 'Follow-up call - URGENT', actionDate: '2026-02-05', urgent: true },
-        { id: 14, name: 'K. Anderson', position: 'Deputy Sheriff', daysInStage: 3, status: 'Accepted', nextAction: 'Onboarding tasks', actionDate: '2026-02-24', startDate: 'Feb 24, 2026' }
-      ]
+  // ── Cohorts and trend ───────────────────────────────────────
+  const unscheduled = cohorts.filter((c) => c.unscheduled).length;
+  const trendMax = Math.max(...timeToHire.map((m) => m.days));
+  const trendMin = Math.min(...timeToHire.map((m) => m.days));
+  const grew = hire.medianDays - hire.twelveMonthsAgo;
+  const bgGrew = hire.backgroundNow - hire.backgroundThen;
+
+  const pastDecision = candidates.filter((c) => c.decision === 'OVERDUE').length;
+  const atRisk = candidates.filter((c) => c.decision === 'AT RISK').length;
+
+  const cards = intelligence.map((c) => {
+    if (c.body) return c;
+    if (c.title.startsWith('Background')) {
+      return { ...c, body: `Time to hire grew ${grew} days over twelve months. Background investigation grew ${bgGrew} of those days, and the rest is the academy gap. No other stage moved materially.` };
     }
-  ];
-
-  // Realistic time-to-hire by position
-  const timeToHireMetrics = {
-    deputySheriff: {
-      avgDays: 127,
-      breakdown: [
-        { stage: 'Application → Screening', days: 7 },
-        { stage: 'Screening → Physical Fitness Test', days: 10 },
-        { stage: 'Physical Test → Oral Board', days: 14 },
-        { stage: 'Interview → Background Start', days: 5 },
-        { stage: 'Background Investigation', days: 67 },
-        { stage: 'Background → Medical/Psych', days: 10 },
-        { stage: 'Medical/Psych → Sheriff Approval', days: 7 },
-        { stage: 'Sheriff Approval → Offer', days: 3 },
-        { stage: 'Offer → Acceptance', days: 4 }
-      ]
-    },
-    deputyAcademy: {
-      avgDays: 165,
-      note: 'Same process + 12-week POST Academy (84 days) + scheduling wait (30-60 days)'
-    },
-    backgroundInvestigator: {
-      avgDays: 90,
-      note: 'Faster for internal transfers - partial background on file'
-    },
-    detentionOfficer: {
-      avgDays: 110,
-      note: 'Similar to Deputy but slightly shorter backgrounds'
-    },
-    adminAssistant: {
-      avgDays: 42,
-      note: 'Civilian - no POST requirements, 30-day background vs 67 days'
-    }
-  };
-
-  // Realistic conversion rates
-  const conversionRates = {
-    applicationToScreening: 73.7,
-    screeningToPhysicalTest: 85.0,
-    physicalTestToInterview: 92.0,
-    interviewToBackground: 77.5,
-    backgroundToCleared: 67.5,
-    offerToAccepted: 80.0,
-    overallApplicationToHire: 32.5
-  };
-
-  // Critical bottlenecks
-  const bottlenecks = [
-    {
-      id: 'background-capacity',
-      title: 'Background Investigation Capacity',
-      severity: 'critical',
-      description: '2 investigators handling all backgrounds for 77 active applicants',
-      details: [
-        'Current: Lt. Hayes (3 cases) + Cpl. Adams (2 cases) = 5 active',
-        'Capacity: 3-4 concurrent cases each = 6-8 max capacity',
-        'Duration: 67 days average per investigation',
-        'Throughput: 4-6 backgrounds completed per month'
-      ],
-      impact: 'Limits hiring pace - cannot accelerate regardless of applicant volume',
-      solution: 'Hire 2 additional Background Investigators (posting active, 9 candidates interviewing Feb 11)',
-      solutionImpact: 'Double capacity from 4-6/month to 8-12/month'
-    },
-    {
-      id: 'interview-availability',
-      title: 'Interview Panel Availability',
-      severity: 'medium',
-      description: 'Command staff have operational duties beyond recruitment',
-      details: [
-        'Major Davis, Lieutenants required for oral board panels',
-        'Cannot conduct interviews daily or ad-hoc',
-        'Must schedule dedicated interview days'
-      ],
-      impact: '15 candidates waiting for interview scheduling',
-      solution: 'Batch interviews on dedicated days (1-2 days/month, 8-12 candidates/session)',
-      status: 'RESOLVED: Feb 06 (8 Deputy), Feb 11 (9 BI), Feb 13 (6 Detention) scheduled'
-    },
-    {
-      id: 'physical-test-facility',
-      title: 'Physical Fitness Test Facility',
-      severity: 'low',
-      description: 'GCSO Training Center limited to 15 candidates per session',
-      details: [
-        'Staffing and timing constraints limit capacity',
-        'Requires certified proctors for Cooper Standards test',
-        'Equipment and timing logistics for 4-part test'
-      ],
-      impact: 'Cannot test candidates on-demand',
-      solution: 'Schedule dedicated test days (monthly or bi-monthly)',
-      status: 'RESOLVED: Feb 07 testing scheduled (14 candidates)'
-    }
-  ];
-
-  const handleNavigation = (item) => {
-    if (item.page) {
-      navigate(createPageUrl(item.page));
-    } else {
-      setActivePage(item.id);
-      setSidebarOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
-  };
-
-  const getStageColor = (color) => {
-    const colors = {
-      blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30', solid: 'bg-blue-500' },
-      purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/30', solid: 'bg-purple-500' },
-      amber: { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', solid: 'bg-amber-500' },
-      cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30', solid: 'bg-cyan-500' },
-      indigo: { bg: 'bg-indigo-500/20', text: 'text-indigo-400', border: 'border-indigo-500/30', solid: 'bg-indigo-500' },
-      green: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', solid: 'bg-green-500' }
+    return {
+      ...c,
+      body: `${academy.inStage} candidates have passed every stage and are waiting on a cohort. `
+        + `${academy.byTrack[1]} of them are detention, where no academy is scheduled at all. `
+        + 'The agency has already spent the full cost of hire on each.',
     };
-    return colors[color] || colors.blue;
-  };
-
-  const getSeverityColor = (severity) => {
-    switch (severity) {
-      case 'critical': return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
-      case 'medium': return { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30' };
-      case 'low': return { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' };
-      default: return { bg: 'bg-slate-500/20', text: 'text-slate-500', border: 'border-slate-500/30' };
-    }
-  };
+  });
 
   return (
     <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
-      <div className="p-4 lg:p-6 min-h-full">
-          <div className="max-w-7xl mx-auto">
-            {/* GCSO Header */}
-            <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Recruitment Pipeline Analysis</h2>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary mb-3">
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  Gwinnett County Sheriff's Office • Lawrenceville, Georgia
-                </span>
-                <span className="hidden sm:inline">•</span>
-                <span>Monday, February 02, 2026 • 18:14 PM EST</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
-                <span>Sheriff: Keybo Taylor</span>
-                <span className="hidden sm:inline">|</span>
-                <span className="text-amber-700 font-medium">Active Pipeline: {totalApplicants} applicants</span>
-                <span className="hidden sm:inline">|</span>
-                <span>Positions: {totalVacancies} vacancies (8 Deputy, 2 Background Inv, 1 Detention, 1 Admin)</span>
-              </div>
-              <div className="text-xs text-slate-700 mt-1">
-                System: GCSO-HRIS v4.2 | Last Updated: 18:14:22 PM EST
-              </div>
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
+        <div className="max-w-[1500px] mx-auto">
+
+          {/* ── Header ─────────────────────────────────────── */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-[19px] font-bold text-slate-100">Hiring Pipeline</h1>
+              <span className="text-[11px] text-slate-500">
+                Candidates in process from application to academy seat · applicant tracking · POST records · background case management
+              </span>
             </div>
-
-            {/* Context Alert Bars */}
-            <div className="space-y-2 mb-6">
-              <div className="flex items-center gap-3 px-4 py-2.5 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-red-300">
-                  <span className="font-medium">Background investigations:</span> 67-day avg duration - investigator capacity limiting throughput to 4-6/month
-                </span>
-              </div>
-              <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0" />
-                <span className="text-sm text-amber-300">
-                  <span className="font-medium">Interview backlog:</span> 23 candidates scheduled across 3 interview days (Feb 06, 11, 13)
-                </span>
-              </div>
-              <div className="flex items-center gap-3 px-4 py-2.5 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                <Activity className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                <span className="text-sm text-blue-300">
-                  <span className="font-medium">Physical fitness testing:</span> Feb 07 session scheduled - 14 candidates, Training Center capacity 15 max
-                </span>
-              </div>
-            </div>
-
-            {/* Pipeline Overview */}
-            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-primary">Active Applicants by Position</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-secondary">Applicants-to-Vacancy Ratio:</span>
-                  <span className="text-sm font-bold text-amber-700">6.4:1</span>
-                  <span className="text-xs text-slate-500">(Ideal: 8-10:1)</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'deputySheriff' ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white dark:bg-zinc-950/50 border-slate-700/50 hover:border-slate-600/50'}`}
-                  onClick={() => setSelectedPosition(selectedPosition === 'deputySheriff' ? 'all' : 'deputySheriff')}>
-                  <div className="flex items-center justify-between mb-2">
-                    <Shield className="w-5 h-5 text-blue-400" />
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${positionBreakdown.deputySheriff.ratio < 5 ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'}`}>
-                      {positionBreakdown.deputySheriff.ratio}:1
-                    </span>
-                  </div>
-                  <p className="text-xl font-bold text-primary">{positionBreakdown.deputySheriff.applicants}</p>
-                  <p className="text-xs text-secondary">Deputy Sheriff → {positionBreakdown.deputySheriff.vacancies} vacancies</p>
-                </div>
-
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500/20 border-purple-500/50' : 'bg-white dark:bg-zinc-950/50 border-slate-700/50 hover:border-slate-600/50'}`}
-                  onClick={() => setSelectedPosition(selectedPosition === 'backgroundInvestigator' ? 'all' : 'backgroundInvestigator')}>
-                  <div className="flex items-center justify-between mb-2">
-                    <Search className="w-5 h-5 text-purple-400" />
-                    <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-500/20 text-green-400">
-                      {positionBreakdown.backgroundInvestigator.ratio}:1
-                    </span>
-                  </div>
-                  <p className="text-xl font-bold text-primary">{positionBreakdown.backgroundInvestigator.applicants}</p>
-                  <p className="text-xs text-secondary">Background Inv → {positionBreakdown.backgroundInvestigator.vacancies} vacancies</p>
-                </div>
-
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'detentionOfficer' ? 'bg-amber-500/20 border-amber-500/50' : 'bg-white dark:bg-zinc-950/50 border-slate-700/50 hover:border-slate-600/50'}`}
-                  onClick={() => setSelectedPosition(selectedPosition === 'detentionOfficer' ? 'all' : 'detentionOfficer')}>
-                  <div className="flex items-center justify-between mb-2">
-                    <Users className="w-5 h-5 text-amber-700" />
-                    <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-500/20 text-green-400">
-                      {positionBreakdown.detentionOfficer.ratio}:1
-                    </span>
-                  </div>
-                  <p className="text-xl font-bold text-primary">{positionBreakdown.detentionOfficer.applicants}</p>
-                  <p className="text-xs text-secondary">Detention Officer → {positionBreakdown.detentionOfficer.vacancies} vacancy</p>
-                </div>
-
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'adminAssistant' ? 'bg-cyan-500/20 border-cyan-500/50' : 'bg-white dark:bg-zinc-950/50 border-slate-700/50 hover:border-slate-600/50'}`}
-                  onClick={() => setSelectedPosition(selectedPosition === 'adminAssistant' ? 'all' : 'adminAssistant')}>
-                  <div className="flex items-center justify-between mb-2">
-                    <FileText className="w-5 h-5 text-cyan-400" />
-                    <span className="px-2 py-0.5 rounded text-xs font-medium bg-amber-500/20 text-amber-700">
-                      {positionBreakdown.adminAssistant.ratio}:1
-                    </span>
-                  </div>
-                  <p className="text-xl font-bold text-primary">{positionBreakdown.adminAssistant.applicants}</p>
-                  <p className="text-xs text-secondary">Admin Assistant → {positionBreakdown.adminAssistant.vacancies} vacancy</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 pt-3 border-t border-border">
-                <span className="text-xs text-slate-500">Filter by Position:</span>
-                <button
-                  onClick={() => setSelectedPosition('all')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'all' ? 'bg-amber-500 text-white' : 'bg-white dark:bg-zinc-900/60 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
-                >
-                  All Positions
-                </button>
-                <button
-                  onClick={() => setSelectedPosition('deputySheriff')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'deputySheriff' ? 'bg-blue-500 text-white' : 'bg-white dark:bg-zinc-900/60 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
-                >
-                  Deputy: {positionBreakdown.deputySheriff.applicants}
-                </button>
-                <button
-                  onClick={() => setSelectedPosition('backgroundInvestigator')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500 text-white' : 'bg-white dark:bg-zinc-900/60 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
-                >
-                  Background Inv: {positionBreakdown.backgroundInvestigator.applicants}
-                </button>
-              </div>
-            </div>
-
-            {/* Bottleneck Analysis */}
-            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-6 overflow-hidden">
-              <div
-                className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-all"
-                onClick={() => setExpandedBottlenecks(!expandedBottlenecks)}
+            <div className="flex items-center gap-4 lg:ml-auto flex-wrap">
+              <span className="text-[11px] text-amber-400/90">
+                {pastDecision} candidates past decision date · background is the binding constraint
+              </span>
+              <button
+                onClick={() => window.print()}
+                className="px-3.5 py-2 border border-amber-500/60 rounded-lg text-[11.5px] font-semibold text-amber-400 hover:bg-amber-500/10 transition-colors"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                      <Target className="w-5 h-5 text-red-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-primary">Pipeline Bottleneck Analysis</h3>
-                      <p className="text-sm text-secondary">Capacity constraints and resolution status</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold">1 Critical</span>
-                    <span className="px-3 py-1 bg-amber-500/20 text-amber-700 rounded-full text-xs font-bold">1 Medium</span>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">1 Resolved</span>
-                    {expandedBottlenecks ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
+                Pipeline report
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 xl:grid-cols-2 gap-8">
+
+            {/* ══ Left column ═══════════════════════════════ */}
+            <div>
+              {/* Headline */}
+              <div className="border border-slate-800/80 rounded-xl grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60">
+                <div className="px-5 py-4 border-b border-slate-800/60">
+                  <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />In process
+                  </p>
+                  <p className="leading-none">
+                    <span className="text-[24px] font-bold text-slate-100">{inProcess}</span>
+                    <span className="text-[11.5px] text-slate-400 ml-2">all tracks</span>
+                  </p>
+                  <p className="text-[10.5px] text-amber-400/90 mt-2">{agingTotal} candidates past stage target</p>
+                </div>
+                <div className="px-5 py-4 border-b border-slate-800/60">
+                  <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />Time to hire
+                  </p>
+                  <p className="leading-none">
+                    <span className="text-[24px] font-bold text-slate-100">{hire.medianDays}</span>
+                    <span className="text-[11.5px] text-slate-400 ml-2">days median</span>
+                  </p>
+                  <p className="text-[10.5px] text-red-400/90 mt-2">target {hire.target} · up {grew} days over 12 months</p>
+                </div>
+                <div className="px-5 py-4">
+                  <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />Background queue
+                  </p>
+                  <p className="leading-none">
+                    <span className="text-[24px] font-bold text-slate-100">{bgActive}</span>
+                    <span className="text-[11.5px] text-slate-400 ml-2">of {bgCapacity} capacity</span>
+                  </p>
+                  <p className="text-[10.5px] text-amber-400/90 mt-2">
+                    median {background.median} days against a {background.target}-day target
+                  </p>
+                </div>
+                <div className="px-5 py-4">
+                  <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />Lost — 90 days
+                  </p>
+                  <p className="leading-none">
+                    <span className="text-[24px] font-bold text-slate-100">{lost}</span>
+                    <span className="text-[11.5px] text-slate-400 ml-2">candidates</span>
+                  </p>
+                  <p className="text-[10.5px] text-amber-400/90 mt-2">{actionable} to causes the agency controls</p>
                 </div>
               </div>
 
-              {expandedBottlenecks && (
-                <div className="border-t border-border p-5 space-y-4">
-                  {bottlenecks.map(bottleneck => {
-                    const severityColor = getSeverityColor(bottleneck.severity);
+              {/* Pipeline by stage */}
+              <div className="mt-7">
+                <SectionLabel right={
+                  <span className="flex items-center gap-4 flex-wrap">
+                    {tabs.map((t) => (
+                      <button
+                        key={t.track}
+                        onClick={() => setTrack(t.track)}
+                        className={`text-[11px] transition-colors ${
+                          track === t.track ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
+                        }`}
+                      >
+                        {t.track} <span className="font-mono text-slate-500">{t.n}</span>
+                      </button>
+                    ))}
+                  </span>
+                }>
+                  Pipeline by stage
+                </SectionLabel>
+
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="flex-1 min-w-0">Stage</span>
+                  <span className="w-14 text-right flex-shrink-0">In stage</span>
+                  <span className="w-14 text-right flex-shrink-0">Median</span>
+                  <span className="w-12 text-right flex-shrink-0">Aging</span>
+                  <span className="w-[92px] flex-shrink-0">Pass rate</span>
+                  <span className="w-28 text-right flex-shrink-0">Flow</span>
+                </div>
+
+                <div className="divide-y divide-slate-800/50">
+                  {withTotals.map((s, i) => {
+                    const isOpen = openStage === s.stage;
+                    const count = track === 'All tracks' ? s.inStage : s.byTrack[trackIndex];
+                    const over = s.median > s.target;
                     return (
-                      <div key={bottleneck.id} className={`p-4 rounded-xl border ${severityColor.border} ${severityColor.bg}`}>
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${severityColor.bg} ${severityColor.text}`}>
-                              {bottleneck.severity}
+                      <div key={s.stage} className={`border-l-2 ${
+                        s.flow === 'BOTTLENECK' ? 'border-red-500/70' : s.flow === 'WITHIN TARGET' ? 'border-transparent' : 'border-amber-500/60'
+                      }`}>
+                        <button
+                          onClick={() => setOpenStage(isOpen ? null : s.stage)}
+                          className="w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors"
+                        >
+                          <div className="flex-1 min-w-0">
+                            <span className="flex items-center gap-2">
+                              <span className="font-mono text-[9px] text-slate-600">{i + 1}</span>
+                              <span className="text-[12.5px] font-semibold text-slate-100 truncate">{s.short ?? s.stage}</span>
+                              {s.flag && (
+                                <span className={`border rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider flex-shrink-0 ${flagTone[s.flag]}`}>
+                                  {s.flag}
+                                </span>
+                              )}
                             </span>
-                            <h4 className="font-semibold text-primary">{bottleneck.title}</h4>
+                            <p className={`text-[10px] truncate mt-0.5 ${
+                              s.noteTone === 'red' ? 'text-red-400/90' : s.noteTone === 'amber' ? 'text-amber-400/80' : 'text-slate-500'
+                            }`}>{s.note}</p>
                           </div>
-                          {bottleneck.status && (
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">
-                              {bottleneck.status.includes('RESOLVED') ? 'Scheduled' : 'Pending'}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-sm text-secondary mb-3">{bottleneck.description}</p>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                          <div>
-                            <p className="text-xs text-slate-500 mb-2">Details:</p>
-                            <ul className="space-y-1">
-                              {bottleneck.details.map((detail, idx) => (
-                                <li key={idx} className="text-xs text-secondary flex items-start gap-2">
-                                  <span className="text-slate-700">•</span>
-                                  {detail}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-xs text-slate-500 mb-2">Impact & Solution:</p>
-                            <p className="text-xs text-secondary mb-2"><span className="text-slate-500">Impact:</span> {bottleneck.impact}</p>
-                            <p className="text-xs text-secondary"><span className="text-slate-500">Solution:</span> {bottleneck.solution}</p>
-                            {bottleneck.solutionImpact && (
-                              <p className="text-xs text-green-400 mt-1"><span className="text-slate-500">Expected Result:</span> {bottleneck.solutionImpact}</p>
+                          <span className="w-14 text-right text-[12px] font-mono font-bold text-slate-100 flex-shrink-0">{count}</span>
+                          <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${over ? 'text-red-400' : 'text-slate-300'}`}>{s.median}d</span>
+                          <span className={`w-12 text-right text-[11px] font-mono flex-shrink-0 ${
+                            s.aging === 0 ? 'text-slate-600' : s.aging > 10 ? 'text-red-400' : 'text-amber-400'
+                          }`}>
+                            {s.aging === 0 ? '—' : s.aging}
+                          </span>
+                          <span className="w-[92px] flex items-center gap-2 flex-shrink-0">
+                            {s.passRate === null ? (
+                              <span className="text-[10.5px] font-mono text-slate-600">—</span>
+                            ) : (
+                              <>
+                                <span className="flex-1"><Meter value={s.passRate} tone={s.passRate < 70 ? 'bg-amber-400' : 'bg-slate-600'} /></span>
+                                <span className="text-[10.5px] font-mono text-slate-400">{s.passRate}%</span>
+                              </>
                             )}
-                            {bottleneck.status && (
-                              <p className="text-xs text-green-400 mt-2 font-medium">{bottleneck.status}</p>
-                            )}
+                          </span>
+                          <span className={`w-28 text-right text-[10px] font-bold tracking-wider flex-shrink-0 ${flowTone[s.flow]}`}>{s.flow}</span>
+                        </button>
+
+                        {isOpen && s.detail && (
+                          <div className="px-3 pb-4">
+                            <p className="text-[12px] text-slate-300 leading-relaxed">{s.detail}</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-3 mt-3.5">
+                              <div className="border-l-2 border-slate-600 pl-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">Active · capacity</p>
+                                <p className="text-[11px] text-slate-200 mt-1">{s.inStage} of {s.stage === 'Background investigation' ? bgCapacity : s.inStage}</p>
+                              </div>
+                              <div className="border-l-2 border-slate-600 pl-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">Median</p>
+                                <p className="text-[11px] text-slate-200 mt-1">{s.median} days · target {s.target}</p>
+                              </div>
+                              <div className="border-l-2 border-amber-500/70 pl-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-amber-400">Past target</p>
+                                <p className="text-[11px] text-slate-200 mt-1">{s.aging} cases</p>
+                              </div>
+                              <div className="border-l-2 border-red-500/70 pl-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-red-400">Withdrawals here</p>
+                                <p className="text-[11px] text-slate-200 mt-1">{s.withdrawalsHere}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2.5 mt-4 flex-wrap">
+                              <button
+                                onClick={() => navigate('/hr/applicants')}
+                                className="px-3 py-1.5 border border-amber-500/60 bg-amber-500/10 rounded text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors"
+                              >
+                                Review candidates
+                              </button>
+                              <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Add capacity</button>
+                              <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Schedule next event</button>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     );
                   })}
                 </div>
-              )}
-            </div>
-
-            {/* Time-to-Hire & Conversion Metrics */}
-            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-6 overflow-hidden">
-              <div
-                className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-all"
-                onClick={() => setExpandedMetrics(!expandedMetrics)}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-indigo-500/20 rounded-xl flex items-center justify-center">
-                      <BarChart3 className="w-5 h-5 text-indigo-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-primary">Recruitment Metrics & Analysis</h3>
-                      <p className="text-sm text-secondary">Time-to-hire by position, conversion rates, historical data</p>
-                    </div>
-                  </div>
-                  {expandedMetrics ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                </div>
+                <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
+                  Pass rate is the share advancing from each stage. Median is days in stage against the stage target. Rows expand
+                  to the constraint and the lever available.
+                </p>
               </div>
 
-              {expandedMetrics && (
-                <div className="border-t border-border p-5">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Time-to-Hire */}
-                    <div>
-                      <h4 className="text-sm font-semibold text-primary mb-4">Time-to-Hire by Position Type</h4>
-                      <div className="space-y-3">
-                        <div className="p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-primary">Deputy Sheriff (POST Certified)</span>
-                            <span className="text-lg font-bold text-blue-400">{timeToHireMetrics.deputySheriff.avgDays} days</span>
-                          </div>
-                          <div className="w-full bg-white dark:bg-zinc-800/50 rounded-full h-2">
-                            <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.deputySheriff.avgDays / 165) * 100}%` }}></div>
-                          </div>
-                        </div>
-                        <div className="p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-primary">Deputy Sheriff (Academy Required)</span>
-                            <span className="text-lg font-bold text-purple-400">{timeToHireMetrics.deputyAcademy.avgDays}+ days</span>
-                          </div>
-                          <div className="w-full bg-white dark:bg-zinc-800/50 rounded-full h-2">
-                            <div className="bg-purple-500 h-2 rounded-full" style={{ width: '100%' }}></div>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.deputyAcademy.note}</p>
-                        </div>
-                        <div className="p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-primary">Background Investigator (Internal)</span>
-                            <span className="text-lg font-bold text-amber-700">{timeToHireMetrics.backgroundInvestigator.avgDays} days</span>
-                          </div>
-                          <div className="w-full bg-white dark:bg-zinc-800/50 rounded-full h-2">
-                            <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.backgroundInvestigator.avgDays / 165) * 100}%` }}></div>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.backgroundInvestigator.note}</p>
-                        </div>
-                        <div className="p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium text-primary">Administrative Assistant (Civilian)</span>
-                            <span className="text-lg font-bold text-green-400">{timeToHireMetrics.adminAssistant.avgDays} days</span>
-                          </div>
-                          <div className="w-full bg-white dark:bg-zinc-800/50 rounded-full h-2">
-                            <div className="bg-green-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.adminAssistant.avgDays / 165) * 100}%` }}></div>
-                          </div>
-                          <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.adminAssistant.note}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Conversion Rates */}
-                    <div>
-                      <h4 className="text-sm font-semibold text-primary mb-4">Pipeline Conversion Rates (Historical)</h4>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Application → Screening</span>
-                          <span className="text-sm font-bold text-primary">{conversionRates.applicationToScreening}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Screening → Physical Test</span>
-                          <span className="text-sm font-bold text-primary">{conversionRates.screeningToPhysicalTest}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Physical Test → Interview</span>
-                          <span className="text-sm font-bold text-primary">{conversionRates.physicalTestToInterview}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Interview → Background</span>
-                          <span className="text-sm font-bold text-primary">{conversionRates.interviewToBackground}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Background → Cleared</span>
-                          <span className="text-sm font-bold text-amber-700">{conversionRates.backgroundToCleared}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg">
-                          <span className="text-xs text-secondary">Offer → Accepted</span>
-                          <span className="text-sm font-bold text-primary">{conversionRates.offerToAccepted}%</span>
-                        </div>
-                        <div className="flex items-center justify-between p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
-                          <span className="text-sm text-indigo-300 font-medium">Overall: Application → Hire</span>
-                          <span className="text-lg font-bold text-indigo-400">{conversionRates.overallApplicationToHire}%</span>
-                        </div>
-                        <p className="text-xs text-slate-500">
-                          Of {totalApplicants} applicants, expect ~{Math.round(totalApplicants * conversionRates.overallApplicationToHire / 100)}-{Math.round(totalApplicants * 0.35)} eventual hires (need {totalVacancies} positions)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              {/* Candidates requiring action */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-red-400/90">{pastDecision} overdue · {atRisk} at risk</span>}>
+                  Candidates requiring action
+                </SectionLabel>
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="flex-1 min-w-0">Candidate / requisition</span>
+                  <span className="w-32 flex-shrink-0">Stage</span>
+                  <span className="w-32 flex-shrink-0">Blocker</span>
+                  <span className="w-14 text-right flex-shrink-0">In stage</span>
+                  <span className="w-16 text-right flex-shrink-0">Decision</span>
                 </div>
-              )}
-            </div>
-
-            {/* Pipeline Stages */}
-            <div className="space-y-6">
-              {pipelineStages.map((stage, stageIdx) => {
-                const Icon = stage.icon;
-                const colorConfig = getStageColor(stage.color);
-                const isExpanded = selectedStage === stage.id;
-
-                return (
-                  <div key={stage.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${stage.isCriticalBottleneck ? 'border-red-500/30' : 'border-slate-700/50'}`}>
-                    <div
-                      className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-all"
-                      onClick={() => setSelectedStage(isExpanded ? null : stage.id)}
+                <div className="divide-y divide-slate-800/50">
+                  {candidates.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => navigate('/hr/applicants')}
+                      className={`w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors border-l-2 ${
+                        c.decision === 'OVERDUE' ? 'border-red-500/70' : c.decision === 'AT RISK' ? 'border-amber-500/60' : 'border-transparent'
+                      }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 flex-1">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorConfig.bg}`}>
-                            <Icon className={`w-6 h-6 ${colorConfig.text}`} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-1">
-                              <h3 className="text-lg font-semibold text-primary">{stage.name}</h3>
-                              <span className={`px-3 py-1 rounded-full text-sm font-bold ${colorConfig.bg} ${colorConfig.text}`}>
-                                {stage.count} candidates
-                              </span>
-                              {stage.isCriticalBottleneck && (
-                                <span className="px-2.5 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold">
-                                  BOTTLENECK
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-4 text-xs text-secondary">
-                              <span>Stage {stageIdx + 1} of {pipelineStages.length}</span>
-                              <span>•</span>
-                              <span>{stage.percentOfPipeline}% of pipeline</span>
-                              {stage.passRate && (
-                                <>
-                                  <span>•</span>
-                                  <span className="text-green-400">Historical pass rate: {stage.passRate}%</span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {stageIdx < pipelineStages.length - 1 && (
-                            <ArrowRight className="w-5 h-5 text-slate-700" />
-                          )}
-                          {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-secondary" />
-                          ) : (
-                            <ChevronDown className="w-5 h-5 text-secondary" />
-                          )}
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="flex items-baseline gap-2">
+                          <span className="text-[11.5px] font-mono font-bold text-slate-100">{c.id}</span>
+                          <span className="text-[10.5px] text-slate-500 truncate">{c.req}</span>
+                        </span>
+                        <p className="text-[10px] text-slate-500 truncate mt-0.5">{c.note}</p>
                       </div>
+                      <span className="w-32 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.stage}</span>
+                      <span className="w-32 text-[11px] text-amber-400 flex-shrink-0 truncate">{c.blocker}</span>
+                      <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${c.inStage > 45 ? 'text-red-400' : 'text-slate-400'}`}>{c.inStage}d</span>
+                      <span className={`w-16 text-right text-[10.5px] font-bold tracking-wider flex-shrink-0 ${decisionTone(c.decision)}`}>{c.decision}</span>
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
+                  Rows open the applicant record — stage history, background packet, assigned staff, and contact log. Identifiers
+                  are used at command level; opening a record is logged.
+                </p>
+              </div>
+
+              {/* Pipeline intelligence */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">AI-assisted synthesis · 5 sources · confidence 84% · 22m ago</span>}>
+                  Pipeline intelligence
+                </SectionLabel>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {cards.map((c) => (
+                    <div key={c.title} className="border border-slate-800/80 rounded-xl px-4 py-3.5">
+                      <p className="flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotTone[c.tone]}`} />
+                        <span className={`text-[12px] font-bold ${textTone[c.tone]}`}>{c.title}</span>
+                      </p>
+                      <p className="text-[11.5px] text-slate-300 leading-relaxed mt-2">{c.body}</p>
+                      <p className="text-[11px] text-slate-100 leading-relaxed mt-2.5">→ {c.action}</p>
+                      <p className="text-[10px] text-slate-600 mt-2.5">{c.sources}</p>
                     </div>
-
-                    {isExpanded && (
-                      <div className="border-t border-border p-5 bg-slate-50 dark:bg-zinc-950/30">
-                        <p className="text-sm text-secondary mb-4">{stage.description}</p>
-
-                        {/* Stage-specific content */}
-                        {stage.id === 'screening' && stage.physicalTestSchedule && (
-                          <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                            <div className="flex items-center gap-2 mb-3">
-                              <Calendar className="w-4 h-4 text-amber-700" />
-                              <h4 className="font-semibold text-amber-700">Physical Fitness Test Scheduled</h4>
-                            </div>
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                              <div>
-                                <p className="text-xs text-slate-500">Date</p>
-                                <p className="text-primary font-medium">{stage.physicalTestSchedule.date}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-slate-500">Time</p>
-                                <p className="text-primary font-medium">{stage.physicalTestSchedule.time}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-slate-500">Candidates</p>
-                                <p className="text-primary font-medium">{stage.physicalTestSchedule.candidatesScheduled} / {stage.physicalTestSchedule.maxCapacity} capacity</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-slate-500">Location</p>
-                                <p className="text-primary font-medium">{stage.physicalTestSchedule.location}</p>
-                              </div>
-                            </div>
-                            <p className="text-xs text-slate-500 mt-2">Test: {stage.physicalTestSchedule.test}</p>
-                          </div>
-                        )}
-
-                        {stage.id === 'interview' && stage.scheduledInterviews && (
-                          <div className="space-y-3 mb-4">
-                            {stage.scheduledInterviews.map((interview, idx) => (
-                              <div key={idx} className="p-4 bg-white dark:bg-zinc-900/60 rounded-xl">
-                                <div className="flex items-center justify-between mb-3">
-                                  <h4 className="font-semibold text-primary">{interview.position} - Oral Board</h4>
-                                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${interview.materialsReady ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-700'}`}>
-                                    {interview.materialsReady ? 'Materials Ready' : 'Pending PT Completion'}
-                                  </span>
-                                </div>
-                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                                  <div>
-                                    <p className="text-xs text-slate-500">Date</p>
-                                    <p className="text-primary font-medium">{interview.date}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-slate-500">Time</p>
-                                    <p className="text-primary font-medium">{interview.time}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-slate-500">Candidates</p>
-                                    <p className="text-primary font-medium">{interview.candidates} scheduled</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-xs text-slate-500">Location</p>
-                                    <p className="text-primary font-medium">{interview.location}</p>
-                                  </div>
-                                </div>
-                                <div className="mt-3 pt-3 border-t border-border">
-                                  <p className="text-xs text-slate-500 mb-1">Interview Panel:</p>
-                                  <p className="text-xs text-secondary">{interview.panel.join(' • ')}</p>
-                                  <p className="text-xs text-slate-500 mt-2">Format: {interview.format}</p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {stage.id === 'background' && stage.investigatorCapacity && (
-                          <div className="mb-4">
-                            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl mb-4">
-                              <h4 className="font-semibold text-red-400 mb-3">Investigator Capacity Analysis</h4>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div>
-                                  <p className="text-xs text-slate-500 mb-2">Current Investigators:</p>
-                                  {stage.investigatorCapacity.investigators.map((inv, idx) => (
-                                    <div key={idx} className="flex items-center justify-between p-2 bg-white dark:bg-zinc-950/50 rounded-lg mb-2">
-                                      <div>
-                                        <p className="text-sm font-medium text-primary">{inv.name}</p>
-                                        <p className="text-xs text-slate-500">{inv.title}</p>
-                                      </div>
-                                      <div className="text-right">
-                                        <p className="text-sm font-bold text-amber-700">{inv.activeCases}/{inv.maxCapacity} cases</p>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                                <div>
-                                  <p className="text-xs text-slate-500 mb-2">Investigation Timeline:</p>
-                                  <div className="space-y-2">
-                                    <div className="flex justify-between text-sm">
-                                      <span className="text-secondary">Average Duration:</span>
-                                      <span className="text-primary font-medium">{stage.investigatorCapacity.avgDuration} days</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm">
-                                      <span className="text-secondary">Minimum (Lateral):</span>
-                                      <span className="text-primary font-medium">{stage.investigatorCapacity.minDuration} days</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm">
-                                      <span className="text-secondary">Maximum (Complex):</span>
-                                      <span className="text-primary font-medium">{stage.investigatorCapacity.maxDuration}+ days</span>
-                                    </div>
-                                    <div className="flex justify-between text-sm pt-2 border-t border-border">
-                                      <span className="text-secondary">Monthly Throughput:</span>
-                                      <span className="text-amber-700 font-medium">4-6 investigations</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="p-4 bg-white dark:bg-zinc-900/60 rounded-xl">
-                              <h4 className="font-semibold text-primary mb-3">Active Investigations</h4>
-                              <div className="space-y-2">
-                                {stage.activeInvestigations.map((inv, idx) => (
-                                  <div key={idx} className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                                    <div className="flex items-center gap-3">
-                                      <div className="w-8 h-8 bg-indigo-500/20 rounded-full flex items-center justify-center">
-                                        <Users className="w-4 h-4 text-indigo-400" />
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-medium text-primary">{inv.name}</p>
-                                        <p className="text-xs text-slate-500">{inv.position} • {inv.investigator}</p>
-                                      </div>
-                                    </div>
-                                    <div className="text-right">
-                                      <p className="text-sm font-bold text-primary">{inv.daysInProgress} days</p>
-                                      <p className="text-xs text-secondary">{inv.status}</p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {stage.id === 'offer' && stage.offersPending && (
-                          <div className="mb-4">
-                            <div className="space-y-3 mb-4">
-                              {stage.offersPending.map((offer, idx) => (
-                                <div key={idx} className={`p-4 rounded-xl border ${offer.urgent ? 'bg-red-500/10 border-red-500/30' : 'bg-white dark:bg-zinc-900/60 border-slate-700/50'}`}>
-                                  <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-3">
-                                      <h4 className="font-semibold text-primary">{offer.name}</h4>
-                                      <span className="text-xs text-slate-500">{offer.refNumber}</span>
-                                    </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                      offer.status.includes('ACCEPTED') ? 'bg-green-500/20 text-green-400' :
-                                      offer.urgent ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-700'
-                                    }`}>
-                                      {formatStatus(offer.status)}
-                                    </span>
-                                  </div>
-                                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                                    <div>
-                                      <p className="text-xs text-slate-500">Position</p>
-                                      <p className="text-primary">{offer.position}</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-slate-500">Salary</p>
-                                      <p className="text-primary">{offer.salary}</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-slate-500">Offer Date</p>
-                                      <p className="text-primary">{offer.offerDate}</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-xs text-slate-500">{offer.startDate ? 'Start Date' : 'Response Deadline'}</p>
-                                      <p className={`${offer.urgent ? 'text-red-400 font-bold' : 'text-primary'}`}>
-                                        {offer.startDate || offer.startDateOffered}
-                                        {offer.daysRemaining === 0 && !offer.startDate && ' (TODAY)'}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  {offer.notes && (
-                                    <p className="text-xs text-slate-500 mt-3 pt-3 border-t border-border">
-                                      Note: {offer.notes}
-                                    </p>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-
-                            <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                              <h4 className="font-semibold text-amber-700 mb-3">Salary Competitiveness Issue</h4>
-                              <div className="grid grid-cols-3 gap-4 text-sm">
-                                <div className="text-center p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                                  <p className="text-xs text-slate-500 mb-1">GCSO Deputy I</p>
-                                  <p className="text-lg font-bold text-primary">${stage.salaryCompetitiveness.gcsoDeputy.toLocaleString()}</p>
-                                </div>
-                                <div className="text-center p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                                  <p className="text-xs text-slate-500 mb-1">Gwinnett County PD</p>
-                                  <p className="text-lg font-bold text-red-400">${stage.salaryCompetitiveness.gwinnettPD.toLocaleString()}</p>
-                                  <p className="text-xs text-red-400">{stage.salaryCompetitiveness.gwinnettPDDiff}</p>
-                                </div>
-                                <div className="text-center p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                                  <p className="text-xs text-slate-500 mb-1">Fulton County SO</p>
-                                  <p className="text-lg font-bold text-amber-700">${stage.salaryCompetitiveness.fultonSO.toLocaleString()}</p>
-                                  <p className="text-xs text-amber-700">{stage.salaryCompetitiveness.fultonSODiff}</p>
-                                </div>
-                              </div>
-                              <p className="text-xs text-secondary mt-3">
-                                Risk: Losing qualified candidates to higher-paying agencies during offer stage
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Candidates list */}
-                        {stage.candidates && stage.candidates.length > 0 && (
-                          <div className="space-y-3">
-                            <h4 className="text-sm font-semibold text-secondary">Candidates in Stage</h4>
-                            {stage.candidates.map(candidate => {
-                              const isCandidateExpanded = expandedCandidate === candidate.id;
-                              return (
-                                <div key={candidate.id} className="bg-white dark:bg-zinc-900/40 rounded-xl overflow-hidden">
-                                  <div
-                                    className="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all"
-                                    onClick={() => setExpandedCandidate(isCandidateExpanded ? null : candidate.id)}
-                                  >
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex items-center gap-3 flex-1">
-                                        <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
-                                          <Users className="w-5 h-5 text-blue-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                          <div className="flex items-center gap-3 mb-1">
-                                            <h4 className="text-sm font-semibold text-primary">{candidate.name}</h4>
-                                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                                              candidate.status === 'Interview Complete' ? 'bg-green-500/20 text-green-400' :
-                                              candidate.status === 'Accepted' ? 'bg-green-500/20 text-green-400' :
-                                              candidate.urgent ? 'bg-red-500/20 text-red-400' :
-                                              'bg-white dark:bg-zinc-800/50 text-slate-500'
-                                            }`}>
-                                              {formatStatus(candidate.status)}
-                                            </span>
-                                            {candidate.score && (
-                                              <span className="text-xs text-amber-700 font-bold">{candidate.score}</span>
-                                            )}
-                                            {candidate.rank && (
-                                              <span className="text-xs text-green-400">{candidate.rank}</span>
-                                            )}
-                                          </div>
-                                          <p className="text-xs text-secondary">{candidate.position}</p>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center gap-4 text-xs text-secondary">
-                                        <span>{candidate.daysInStage} days in stage</span>
-                                        {isCandidateExpanded ? (
-                                          <ChevronUp className="w-4 h-4" />
-                                        ) : (
-                                          <ChevronDown className="w-4 h-4" />
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {isCandidateExpanded && (
-                                    <div className="border-t border-border p-4 bg-white dark:bg-zinc-950/50">
-                                      <div className="grid grid-cols-2 gap-3 mb-4">
-                                        <div className="bg-white dark:bg-zinc-900/60 rounded-lg p-3">
-                                          <p className="text-xs text-secondary mb-1">Next Action</p>
-                                          <p className="text-sm font-medium text-primary">{candidate.nextAction}</p>
-                                        </div>
-                                        <div className="bg-white dark:bg-zinc-900/60 rounded-lg p-3">
-                                          <p className="text-xs text-secondary mb-1">Action Date</p>
-                                          <p className="text-sm font-medium text-primary">{new Date(candidate.actionDate).toLocaleDateString()}</p>
-                                        </div>
-                                      </div>
-                                      {candidate.qualifications && (
-                                        <div className="bg-white dark:bg-zinc-900/60 rounded-lg p-3 mb-4">
-                                          <p className="text-xs text-secondary mb-1">Qualifications</p>
-                                          <p className="text-sm text-primary">{candidate.qualifications}</p>
-                                        </div>
-                                      )}
-                                      {candidate.investigator && (
-                                        <div className="bg-white dark:bg-zinc-900/60 rounded-lg p-3 mb-4">
-                                          <p className="text-xs text-secondary mb-1">Assigned Investigator</p>
-                                          <p className="text-sm text-primary">{candidate.investigator}</p>
-                                          {candidate.completedItems && (
-                                            <div className="mt-2">
-                                              <div className="flex justify-between text-xs mb-1">
-                                                <span className="text-slate-500">Investigation Progress</span>
-                                                <span className="text-secondary">{candidate.completedItems}/{candidate.totalItems} items</span>
-                                              </div>
-                                              <div className="w-full bg-white dark:bg-zinc-800/50 rounded-full h-2">
-                                                <div className="bg-indigo-500 h-2 rounded-full" style={{ width: `${(candidate.completedItems / candidate.totalItems) * 100}%` }}></div>
-                                              </div>
-                                            </div>
-                                          )}
-                                        </div>
-                                      )}
-                                      <div className="flex gap-2">
-                                        <button className="flex-1 px-3 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all">
-                                          Advance to Next Stage
-                                        </button>
-                                        <button className="flex-1 px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                                          View Full Profile
-                                        </button>
-                                        <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all">
-                                          Add Note
-                                        </button>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-      {/* Chat Button */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-primary" /> : <MessageCircle className="w-6 h-6 text-primary" />}
-      </button>
-
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-primary">Pipeline Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MessageCircle className="w-4 h-4 text-primary" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-700 dark:text-slate-200">I can help you analyze pipeline bottlenecks, review candidate status, check investigator workload, or schedule interview panels. What information do you need?</p>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-          <div className="p-4 border-t border-border">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about pipeline status..." className="flex-1 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-primary" />
-              </button>
+
+            {/* ══ Right column ══════════════════════════════ */}
+            <div>
+              {/* Background investigation load */}
+              <SectionLabel right={
+                <span className="text-[10px] text-red-400/90">{bgActive} of {bgCapacity} · {bgOver} of {investigators.length} over</span>
+              }>
+                Background investigation load
+              </SectionLabel>
+              <div className="divide-y divide-slate-800/50">
+                {investigators.map((inv) => {
+                  const over = inv.active > CASES_PER_INVESTIGATOR;
+                  const heavy = inv.active >= CASES_PER_INVESTIGATOR * 1.3;
+                  return (
+                    <div key={inv.name} className="flex items-center gap-3 py-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12.5px] font-semibold text-slate-100 truncate">{inv.name}</p>
+                        <p className={`text-[10.5px] truncate ${over ? 'text-amber-400/80' : 'text-slate-500'}`}>{inv.note}</p>
+                      </div>
+                      <span className="w-20 flex-shrink-0">
+                        <Meter
+                          value={pct(inv.active, CASES_PER_INVESTIGATOR * 1.5)}
+                          tone={heavy ? 'bg-red-500' : over ? 'bg-amber-400' : 'bg-slate-600'}
+                        />
+                      </span>
+                      <span className={`w-14 text-right text-[11.5px] font-mono flex-shrink-0 ${
+                        heavy ? 'text-red-400' : over ? 'text-amber-400' : 'text-slate-400'
+                      }`}>
+                        {inv.active} / {CASES_PER_INVESTIGATOR}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                Capacity is {CASES_PER_INVESTIGATOR} concurrent cases per investigator at the current standard. A fifth position
+                would return the median to target within one quarter; contracting the civilian-track cases would recover roughly
+                seven cases immediately.
+              </p>
+
+              {/* Attrition */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{lost} candidates lost</span>}>
+                  Attrition — 90 days
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {attrition.map((r) => (
+                    <div key={r.reason} className="flex items-start gap-2.5 py-3">
+                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${r.agency ? 'bg-red-500' : 'bg-slate-600'}`} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12.5px] font-semibold text-slate-100 truncate">{r.reason}</p>
+                        <p className="text-[10.5px] text-slate-500 truncate">{r.note}</p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-[12.5px] font-mono font-bold text-slate-100">{r.count}</p>
+                        <p className={`text-[10px] font-mono ${r.agency ? 'text-amber-400' : 'text-slate-500'}`}>{Math.round(pct(r.count, lost))}%</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  {actionable} of {lost} losses trace to process delay or capacity rather than candidate disqualification. Those
+                  are the ones the agency can act on.
+                </p>
+              </div>
+
+              {/* Academy cohorts */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-amber-400/90">{unscheduled} cohort unscheduled</span>}>
+                  Academy cohorts
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {cohorts.map((c) => (
+                    <div key={c.cohort} className="py-3">
+                      <div className="flex items-baseline gap-2.5">
+                        <p className="text-[12.5px] font-semibold text-slate-100">{c.cohort}</p>
+                        <span className={`text-[10.5px] ${c.unscheduled ? 'text-amber-400' : 'text-slate-500'}`}>{c.dates}</span>
+                        <span className={`ml-auto text-[11.5px] font-mono flex-shrink-0 ${
+                          c.unscheduled ? 'text-red-400' : c.seated === c.capacity ? 'text-emerald-400' : 'text-slate-200'
+                        }`}>
+                          {c.seated} / {c.capacity}
+                        </span>
+                      </div>
+                      <span className="block mt-2">
+                        <Meter value={pct(c.seated, c.capacity)} tone={c.unscheduled ? 'bg-red-500' : 'bg-amber-500'} />
+                      </span>
+                      <p className={`text-[10.5px] mt-1.5 ${c.unscheduled ? 'text-amber-400/90' : 'text-slate-500'}`}>{c.note}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  A candidate who clears every stage but misses a cohort waits for the next start date. Two of the last four
+                  withdrawals happened in that gap.
+                </p>
+              </div>
+
+              {/* Time to hire trend */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">median {hire.medianDays} days</span>}>
+                  Time to hire — 12 months
+                </SectionLabel>
+                <div className="flex items-end gap-1.5 h-24">
+                  {timeToHire.map((m) => {
+                    const over = m.days > hire.target;
+                    // Scale from a floor below the minimum so month-to-month movement reads.
+                    const h = ((m.days - (trendMin - 12)) / (trendMax - (trendMin - 12))) * 100;
+                    return (
+                      <span
+                        key={m.month}
+                        title={`${m.month} · ${m.days} days`}
+                        className={`flex-1 rounded-t-sm ${over ? 'bg-red-500' : 'bg-slate-600'}`}
+                        style={{ height: `${h}%` }}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="flex items-baseline justify-between mt-1.5">
+                  <span className="text-[10px] text-slate-500">{timeToHire[0].month}</span>
+                  <span className="text-[10px] text-slate-500">{timeToHire[timeToHire.length - 1].month}</span>
+                </div>
+                <div className="flex items-center gap-4 mt-2">
+                  <span className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                    <span className="w-3 h-1 rounded-full bg-red-500" />above {hire.target}-day target
+                  </span>
+                  <span className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                    <span className="w-3 h-1 rounded-full bg-slate-600" />within target
+                  </span>
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  Median has moved from {hire.twelveMonthsAgo} to {hire.medianDays} days over twelve months. The increase is
+                  almost entirely background investigation, which grew from {hire.backgroundThen} to {hire.backgroundNow} days
+                  across the same period.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      )}
       </div>
     </DashboardLayout>
   );
