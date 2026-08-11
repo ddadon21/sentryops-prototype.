@@ -103,13 +103,18 @@ const retention = [
 // The largest separation category is resignation to another agency, so the
 // board carries the market position that explains it.
 
+// Agency rates are the pay-grade figures Job Postings quotes on each
+// requisition, so the two pages cannot disagree about our own payroll. The
+// market column differs between the pages by design: this is the broader
+// regional survey, Job Postings compares against the six metro agencies the
+// county actually loses candidates to.
 const compensation = [
-  { class: 'Deputy — entry',        agency: 52400, market: 57900, incumbents: 148 },
-  { class: 'Deputy — 5 year',       agency: 61200, market: 64800, incumbents: 214 },
-  { class: 'Detention officer',     agency: 46800, market: 52100, incumbents: 341 },
-  { class: 'Telecommunicator',      agency: 44100, market: 49600, incumbents: 79  },
-  { class: 'Sergeant',              agency: 74300, market: 76200, incumbents: 96  },
-  { class: 'Detective',             agency: 68900, market: 70100, incumbents: 42  },
+  { class: 'Deputy — entry',            agency: 52180, market: 57900, incumbents: 148 },
+  { class: 'Deputy — 5 year',           agency: 61200, market: 64800, incumbents: 214 },
+  { class: 'Detention officer — entry', agency: 47320, market: 52100, incumbents: 341 },
+  { class: 'Telecommunicator — entry',  agency: 44900, market: 49600, incumbents: 79  },
+  { class: 'Sergeant',                  agency: 74300, market: 76200, incumbents: 96  },
+  { class: 'Detective — mid-range',     agency: 69400, market: 70100, incumbents: 42  },
 ];
 
 // ── Applicant flow — EEO / adverse impact ──────────────────────
@@ -264,7 +269,7 @@ export default function HRDashboard() {
   const weightedGap =
     withGap.reduce((a, c) => a + c.gap * c.incumbents, 0) / withGap.reduce((a, c) => a + c.incumbents, 0);
   const worstClass = [...withGap].sort((a, b) => a.gap - b.gap)[0];
-  const detentionPay = withGap.find((c) => c.class === 'Detention officer');
+  const detentionPay = withGap.find((c) => c.class.startsWith('Detention officer'));
   const cards = intelligence.map((c) => c.body ? c : ({
     ...c,
     body: `Detention officers sit ${Math.abs(detentionPay.gap).toFixed(1)}% below market against a `
