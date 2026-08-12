@@ -16,16 +16,16 @@ const requisitions = [
   {
     id: 'detention-officer', title: 'Detention Officer', kind: 'Sworn · Detention · continuous posting',
     track: 'Sworn', openings: 59, apps: 112, qual: 41, filled: 6, days: 214, status: 'STALLED',
-    grade: 'PS-14 · $47,320 start', posting: 'Continuous · 214 days', constraint: 'No academy seat until May',
+    grade: 'PS-14 · $47,320 start', posting: 'Continuous · 214 days', constraint: 'Detention academy unscheduled',
     withdrawals: '6 citing wait time',
-    detail: 'The largest requisition in the agency and the one that governs whether Detention can stop running mandatory overtime. Continuous posting has produced 112 applications since it opened, but only six offers have been accepted because there is no academy cohort until May. Six of the forty-one qualified candidates have already withdrawn citing the wait.',
+    detail: 'The largest requisition in the agency and the one that governs whether Detention can stop running mandatory overtime. Continuous posting has produced 112 applications since it opened, but only six offers have been accepted because the detention academy has no scheduled start and no instructor assigned. Six of the forty-one qualified candidates have already withdrawn citing the wait.',
   },
   {
     id: 'deputy-sheriff', title: 'Deputy Sheriff', kind: 'Sworn · Patrol · continuous posting',
     track: 'Sworn', openings: 41, apps: 96, qual: 38, filled: 9, days: 186, status: 'STALLED',
-    grade: 'PS-16 · $52,180 start', posting: 'Continuous · 186 days', constraint: 'No academy seat until May',
+    grade: 'PS-16 · $52,180 start', posting: 'Continuous · 186 days', constraint: '5 seats in cohort 26-C · 27-A opens Oct 1',
     withdrawals: '4 citing wait time',
-    detail: 'Second continuous sworn posting, held by the same academy constraint. Thirty-eight qualified candidates are waiting on a seat that does not exist before May, and nine of the forty-one openings have been filled by lateral transfers who bypass the academy entirely.',
+    detail: 'Second continuous sworn posting. Five seats remain in the cohort now in session and assignment for the January cohort opens Oct 1, so the deputy track is seat-limited rather than blocked. Nine of the forty-one openings have been filled by lateral transfers who bypass the academy entirely.',
   },
   {
     id: 'communications', title: '911 Communications Officer', kind: 'Civilian · Communications',
@@ -39,7 +39,7 @@ const requisitions = [
     track: 'Contract', openings: 2, apps: 14, qual: 8, filled: 0, days: 9, status: 'ACTIVE', flag: 'PRIORITY',
     grade: 'Contract · $58/hr', posting: 'Closes in 19 days', constraint: 'Adjudication required before close',
     withdrawals: 'None',
-    detail: 'Two contract investigators against the stage that consumes 74 of the 147-day time to hire. This requisition is the one that unblocks every sworn posting behind it.',
+    detail: 'Two contract investigators against the stage that consumes 63 of the 168-day time to hire. This requisition is the one that unblocks every sworn posting behind it.',
   },
   {
     id: 'detective', title: 'Detective — Major Crimes', kind: 'Sworn · Criminal Investigations',
@@ -92,11 +92,11 @@ const sources = [
 ];
 
 // Candidates standing at conditional offer right now, across every open
-// requisition — the same figure the HR dashboard's pipeline carries. It is not
-// the same measure as the 90-day hire count below: a hire completed this
+// requisition — the figure the Hiring Pipeline carries for that stage. It is
+// not the same measure as the 90-day hire count below: a hire completed this
 // quarter came from an earlier intake, so the two cannot be divided by the same
 // denominator.
-const AT_CONDITIONAL_OFFER = 9;
+const AT_CONDITIONAL_OFFER = 14;
 
 // ── Right column ───────────────────────────────────────────────
 
@@ -267,7 +267,7 @@ export default function JobPostings() {
             </div>
             <div className="flex items-center gap-4 lg:ml-auto flex-wrap">
               <span className="text-[11px] text-slate-400">
-                {totals.openings} openings posted · {totals.filled} filled · no academy seat until May
+                {totals.openings} openings posted · {totals.filled} filled · detention academy unscheduled
               </span>
               <button className="px-3.5 py-2 border border-amber-500/60 rounded-lg text-[11.5px] font-semibold text-amber-400 hover:bg-amber-500/10 transition-colors">
                 New requisition

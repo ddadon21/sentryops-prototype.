@@ -30,11 +30,10 @@ const divisions = [
 ];
 
 const strength = {
-  timeToHire: 147,
-  hireTarget: 90,
-  backgroundDays: 74,
+  timeToHire: 168,
+  hireTarget: 150,
+  backgroundDays: 63,
   attritionAssumption: 8.5,
-  nextCohort: 'May 2027',
 };
 
 // ── Recruiting pipeline ────────────────────────────────────────
@@ -44,14 +43,14 @@ const strength = {
 // multiply down the funnel.
 
 const pipeline = [
-  { stage: 'Applications received',    note: 'Rolling posting · 12-week intake window', inStage: 284, passRate: null, median: 0,  flow: 'WITHIN TARGET' },
-  { stage: 'Minimum qualifications',   note: 'Automated screen against POST eligibility', inStage: 171, passRate: 60, median: 6,  flow: 'WITHIN TARGET' },
-  { stage: 'Written and physical',     note: 'Monthly testing cycle',                   inStage: 98,  passRate: 57, median: 11, flow: 'WITHIN TARGET' },
-  { stage: 'Background investigation', note: 'Four investigators · 38 active files', noteTone: 'amber', inStage: 38, passRate: 39, median: 74, flow: 'BOTTLENECK' },
-  { stage: 'Polygraph',                note: 'Single contracted examiner', noteTone: 'amber', inStage: 14, passRate: 71, median: 22, flow: 'BOTTLENECK' },
-  { stage: 'Psychological and medical', note: 'Contracted provider',                   inStage: 11,  passRate: 86, median: 19, flow: 'WITHIN TARGET' },
-  { stage: 'Conditional offer',        note: 'Awaiting Sheriff signature on 3',        inStage: 9,   passRate: 92, median: 8,  flow: 'WITHIN TARGET' },
-  { stage: 'Academy assignment',       note: 'Next cohort May 2027 — third cohort deferred', noteTone: 'red', inStage: 0, passRate: null, median: 0, flow: 'NO COHORT' },
+  { stage: 'Application received',      note: 'Minimum-qualification screen · automated',   inStage: 64, passRate: 67,   median: 4,  target: 10, flow: 'WITHIN TARGET' },
+  { stage: 'Written examination',       note: 'Monthly test date · next Aug 22',            inStage: 38, passRate: 71,   median: 16, target: 21, flow: 'WITHIN TARGET' },
+  { stage: 'Physical assessment',       note: 'POST standard battery · retest permitted',   inStage: 27, passRate: 74,   median: 11, target: 14, flow: 'WITHIN TARGET' },
+  { stage: 'Oral board',                note: 'Three-member panel · scheduled weekly',      inStage: 19, passRate: 82,   median: 13, target: 18, flow: 'WITHIN TARGET' },
+  { stage: 'Conditional offer',         note: 'Offer letter · 10-day acceptance window',    inStage: 14, passRate: 89,   median: 6,  target: 10, flow: 'WITHIN TARGET' },
+  { stage: 'Background investigation',  note: 'Four investigators · 47 active against a capacity of 40', noteTone: 'amber', inStage: 47, passRate: 66, median: 63, target: 45, flow: 'BOTTLENECK' },
+  { stage: 'Polygraph · psych · medical', note: 'Contract vendor · one scheduling day a week', noteTone: 'amber', inStage: 16, passRate: 77, median: 24, target: 21, flow: 'SLOWING' },
+  { stage: 'Academy seat assignment',   note: 'Detention academy unscheduled · 9 cleared and waiting', noteTone: 'red', inStage: 9, passRate: null, median: 19, target: 14, flow: 'WAITING' },
 ];
 
 const separations = [
@@ -84,11 +83,11 @@ const offFullDuty = [
 ];
 
 const backgrounds = [
-  { stage: 'Personal history review',      note: 'Initial packet and references', count: 12, median: 18, tone: 'slate'   },
-  { stage: 'Employment and residence',     note: 'Field verification',            count: 9,  median: 41, tone: 'amber'   },
-  { stage: 'Criminal history and NCIC',    note: 'GCIC and interstate returns',   count: 7,  median: 26, tone: 'slate'   },
-  { stage: 'Awaiting investigator assignment', note: 'No investigator available', count: 8,  median: 31, tone: 'red'     },
-  { stage: 'Ready for adjudication',       note: 'Packet complete · command review', count: 2, median: 6, tone: 'emerald' },
+  { stage: 'Personal history review',      note: 'Initial packet and references', count: 15, median: 18, tone: 'slate'   },
+  { stage: 'Employment and residence',     note: 'Field verification',            count: 11, median: 41, tone: 'amber'   },
+  { stage: 'Criminal history and NCIC',    note: 'GCIC and interstate returns',   count: 9,  median: 26, tone: 'slate'   },
+  { stage: 'Awaiting investigator assignment', note: 'No investigator available', count: 9,  median: 31, tone: 'red'     },
+  { stage: 'Ready for adjudication',       note: 'Packet complete · command review', count: 3, median: 6, tone: 'emerald' },
 ];
 
 const retention = [
@@ -157,7 +156,7 @@ const dueProcess = [
 const intelligence = [
   {
     title: 'Background investigation is the hiring constraint', tone: 'red',
-    body: 'Thirty-eight active files against four investigators produce a 74-day median where the target is 45. Half of the 147-day time to hire sits in this one stage.',
+    body: null, // templated from the pipeline's background row
     action: 'Two contract background investigators would return the stage to target within one cycle at roughly the cost of six weeks of Detention overtime.',
     sources: 'Applicant tracking · BI module · position control · overtime ledger',
   },
@@ -168,9 +167,9 @@ const intelligence = [
     sources: 'Position control · payroll · exit interviews · Custody Operations',
   },
   {
-    title: 'The deferred cohort has a delivery date', tone: 'amber',
-    body: 'With the third academy cohort deferred, twenty-four sworn positions that would have been filled in January now have no delivery date before May.',
-    action: 'Present the deferral as a strength timeline in the FY27 request rather than as a savings line.',
+    title: 'Detention has no academy at all', tone: 'amber',
+    body: 'Deputy candidates have seats in the cohort now in session, but the detention academy is unscheduled with no instructor assigned. Four cleared candidates are waiting on a start date that does not exist.',
+    action: 'Assign a detention academy instructor and publish a start date in the FY27 request rather than carrying it as a savings line.',
     sources: 'Training division · budget amendment · position control',
   },
   {
@@ -255,8 +254,7 @@ export default function HRDashboard() {
   const backgroundsActive = backgrounds.reduce((a, b) => a + b.count, 0);
 
   const atOffer = pipeline.find((p) => p.stage === 'Conditional offer').inStage;
-  const applications = pipeline[0].inStage;
-  const wipYield = pct(atOffer, applications);
+  const inProcess = pipeline.reduce((a, p) => a + p.inStage, 0);
   const bottlenecks = pipeline.filter((p) => p.flow === 'BOTTLENECK');
   const maxInStage = Math.max(...pipeline.map((p) => p.inStage));
 
@@ -270,12 +268,22 @@ export default function HRDashboard() {
     withGap.reduce((a, c) => a + c.gap * c.incumbents, 0) / withGap.reduce((a, c) => a + c.incumbents, 0);
   const worstClass = [...withGap].sort((a, b) => a.gap - b.gap)[0];
   const detentionPay = withGap.find((c) => c.class.startsWith('Detention officer'));
-  const cards = intelligence.map((c) => c.body ? c : ({
-    ...c,
-    body: `Detention officers sit ${Math.abs(detentionPay.gap).toFixed(1)}% below market against a `
+  const backgroundStage = pipeline.find((p) => p.stage === 'Background investigation');
+  const cards = intelligence.map((c) => {
+    if (c.body) return c;
+    if (c.title.startsWith('Background investigation')) {
+      return {
+        ...c,
+        body: `${backgroundStage.inStage} active files against four investigators produce a `
+          + `${backgroundStage.median}-day median where the target is ${backgroundStage.target}. `
+          + `${Math.round(pct(backgroundStage.median, strength.timeToHire))}% of the `
+          + `${strength.timeToHire}-day time to hire sits in this one stage.`,
+      };
+    }
+    return { ...c, body: `Detention officers sit ${Math.abs(detentionPay.gap).toFixed(1)}% below market against a `
       + `${Math.abs(weightedGap).toFixed(1)}% agency-wide gap, and Detention supplies the largest share of `
-      + `resignations to other agencies.`,
-  }));
+      + `resignations to other agencies.` };
+  });
 
   // ── Adverse impact ──────────────────────────────────────────
   const flowRows = flowBasis === 'race' ? applicantFlow : applicantSex;
@@ -310,7 +318,7 @@ export default function HRDashboard() {
             </div>
             <div className="flex items-center gap-4 lg:ml-auto flex-wrap">
               <span className="text-[11px] text-amber-400/90">
-                Communications at {pct(96 - 79, 96).toFixed(1)}% vacancy · no academy cohort until May
+                Communications at {pct(96 - 79, 96).toFixed(1)}% vacancy · detention academy unscheduled
               </span>
               <button
                 onClick={() => window.print()}
@@ -437,7 +445,7 @@ export default function HRDashboard() {
 
               {/* Recruiting pipeline */}
               <div className="mt-7">
-                <SectionLabel right={<span className="text-[10px] text-slate-500">{applications} applications · {atOffer} at conditional offer</span>}>
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{inProcess} in process · {atOffer} at conditional offer</span>}>
                   Recruiting pipeline
                 </SectionLabel>
                 <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
@@ -479,9 +487,11 @@ export default function HRDashboard() {
                 <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
                   In stage is a snapshot of files in process; stage yield is the trailing twelve-month pass rate for that stage, measured
                   on completed cohorts — the two are different measurements and the counts do not multiply down the funnel.
+                  {' '}{inProcess} candidates are in process across every stage, {atOffer} of them at conditional offer.
                   Bottleneck: {bottlenecks.map((b) => b.stage.toLowerCase()).join(' and ')}. Median time to hire is {strength.timeToHire} days
                   against a {strength.hireTarget}-day target, and background investigation accounts for {Math.round(pct(strength.backgroundDays, strength.timeToHire))}% of it.
-                  Of the {applications} applications now in process, {atOffer} have reached conditional offer ({wipYield.toFixed(1)}%).
+                  Full stage detail is on the{' '}
+                  <button onClick={() => navigate('/hr/pipeline')} className="text-amber-500/90 hover:text-amber-400 transition-colors">Hiring Pipeline</button>.
                 </p>
               </div>
 
