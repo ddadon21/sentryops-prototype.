@@ -65,33 +65,346 @@ const hire = {
 };
 
 // ── Candidate roster ───────────────────────────────────────────
-// The working applicant list, merged in from Applicant Tracking. `blocker` is
-// what is holding the candidate; a row with one is what "requires action"
-// means, so the count and the filter cannot drift apart.
+// The applicant record, merged in from Applicant Tracking. Each row opens the
+// whole file: score breakdown, stage timeline, qualifications, screening
+// checkpoints, assignment, attachments, notes and next action.
+//
+// `blocker` is what is holding the candidate. A row carrying one is exactly
+// what "requires action" means, so the chip count and the filter are the same
+// predicate.
 
-const candidates = [
-  { id: 'A-26-1184', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'POST job board',  note: 'Competing offer from Cobb County · decision requested', stage: 'Background',         blocker: 'Investigator load',  inStage: 71, decision: 'OVERDUE' },
-  { id: 'A-26-1209', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Prior-employer verification outstanding 24 days',       stage: 'Background',         blocker: 'Investigator load',  inStage: 66, decision: 'OVERDUE' },
-  { id: 'A-26-1156', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Employee referral', note: 'Cleared all stages Jun 18 · waiting on a seat',       stage: 'Academy wait',       blocker: 'No cohort seat',     inStage: 54, decision: 'AT RISK' },
-  { id: 'A-26-1163', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Detention academy has no scheduled start',              stage: 'Academy wait',       blocker: 'Cohort unscheduled', inStage: 47, decision: 'AT RISK' },
-  { id: 'A-26-1247', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Career fair',     note: 'Scheduled Aug 19 · earliest available vendor slot',     stage: 'Poly · psych · med', blocker: 'Vendor slot',        inStage: 31, decision: '7 DAYS'  },
-  { id: 'A-26-1288', req: 'Communications',    track: 'Communications',    source: 'Indeed',          note: 'Offer expires Aug 14 · no response to two contacts',    stage: 'Conditional offer',  blocker: 'Acceptance window',  inStage: 8,  decision: '3 DAYS'  },
-  { id: 'A-26-1198', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'GovernmentJobs',  note: 'Out-of-state records request pending since Jul 3',      stage: 'Background',         blocker: 'Records request',    inStage: 58, decision: '14 DAYS' },
-  { id: 'A-26-1221', req: 'Detention Officer', track: 'Detention officer', source: 'Employee referral', note: 'Board scheduled Aug 20 · panel member on leave',      stage: 'Oral board',         blocker: 'Panel availability', inStage: 17, decision: '10 DAYS' },
-
-  { id: 'A-26-1302', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Military transition', note: 'SkillBridge candidate · separates Oct 3',           stage: 'Background',         blocker: null, inStage: 22, decision: 'ON TRACK' },
-  { id: 'A-26-1295', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Packet complete · queued for adjudication',             stage: 'Background',         blocker: null, inStage: 19, decision: 'ON TRACK' },
-  { id: 'A-26-1311', req: 'Communications',    track: 'Communications',    source: 'Employee referral', note: 'Offer accepted · start date Aug 25',                  stage: 'Conditional offer',  blocker: null, inStage: 4,  decision: 'ON TRACK' },
-  { id: 'A-26-1276', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'POST job board',  note: 'Lateral transfer · academy waiver under review',        stage: 'Academy wait',       blocker: null, inStage: 11, decision: 'ON TRACK' },
-  { id: 'A-26-1318', req: 'Detention Officer', track: 'Detention officer', source: 'Career fair',     note: 'Oral board scheduled Aug 15',                           stage: 'Oral board',         blocker: null, inStage: 6,  decision: 'ON TRACK' },
-  { id: 'A-26-1324', req: 'Fleet Technician',  track: 'Civilian',          source: 'Indeed',          note: 'ASE certification verified',                            stage: 'Conditional offer',  blocker: null, inStage: 3,  decision: 'ON TRACK' },
-  { id: 'A-26-1330', req: 'Records Technician', track: 'Civilian',         source: 'GovernmentJobs',  note: 'Background packet returned Aug 6',                      stage: 'Background',         blocker: null, inStage: 9,  decision: 'ON TRACK' },
-  { id: 'A-26-1341', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'GovernmentJobs',  note: 'Written exam Aug 22',                                   stage: 'Written examination', blocker: null, inStage: 12, decision: 'ON TRACK' },
-  { id: 'A-26-1347', req: 'Detention Officer', track: 'Detention officer', source: 'Employee referral', note: 'Physical assessment passed Aug 4',                    stage: 'Physical assessment', blocker: null, inStage: 5,  decision: 'ON TRACK' },
-  { id: 'A-26-1352', req: 'Communications',    track: 'Communications',    source: 'Career fair',     note: 'Minimum qualifications cleared',                        stage: 'Application received', blocker: null, inStage: 2, decision: 'ON TRACK' },
+const TIMELINE = [
+  'Application received', 'Written examination', 'Physical assessment', 'Oral board',
+  'Conditional offer', 'Background', 'Poly · psych · med', 'Academy seat',
 ];
 
-const ROSTER_FILTERS = ['Requires action', 'Background', 'Academy wait', 'Offer out', 'All shown'];
+const SCORE_DIMENSIONS = ['Experience', 'Education', 'POST certification', 'Physical fitness', 'Oral board', 'Background pre-screen'];
+
+const candidates = [
+  {
+    id: 'A-26-1184', name: 'Marcus Johnson', ref: '2026-APP-0142', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'POST job board', stage: 'Background', blocker: 'Investigator load', inStage: 71, decision: 'OVERDUE',
+    note: 'Competing offer from Cobb County · decision requested', score: 88,
+    breakdown: [90, 85, 95, 90, 88, 92],
+    contact: { email: 'm.johnson@example.com', phone: '(555) 234-5678', location: 'Lawrenceville, GA' },
+    assigned: [['Background investigator', 'Inv. Halloran'], ['HR specialist', 'J. Martinez']],
+    qualifications: '5 years law enforcement · Metro Atlanta PD 2019–2024, patrol · BS Criminal Justice, Georgia State 2018 · POST Basic #48291, current to 06/2027',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · POST cert · HS/GED'],
+      ['Physical assessment', 'PASSED', '1.5-mi 11:45 · push-ups 42 · 300m 52s'],
+      ['Oral board', 'PASSED', 'Panel score 88 · recommended'],
+      ['Background investigation', 'IN PROGRESS', 'Day 71 of a 45-day target'],
+    ],
+    attachments: ['Employment application', 'Resume', 'POST certificate', 'College transcript', 'Prior-agency file'],
+    nextAction: { title: 'Adjudicate background packet', due: 'Overdue by 26 days · investigator load' },
+    notes: [{ author: 'Lt. K. Williams', date: 'Aug 4', text: 'Candidate disclosed a competing offer from Cobb with a decision date of Aug 18. Packet is complete apart from the investigator review.' }],
+    activity: [['Aug 4', 'Candidate reported competing offer'], ['Jul 12', 'Employment verification returned'], ['May 30', 'Assigned to Inv. Halloran']],
+  },
+  {
+    id: 'A-26-1209', name: 'Denise Okoro', ref: '2026-APP-0187', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'GovernmentJobs', stage: 'Background', blocker: 'Investigator load', inStage: 66, decision: 'OVERDUE',
+    note: 'Prior-employer verification outstanding 24 days', score: 81,
+    breakdown: [78, 80, 85, 86, 80, 78],
+    contact: { email: 'd.okoro@example.com', phone: '(555) 412-9930', location: 'Snellville, GA' },
+    assigned: [['Background investigator', 'Inv. Sedgwick'], ['HR specialist', 'J. Martinez']],
+    qualifications: '3 years corrections · Fulton County Jail 2022–2025 · AS Criminal Justice, Georgia Piedmont 2022 · Detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED · no disqualifying history'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 80'],
+      ['Background investigation', 'IN PROGRESS', 'Prior-employer verification outstanding 24 days'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Prior-employer release', 'Reference sheet'],
+    nextAction: { title: 'Chase prior-employer verification', due: 'Overdue by 21 days · second request unanswered' },
+    notes: [{ author: 'Inv. Sedgwick', date: 'Jul 29', text: 'Second written request sent to Fulton County HR. No response. Recommend supervisor-level contact.' }],
+    activity: [['Jul 29', 'Second verification request sent'], ['Jul 8', 'First request sent'], ['Jun 4', 'Assigned to Inv. Sedgwick']],
+  },
+  {
+    id: 'A-26-1156', name: 'Ryan Delacroix', ref: '2026-APP-0119', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'Employee referral', stage: 'Academy seat', blocker: 'No cohort seat', inStage: 54, decision: 'AT RISK',
+    note: 'Cleared all stages Jun 18 · waiting on a seat', score: 91,
+    breakdown: [88, 92, 95, 94, 90, 90],
+    contact: { email: 'r.delacroix@example.com', phone: '(555) 771-2048', location: 'Duluth, GA' },
+    assigned: [['Training division', 'Sgt. Ibarra'], ['HR specialist', 'J. Martinez']],
+    qualifications: '2 years military police · US Army 2021–2024 · BS Criminology, University of Georgia 2021 · POST Basic eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · degree · no disqualifying history'],
+      ['Physical assessment', 'PASSED', 'Top-decile battery'],
+      ['Oral board', 'PASSED', 'Panel score 90 · top candidate'],
+      ['Background investigation', 'CLEARED', 'Adjudicated Jun 18'],
+      ['Academy seat', 'WAITING', '54 days · seat available in 26-C'],
+    ],
+    attachments: ['Employment application', 'DD-214', 'Degree transcript', 'Background adjudication'],
+    nextAction: { title: 'Assign to Deputy Academy 26-C', due: '5 seats open · candidate cleared and eligible' },
+    notes: [{ author: 'Sgt. Ibarra', date: 'Aug 1', text: 'Eligible for the seat now open in 26-C. Referral source; the referring deputy has asked twice about a start date.' }],
+    activity: [['Jun 18', 'Background adjudicated · cleared'], ['May 2', 'Oral board passed'], ['Apr 14', 'Referred by Dep. Whitaker']],
+  },
+  {
+    id: 'A-26-1163', name: 'Alicia Brennan', ref: '2026-APP-0124', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'GovernmentJobs', stage: 'Academy seat', blocker: 'Cohort unscheduled', inStage: 47, decision: 'AT RISK',
+    note: 'Detention academy has no scheduled start', score: 84,
+    breakdown: [80, 82, 88, 88, 84, 82],
+    contact: { email: 'a.brennan@example.com', phone: '(555) 320-7741', location: 'Norcross, GA' },
+    assigned: [['Training division', 'Sgt. Ibarra'], ['HR specialist', 'M. Torres']],
+    qualifications: '4 years security supervision · BS Psychology, Kennesaw State 2020 · Detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · degree'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 84'],
+      ['Background investigation', 'CLEARED', 'Adjudicated Jun 25'],
+      ['Academy seat', 'BLOCKED', 'Detention academy unscheduled · no instructor'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Degree transcript', 'Background adjudication'],
+    nextAction: { title: 'Schedule Detention Academy 26-B', due: 'Instructor unassigned · 4 candidates waiting' },
+    notes: [{ author: 'M. Torres', date: 'Jul 30', text: 'Candidate has asked twice for a start date. There is none to give until an instructor is assigned.' }],
+    activity: [['Jun 25', 'Background adjudicated · cleared'], ['May 20', 'Oral board passed'], ['Apr 2', 'Application received']],
+  },
+  {
+    id: 'A-26-1247', name: 'Victor Salas', ref: '2026-APP-0208', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'Career fair', stage: 'Poly · psych · med', blocker: 'Vendor slot', inStage: 31, decision: '7 DAYS',
+    note: 'Scheduled Aug 19 · earliest available vendor slot', score: 79,
+    breakdown: [74, 78, 85, 82, 78, 78],
+    contact: { email: 'v.salas@example.com', phone: '(555) 908-3312', location: 'Buford, GA' },
+    assigned: [['Contract vendor', 'Meridian Assessment'], ['HR specialist', 'M. Torres']],
+    qualifications: '1 year corrections · AS Criminal Justice, Gwinnett Tech 2024 · POST Basic eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 78'],
+      ['Background investigation', 'CLEARED', 'Adjudicated Jul 22'],
+      ['Poly · psych · med', 'SCHEDULED', 'Aug 19 · earliest vendor slot'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Background adjudication', 'Medical release'],
+    nextAction: { title: 'Polygraph and psychological battery', due: 'Aug 19 · vendor schedules one day a week' },
+    notes: [{ author: 'M. Torres', date: 'Jul 24', text: 'Earliest vendor slot is Aug 19. A second vendor day would have cleared this three weeks sooner.' }],
+    activity: [['Jul 22', 'Background adjudicated · cleared'], ['Jun 30', 'Oral board passed'], ['Jun 9', 'Met at Gwinnett Tech career fair']],
+  },
+  {
+    id: 'A-26-1288', name: 'Priya Raman', ref: '2026-APP-0231', req: '911 Communications Officer', division: 'Communications',
+    track: 'Communications', source: 'Indeed', stage: 'Conditional offer', blocker: 'Acceptance window', inStage: 8, decision: '3 DAYS',
+    note: 'Offer expires Aug 14 · no response to two contacts', score: 86,
+    breakdown: [82, 88, null, 84, 88, 86],
+    contact: { email: 'p.raman@example.com', phone: '(555) 664-1187', location: 'Sugar Hill, GA' },
+    assigned: [['HR specialist', 'M. Torres'], ['Hiring manager', 'J. Ruiz']],
+    qualifications: '6 years call-centre supervision · BA Communications, Georgia State 2018 · no POST requirement for this class',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Typing · multitask battery'],
+      ['Oral board', 'PASSED', 'Panel score 88'],
+      ['Conditional offer', 'EXTENDED', 'Issued Aug 4 · expires Aug 14'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Offer letter'],
+    nextAction: { title: 'Third contact before the offer lapses', due: 'Expires Aug 14 · no response to two attempts' },
+    notes: [{ author: 'J. Ruiz', date: 'Aug 8', text: 'Two calls and one email unanswered. Communications is the unit with the worst vacancy rate; this one is worth a supervisor call.' }],
+    activity: [['Aug 8', 'Second contact attempt'], ['Aug 6', 'First contact attempt'], ['Aug 4', 'Conditional offer issued']],
+  },
+  {
+    id: 'A-26-1198', name: 'Grant Whitfield', ref: '2026-APP-0166', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'GovernmentJobs', stage: 'Background', blocker: 'Records request', inStage: 58, decision: '14 DAYS',
+    note: 'Out-of-state records request pending since Jul 3', score: 83,
+    breakdown: [85, 78, 88, 84, 82, 80],
+    contact: { email: 'g.whitfield@example.com', phone: '(555) 227-6690', location: 'Grayson, GA' },
+    assigned: [['Background investigator', 'Inv. Brannigan'], ['HR specialist', 'J. Martinez']],
+    qualifications: '7 years law enforcement · Charlotte-Mecklenburg PD 2017–2024 · AS Criminal Justice 2016 · POST reciprocity pending',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · prior certification'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 82'],
+      ['Background investigation', 'IN PROGRESS', 'North Carolina records request pending since Jul 3'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Prior-agency release', 'POST reciprocity form'],
+    nextAction: { title: 'Follow up North Carolina records request', due: '36 days outstanding · reciprocity blocked behind it' },
+    notes: [{ author: 'Inv. Brannigan', date: 'Aug 2', text: 'Out-of-state request is with the NC agency records unit. POST reciprocity cannot be filed until it returns.' }],
+    activity: [['Aug 2', 'Records request followed up'], ['Jul 3', 'Records request submitted'], ['Jun 12', 'Assigned to Inv. Brannigan']],
+  },
+  {
+    id: 'A-26-1221', name: 'Nadia Pruitt', ref: '2026-APP-0179', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'Employee referral', stage: 'Oral board', blocker: 'Panel availability', inStage: 17, decision: '10 DAYS',
+    note: 'Board scheduled Aug 20 · panel member on leave', score: 80,
+    breakdown: [76, 80, 84, 86, null, 78],
+    contact: { email: 'n.pruitt@example.com', phone: '(555) 505-8823', location: 'Lawrenceville, GA' },
+    assigned: [['Panel chair', 'Capt. Nguyen'], ['HR specialist', 'M. Torres']],
+    qualifications: '2 years detention · Hall County 2023–2025 · HS diploma · detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'SCHEDULED', 'Aug 20 · one panel member on leave'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Reference sheet'],
+    nextAction: { title: 'Seat a third panel member', due: 'Board Aug 20 · panel is short one member' },
+    notes: [{ author: 'M. Torres', date: 'Aug 5', text: 'Board cannot sit with two members. A substitute chair would hold the date.' }],
+    activity: [['Aug 5', 'Board scheduled Aug 20'], ['Jul 24', 'Physical assessment passed'], ['Jul 10', 'Referred by Sgt. Pruitt']],
+  },
+  {
+    id: 'A-26-1302', name: 'Elliot Vance', ref: '2026-APP-0244', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'Military transition', stage: 'Background', blocker: null, inStage: 22, decision: 'ON TRACK',
+    note: 'SkillBridge candidate · separates Oct 3', score: 87,
+    breakdown: [84, 86, 90, 92, 86, 84],
+    contact: { email: 'e.vance@example.com', phone: '(555) 118-4402', location: 'Fort Eisenhower, GA' },
+    assigned: [['Background investigator', 'Inv. Okoro'], ['HR specialist', 'J. Martinez']],
+    qualifications: '6 years military police · US Army, separating Oct 3 · SkillBridge participant · POST Basic eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · service record'],
+      ['Physical assessment', 'PASSED', 'Top-quartile battery'],
+      ['Oral board', 'PASSED', 'Panel score 86'],
+      ['Background investigation', 'IN PROGRESS', 'Day 22 of a 45-day target'],
+    ],
+    attachments: ['Employment application', 'DD-214 (pending)', 'SkillBridge agreement', 'Service record'],
+    nextAction: { title: 'Complete background before separation date', due: 'Separates Oct 3 · on target' },
+    notes: [], activity: [['Jul 18', 'Assigned to Inv. Okoro'], ['Jul 2', 'Oral board passed']],
+  },
+  {
+    id: 'A-26-1295', name: 'Kelsey Nash', ref: '2026-APP-0238', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'GovernmentJobs', stage: 'Background', blocker: null, inStage: 19, decision: 'ON TRACK',
+    note: 'Packet complete · queued for adjudication', score: 82,
+    breakdown: [78, 80, 86, 84, 82, 82],
+    contact: { email: 'k.nash@example.com', phone: '(555) 443-9012', location: 'Snellville, GA' },
+    assigned: [['Background investigator', 'Inv. Okoro'], ['HR specialist', 'M. Torres']],
+    qualifications: '3 years corrections · AS Criminal Justice 2022 · detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 82'],
+      ['Background investigation', 'READY', 'Packet complete · awaiting command review'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Reference sheet', 'Background packet'],
+    nextAction: { title: 'Command review of completed packet', due: 'Ready for adjudication · median 6 days' },
+    notes: [], activity: [['Aug 6', 'Packet marked complete'], ['Jul 21', 'Assigned to Inv. Okoro']],
+  },
+  {
+    id: 'A-26-1311', name: 'Tomas Iverson', ref: '2026-APP-0251', req: '911 Communications Officer', division: 'Communications',
+    track: 'Communications', source: 'Employee referral', stage: 'Conditional offer', blocker: null, inStage: 4, decision: 'ON TRACK',
+    note: 'Offer accepted · start date Aug 25', score: 85,
+    breakdown: [80, 84, null, 86, 88, 84],
+    contact: { email: 't.iverson@example.com', phone: '(555) 776-2210', location: 'Duluth, GA' },
+    assigned: [['HR specialist', 'M. Torres'], ['Hiring manager', 'J. Ruiz']],
+    qualifications: '4 years dispatch · Hall County E-911 2021–2025 · no POST requirement for this class',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Typing · multitask battery'],
+      ['Oral board', 'PASSED', 'Panel score 88'],
+      ['Conditional offer', 'ACCEPTED', 'Start date Aug 25'],
+    ],
+    attachments: ['Employment application', 'Resume', 'Signed offer letter'],
+    nextAction: { title: 'Onboarding packet and in-house academy seat', due: 'Start Aug 25 · six-week in-house academy' },
+    notes: [], activity: [['Aug 6', 'Offer accepted'], ['Aug 2', 'Conditional offer issued']],
+  },
+  {
+    id: 'A-26-1276', name: 'Dana Kestrel', ref: '2026-APP-0226', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'POST job board', stage: 'Academy seat', blocker: null, inStage: 11, decision: 'ON TRACK',
+    note: 'Lateral transfer · academy waiver under review', score: 89,
+    breakdown: [92, 84, 95, 88, 88, 86],
+    contact: { email: 'd.kestrel@example.com', phone: '(555) 338-5567', location: 'Sugar Hill, GA' },
+    assigned: [['Training division', 'Sgt. Ibarra'], ['HR specialist', 'J. Martinez']],
+    qualifications: '9 years law enforcement · DeKalb County PD 2016–2025 · POST Basic current · lateral waiver eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Current POST certification'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'PASSED', 'Panel score 88'],
+      ['Background investigation', 'CLEARED', 'Adjudicated Jul 29'],
+      ['Academy seat', 'WAIVER PENDING', 'Lateral waiver under POST review'],
+    ],
+    attachments: ['Employment application', 'POST certificate', 'Prior-agency file', 'Waiver application'],
+    nextAction: { title: 'POST lateral waiver determination', due: 'Waiver would bypass the academy entirely' },
+    notes: [], activity: [['Jul 29', 'Background adjudicated · cleared'], ['Jul 1', 'Waiver application filed']],
+  },
+  {
+    id: 'A-26-1318', name: 'Omar Bhatt', ref: '2026-APP-0257', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'Career fair', stage: 'Oral board', blocker: null, inStage: 6, decision: 'ON TRACK',
+    note: 'Oral board scheduled Aug 15', score: 77,
+    breakdown: [72, 78, 82, 80, null, 76],
+    contact: { email: 'o.bhatt@example.com', phone: '(555) 991-3084', location: 'Norcross, GA' },
+    assigned: [['Panel chair', 'Capt. Nguyen'], ['HR specialist', 'M. Torres']],
+    qualifications: '1 year security · HS diploma · detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED'],
+      ['Physical assessment', 'PASSED', 'Standard battery'],
+      ['Oral board', 'SCHEDULED', 'Aug 15'],
+    ],
+    attachments: ['Employment application', 'Resume'],
+    nextAction: { title: 'Oral board Aug 15', due: 'Panel confirmed' },
+    notes: [], activity: [['Aug 3', 'Board scheduled'], ['Jul 28', 'Physical assessment passed']],
+  },
+  {
+    id: 'A-26-1324', name: 'Reese Boyd', ref: '2026-APP-0262', req: 'Fleet Maintenance Technician', division: 'Support Services',
+    track: 'Civilian', source: 'Indeed', stage: 'Conditional offer', blocker: null, inStage: 3, decision: 'ON TRACK',
+    note: 'ASE certification verified', score: 84,
+    breakdown: [88, 74, null, null, 84, 82],
+    contact: { email: 'r.boyd@example.com', phone: '(555) 210-4478', location: 'Buford, GA' },
+    assigned: [['Hiring manager', 'S. Boyd'], ['HR specialist', 'M. Torres']],
+    qualifications: '11 years fleet maintenance · ASE Master Technician · no POST requirement for this class',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'ASE certification verified'],
+      ['Oral board', 'PASSED', 'Panel score 84'],
+      ['Conditional offer', 'EXTENDED', 'Issued Aug 7'],
+    ],
+    attachments: ['Employment application', 'ASE certification', 'Offer letter'],
+    nextAction: { title: 'Await offer acceptance', due: '10-day acceptance window · expires Aug 17' },
+    notes: [], activity: [['Aug 7', 'Conditional offer issued'], ['Aug 1', 'ASE certification verified']],
+  },
+  {
+    id: 'A-26-1330', name: 'Harper Liu', ref: '2026-APP-0268', req: 'Records Technician', division: 'Support Services',
+    track: 'Civilian', source: 'GovernmentJobs', stage: 'Background', blocker: null, inStage: 9, decision: 'ON TRACK',
+    note: 'Background packet returned Aug 6', score: 80,
+    breakdown: [76, 82, null, null, 82, 80],
+    contact: { email: 'h.liu@example.com', phone: '(555) 604-9931', location: 'Lawrenceville, GA' },
+    assigned: [['Background investigator', 'Inv. Brannigan'], ['HR specialist', 'M. Torres']],
+    qualifications: '5 years records administration · BA Public Administration 2019 · CJIS certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Records experience · CJIS eligible'],
+      ['Oral board', 'PASSED', 'Panel score 82'],
+      ['Background investigation', 'IN PROGRESS', 'Civilian-track case · day 9'],
+    ],
+    attachments: ['Employment application', 'Resume', 'CJIS consent form'],
+    nextAction: { title: 'Complete civilian-track background', due: 'Records position is behind the open-records finding' },
+    notes: [], activity: [['Aug 6', 'Packet returned'], ['Jul 30', 'Assigned to Inv. Brannigan']],
+  },
+  {
+    id: 'A-26-1341', name: 'Casey Whitaker', ref: '2026-APP-0274', req: 'Deputy Sheriff', division: 'Patrol Division',
+    track: 'Deputy sheriff', source: 'GovernmentJobs', stage: 'Written examination', blocker: null, inStage: 12, decision: 'ON TRACK',
+    note: 'Written exam Aug 22', score: null,
+    breakdown: [null, 80, null, null, null, null],
+    contact: { email: 'c.whitaker@example.com', phone: '(555) 872-1140', location: 'Grayson, GA' },
+    assigned: [['HR specialist', 'J. Martinez']],
+    qualifications: 'No prior law enforcement · BS Sociology 2024 · POST Basic eligible on hire',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · degree'],
+      ['Written examination', 'SCHEDULED', 'Aug 22 · monthly test date'],
+    ],
+    attachments: ['Employment application', 'Degree transcript'],
+    nextAction: { title: 'Written examination Aug 22', due: 'Monthly cadence · applied Jul 28' },
+    notes: [], activity: [['Jul 28', 'Application received']],
+  },
+  {
+    id: 'A-26-1347', name: 'Jordan Alvarez', ref: '2026-APP-0279', req: 'Detention Officer', division: 'Detention',
+    track: 'Detention officer', source: 'Employee referral', stage: 'Physical assessment', blocker: null, inStage: 5, decision: 'ON TRACK',
+    note: 'Physical assessment passed Aug 4', score: null,
+    breakdown: [null, 76, null, 84, null, null],
+    contact: { email: 'j.alvarez@example.com', phone: '(555) 336-7728', location: 'Snellville, GA' },
+    assigned: [['HR specialist', 'M. Torres']],
+    qualifications: '2 years security · HS diploma · detention certification eligible',
+    screening: [
+      ['Minimum qualifications', 'PASSED', 'Age 21+ · HS/GED'],
+      ['Physical assessment', 'PASSED', 'Standard battery Aug 4'],
+    ],
+    attachments: ['Employment application', 'Resume'],
+    nextAction: { title: 'Schedule oral board', due: 'Panel sits weekly' },
+    notes: [], activity: [['Aug 4', 'Physical assessment passed'], ['Jul 22', 'Referred by Sgt. Alvarez']],
+  },
+  {
+    id: 'A-26-1352', name: 'Simone Ferreira', ref: '2026-APP-0283', req: '911 Communications Officer', division: 'Communications',
+    track: 'Communications', source: 'Career fair', stage: 'Application received', blocker: null, inStage: 2, decision: 'ON TRACK',
+    note: 'Minimum qualifications cleared', score: null,
+    breakdown: [null, null, null, null, null, null],
+    contact: { email: 's.ferreira@example.com', phone: '(555) 447-0091', location: 'Duluth, GA' },
+    assigned: [['HR specialist', 'M. Torres']],
+    qualifications: '3 years customer operations · AS Business 2023 · no POST requirement for this class',
+    screening: [['Minimum qualifications', 'PASSED', 'Typing · multitask battery']],
+    attachments: ['Employment application'],
+    nextAction: { title: 'Schedule oral board', due: 'Communications has no academy dependency' },
+    notes: [], activity: [['Aug 7', 'Minimum qualifications cleared']],
+  },
+];
+
+const ROSTER_FILTERS = ['Requires action', 'Background', 'Academy seat', 'Conditional offer', 'All shown'];
 
 // ── Right column ───────────────────────────────────────────────
 
@@ -201,6 +514,7 @@ export default function HiringPipeline() {
   const [track, setTrack] = useState('All tracks');
   const [roster, setRoster] = useState('Requires action');
   const [query, setQuery] = useState('');
+  const [openRecord, setOpenRecord] = useState('A-26-1184');
 
   // ── Pipeline roll-up ────────────────────────────────────────
   const withTotals = stages.map((s) => ({
@@ -240,21 +554,12 @@ export default function HiringPipeline() {
 
   // Roster: "requires action" is exactly the rows carrying a blocker, so the
   // chip count and the filtered list are the same predicate.
-  const matchesFilter = (c) =>
-    roster === 'All shown' ? true
-      : roster === 'Requires action' ? !!c.blocker
-        : roster === 'Background' ? c.stage === 'Background'
-          : roster === 'Academy wait' ? c.stage === 'Academy wait'
-            : c.stage === 'Conditional offer';
-  const rosterCount = (f) => candidates.filter((c) =>
-    f === 'All shown' ? true
-      : f === 'Requires action' ? !!c.blocker
-        : f === 'Background' ? c.stage === 'Background'
-          : f === 'Academy wait' ? c.stage === 'Academy wait'
-            : c.stage === 'Conditional offer').length;
+  const inFilter = (c, f) =>
+    f === 'All shown' ? true : f === 'Requires action' ? !!c.blocker : c.stage === f;
+  const rosterCount = (f) => candidates.filter((c) => inFilter(c, f)).length;
   const q = query.trim().toLowerCase();
   const rosterRows = candidates
-    .filter(matchesFilter)
+    .filter((c) => inFilter(c, roster))
     .filter((c) => !q || `${c.id} ${c.req} ${c.stage} ${c.source} ${c.note}`.toLowerCase().includes(q));
 
   const cards = intelligence.map((c) => {
@@ -465,80 +770,6 @@ export default function HiringPipeline() {
                 </p>
               </div>
 
-              {/* Candidate roster */}
-              <div className="mt-7">
-                <SectionLabel right={
-                  <span className="text-[10px] text-red-400/90">{pastDecision} overdue · {atRisk} at risk</span>
-                }>
-                  Candidate roster
-                </SectionLabel>
-
-                <div className="flex items-center gap-3 flex-wrap mb-3">
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search identifier, requisition, stage, or source"
-                    className="w-72 px-3 py-1.5 bg-zinc-900/60 border border-slate-700/60 rounded-lg text-[11.5px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-500"
-                  />
-                  <span className="flex items-center gap-3 flex-wrap">
-                    {ROSTER_FILTERS.map((f) => (
-                      <button
-                        key={f}
-                        onClick={() => setRoster(f)}
-                        className={`text-[11px] transition-colors ${
-                          roster === f ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
-                        }`}
-                      >
-                        {f} <span className="font-mono text-slate-500">{rosterCount(f)}</span>
-                      </button>
-                    ))}
-                  </span>
-                </div>
-
-                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
-                  <span className="flex-1 min-w-0">Candidate / requisition</span>
-                  <span className="w-28 flex-shrink-0">Stage</span>
-                  <span className="w-28 flex-shrink-0">Blocker</span>
-                  <span className="w-28 flex-shrink-0">Source</span>
-                  <span className="w-14 text-right flex-shrink-0">In stage</span>
-                  <span className="w-[72px] text-right flex-shrink-0">Decision</span>
-                </div>
-                <div className="divide-y divide-slate-800/50">
-                  {rosterRows.map((c) => (
-                    <button
-                      key={c.id}
-                      onClick={() => navigate(`/hr/jobs`)}
-                      className={`w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors border-l-2 ${
-                        c.decision === 'OVERDUE' ? 'border-red-500/70' : c.decision === 'AT RISK' ? 'border-amber-500/60' : 'border-transparent'
-                      }`}
-                    >
-                      <div className="flex-1 min-w-0">
-                        <span className="flex items-baseline gap-2">
-                          <span className="text-[11.5px] font-mono font-bold text-slate-100">{c.id}</span>
-                          <span className="text-[10.5px] text-slate-500 truncate">{c.req}</span>
-                        </span>
-                        <p className="text-[10px] text-slate-500 truncate mt-0.5">{c.note}</p>
-                      </div>
-                      <span className="w-28 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.stage}</span>
-                      <span className={`w-28 text-[11px] flex-shrink-0 truncate ${c.blocker ? 'text-amber-400' : 'text-slate-600'}`}>
-                        {c.blocker ?? '—'}
-                      </span>
-                      <span className="w-28 text-[10.5px] text-slate-500 flex-shrink-0 truncate">{c.source}</span>
-                      <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${c.inStage > 45 ? 'text-red-400' : 'text-slate-400'}`}>{c.inStage}d</span>
-                      <span className={`w-[72px] text-right text-[10.5px] font-bold tracking-wider whitespace-nowrap flex-shrink-0 ${decisionTone(c.decision)}`}>{c.decision}</span>
-                    </button>
-                  ))}
-                  {rosterRows.length === 0 && (
-                    <p className="py-6 text-[11.5px] text-slate-500 text-center">No candidates match that search in this filter.</p>
-                  )}
-                </div>
-                <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
-                  Rows open the applicant record — stage history, background packet, assigned staff, and contact log. Identifiers
-                  are used at command level; opening a record is logged. The roster lists candidates with an open item or activity
-                  in the last fourteen days; all {inProcess} in process are searchable.
-                </p>
-              </div>
-
               {/* Pipeline intelligence */}
               <div className="mt-7">
                 <SectionLabel right={<span className="text-[10px] text-slate-500">AI-assisted synthesis · 5 sources · confidence 84% · 22m ago</span>}>
@@ -695,6 +926,226 @@ export default function HiringPipeline() {
               </div>
             </div>
           </div>
+
+            {/* Candidate roster */}
+            <div className="mt-7">
+              <SectionLabel right={
+                <span className="text-[10px] text-red-400/90">{pastDecision} overdue · {atRisk} at risk</span>
+              }>
+                Candidate roster
+              </SectionLabel>
+
+              <div className="flex items-center gap-3 flex-wrap mb-3">
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search identifier, requisition, stage, or source"
+                  className="w-72 px-3 py-1.5 bg-zinc-900/60 border border-slate-700/60 rounded-lg text-[11.5px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-500"
+                />
+                <span className="flex items-center gap-3 flex-wrap">
+                  {ROSTER_FILTERS.map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setRoster(f)}
+                      className={`text-[11px] transition-colors ${
+                        roster === f ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
+                      }`}
+                    >
+                      {f} <span className="font-mono text-slate-500">{rosterCount(f)}</span>
+                    </button>
+                  ))}
+                </span>
+              </div>
+
+              <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                <span className="flex-1 min-w-0">Candidate / requisition</span>
+                <span className="w-12 text-right flex-shrink-0">Score</span>
+                <span className="w-28 flex-shrink-0">Stage</span>
+                <span className="w-28 flex-shrink-0">Blocker</span>
+                <span className="w-24 flex-shrink-0">Source</span>
+                <span className="w-14 text-right flex-shrink-0">In stage</span>
+                <span className="w-[72px] text-right flex-shrink-0">Decision</span>
+              </div>
+              <div className="divide-y divide-slate-800/50">
+                {rosterRows.map((c) => {
+                  const isOpen = openRecord === c.id;
+                  const stageIndex = TIMELINE.indexOf(c.stage);
+                  return (
+                    <div key={c.id} className={`border-l-2 ${
+                      c.decision === 'OVERDUE' ? 'border-red-500/70' : c.decision === 'AT RISK' ? 'border-amber-500/60' : 'border-transparent'
+                    }`}>
+                      <button
+                        onClick={() => setOpenRecord(isOpen ? null : c.id)}
+                        className="w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <span className="flex items-baseline gap-2 flex-wrap">
+                            <span className="text-[12.5px] font-semibold text-slate-100">{c.name}</span>
+                            <span className="text-[10px] font-mono text-slate-500">{c.id}</span>
+                            <span className="text-[10.5px] text-slate-500 truncate">{c.req}</span>
+                          </span>
+                          <p className="text-[10px] text-slate-500 truncate mt-0.5">{c.note}</p>
+                        </div>
+                        <span className="w-12 text-right text-[11px] font-mono flex-shrink-0">
+                          {c.score === null
+                            ? <span className="text-slate-600">—</span>
+                            : <span className={c.score >= 85 ? 'text-emerald-400' : c.score >= 75 ? 'text-slate-200' : 'text-amber-400'}>{c.score}</span>}
+                        </span>
+                        <span className="w-28 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.stage}</span>
+                        <span className={`w-28 text-[11px] flex-shrink-0 truncate ${c.blocker ? 'text-amber-400' : 'text-slate-600'}`}>
+                          {c.blocker ?? '—'}
+                        </span>
+                        <span className="w-24 text-[10.5px] text-slate-500 flex-shrink-0 truncate">{c.source}</span>
+                        <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${c.inStage > 45 ? 'text-red-400' : 'text-slate-400'}`}>{c.inStage}d</span>
+                        <span className={`w-[72px] text-right text-[10.5px] font-bold tracking-wider whitespace-nowrap flex-shrink-0 ${decisionTone(c.decision)}`}>{c.decision}</span>
+                      </button>
+
+                      {isOpen && (
+                        <div className="px-3 pb-5">
+                          {/* Stage timeline */}
+                          <div className="flex items-center gap-1 mt-1 mb-4">
+                            {TIMELINE.map((step, i) => {
+                              const done = i < stageIndex;
+                              const here = i === stageIndex;
+                              return (
+                                <span key={step} className="flex-1 min-w-0" title={step}>
+                                  <span className={`block h-1 rounded-full ${
+                                    here ? (c.blocker ? 'bg-red-500' : 'bg-amber-400') : done ? 'bg-emerald-500/70' : 'bg-zinc-800'
+                                  }`} />
+                                  <span className={`block text-[8.5px] mt-1 truncate ${
+                                    here ? 'text-slate-200 font-semibold' : done ? 'text-slate-500' : 'text-slate-700'
+                                  }`}>{step}</span>
+                                </span>
+                              );
+                            })}
+                          </div>
+
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4">
+                            {/* Identity + score */}
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-2">Applicant</p>
+                              <p className="text-[11.5px] text-slate-200">{c.name} · {c.ref}</p>
+                              <p className="text-[10.5px] text-slate-500 mt-0.5">{c.req} · {c.division}</p>
+                              <p className="text-[10.5px] text-slate-500 mt-1.5">{c.contact.email} · {c.contact.phone}</p>
+                              <p className="text-[10.5px] text-slate-500">{c.contact.location} · sourced via {c.source}</p>
+                            </div>
+
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-2">
+                                Assessment {c.score !== null && <span className="text-slate-400 font-mono normal-case tracking-normal">composite {c.score}</span>}
+                              </p>
+                              <div className="space-y-1">
+                                {SCORE_DIMENSIONS.map((d, i) => (
+                                  <div key={d} className="flex items-center gap-2">
+                                    <span className="w-32 text-[10px] text-slate-500 truncate">{d}</span>
+                                    <span className="flex-1">
+                                      <Meter value={c.breakdown[i] ?? 0} tone={
+                                        c.breakdown[i] === null ? 'bg-zinc-800'
+                                          : c.breakdown[i] >= 85 ? 'bg-emerald-500' : c.breakdown[i] >= 75 ? 'bg-slate-500' : 'bg-amber-400'
+                                      } />
+                                    </span>
+                                    <span className="w-8 text-right text-[10px] font-mono text-slate-400">
+                                      {c.breakdown[i] ?? '—'}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Screening checkpoints */}
+                            <div className="lg:col-span-2">
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-2">Screening record</p>
+                              <div className="divide-y divide-slate-800/50 border-t border-slate-800/50">
+                                {c.screening.map(([step, verdict, detail]) => (
+                                  <div key={step} className="flex items-center gap-3 py-1.5">
+                                    <span className="w-44 text-[11px] text-slate-200 flex-shrink-0 truncate">{step}</span>
+                                    <span className={`w-28 text-[9.5px] font-bold tracking-wider flex-shrink-0 ${
+                                      verdict === 'PASSED' || verdict === 'CLEARED' || verdict === 'ACCEPTED' || verdict === 'READY' ? 'text-emerald-400'
+                                        : verdict === 'BLOCKED' ? 'text-red-400' : 'text-amber-400'
+                                    }`}>{verdict}</span>
+                                    <span className="flex-1 min-w-0 text-[10.5px] text-slate-500 truncate">{detail}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Qualifications */}
+                            <div className="lg:col-span-2">
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-1.5">Qualifications</p>
+                              <p className="text-[11px] text-slate-300 leading-relaxed">{c.qualifications}</p>
+                            </div>
+
+                            {/* Assignment + attachments */}
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-1.5">Assigned</p>
+                              {c.assigned.map(([role, who]) => (
+                                <p key={role} className="text-[11px] text-slate-300">
+                                  <span className="text-slate-500">{role}</span> · {who}
+                                </p>
+                              ))}
+                            </div>
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-1.5">
+                                Attachments <span className="text-slate-600 font-mono normal-case tracking-normal">{c.attachments.length}</span>
+                              </p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {c.attachments.map((a) => (
+                                  <span key={a} className="border border-slate-700/60 rounded px-1.5 py-0.5 text-[9.5px] text-slate-400">{a}</span>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Notes + activity */}
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-1.5">Notes</p>
+                              {c.notes.length === 0
+                                ? <p className="text-[10.5px] text-slate-600">No notes recorded.</p>
+                                : c.notes.map((n) => (
+                                  <div key={n.date}>
+                                    <p className="text-[10px] text-slate-500">{n.author} · {n.date}</p>
+                                    <p className="text-[11px] text-slate-300 leading-relaxed mt-0.5">{n.text}</p>
+                                  </div>
+                                ))}
+                            </div>
+                            <div>
+                              <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-1.5">Activity</p>
+                              {c.activity.map(([when, text]) => (
+                                <p key={when + text} className="text-[10.5px] text-slate-500">
+                                  <span className="font-mono text-slate-600 mr-1.5">{when}</span>{text}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Next action */}
+                          <div className={`mt-4 border-l-2 pl-3 ${c.blocker ? 'border-red-500/70' : 'border-slate-600'}`}>
+                            <p className={`text-[9px] font-bold uppercase tracking-[0.13em] ${c.blocker ? 'text-red-400' : 'text-slate-500'}`}>Next action</p>
+                            <p className="text-[11.5px] text-slate-200 mt-1">{c.nextAction.title}</p>
+                            <p className="text-[10.5px] text-slate-500">{c.nextAction.due}</p>
+                          </div>
+
+                          <div className="flex items-center gap-2.5 mt-4 flex-wrap">
+                            <button className="px-3 py-1.5 border border-amber-500/60 bg-amber-500/10 rounded text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors">Advance stage</button>
+                            <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Open full application</button>
+                            <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Email applicant</button>
+                            <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Add note</button>
+                            <span className="ml-auto text-[10px] text-slate-600">Opening a record is logged with actor and timestamp.</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                {rosterRows.length === 0 && (
+                  <p className="py-6 text-[11.5px] text-slate-500 text-center">No candidates match that search in this filter.</p>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
+                Rows open the full applicant record — stage timeline, assessment breakdown, screening history, qualifications,
+                assignment, attachments, notes and next action. The roster lists candidates with an open item or activity in the
+                last fourteen days; all {inProcess} in process are searchable. Opening a record is logged.
+              </p>
+            </div>
         </div>
       </div>
     </DashboardLayout>
