@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import FullscreenToggle from './components/FullscreenToggle';
 
@@ -48,7 +48,6 @@ import ActiveCasesDashboard from './pages/investigations/ActiveCasesDashboard';
 
 // HR Module
 import HRDashboard from './pages/HRDashboard';
-import ApplicantTracking from './pages/ApplicantTracking';
 import JobPostings from './pages/JobPostings';
 import JobWorkspace from './pages/JobWorkspace';
 import ApplicantWorkspace from './pages/ApplicantWorkspace';
@@ -138,7 +137,8 @@ function App() {
         <Route path="/hr/jobs/:jobId" element={<JobWorkspace />} />
         <Route path="/hr/jobs/:jobId/applicants" element={<ApplicantWorkspace />} />
         <Route path="/hr/jobs/:jobId/applicants/:applicantId" element={<ApplicantProfile />} />
-        <Route path="/hr/applicants" element={<ApplicantTracking />} />
+        {/* Applicant Tracking merged into Hiring Pipeline — old links still resolve. */}
+        <Route path="/hr/applicants" element={<Navigate to="/hr/pipeline" replace />} />
         <Route path="/hr/pipeline" element={<HiringPipeline />} />
         <Route path="/hr/onboarding" element={<NewHireOnboarding />} />
         <Route path="/hr/records" element={<EmployeeRecords />} />

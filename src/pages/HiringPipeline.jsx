@@ -64,18 +64,34 @@ const hire = {
   backgroundThen: 41,
 };
 
-// ── Candidates requiring action ────────────────────────────────
+// ── Candidate roster ───────────────────────────────────────────
+// The working applicant list, merged in from Applicant Tracking. `blocker` is
+// what is holding the candidate; a row with one is what "requires action"
+// means, so the count and the filter cannot drift apart.
 
 const candidates = [
-  { id: 'A-26-1184', req: 'Deputy Sheriff',    note: 'Competing offer from Cobb County · decision requested', stage: 'Background',         blocker: 'Investigator load',  inStage: 71, decision: 'OVERDUE' },
-  { id: 'A-26-1209', req: 'Detention Officer', note: 'Prior-employer verification outstanding 24 days',       stage: 'Background',         blocker: 'Investigator load',  inStage: 66, decision: 'OVERDUE' },
-  { id: 'A-26-1156', req: 'Deputy Sheriff',    note: 'Cleared all stages Jun 18 · waiting on a seat',         stage: 'Academy wait',       blocker: 'No cohort seat',     inStage: 54, decision: 'AT RISK' },
-  { id: 'A-26-1163', req: 'Detention Officer', note: 'Detention academy has no scheduled start',              stage: 'Academy wait',       blocker: 'Cohort unscheduled', inStage: 47, decision: 'AT RISK' },
-  { id: 'A-26-1247', req: 'Deputy Sheriff',    note: 'Scheduled Aug 19 · earliest available vendor slot',     stage: 'Poly · psych · med', blocker: 'Vendor slot',        inStage: 31, decision: '7 DAYS'  },
-  { id: 'A-26-1288', req: 'Communications',    note: 'Offer expires Aug 14 · no response to two contacts',    stage: 'Conditional offer',  blocker: 'Acceptance window',  inStage: 8,  decision: '3 DAYS'  },
-  { id: 'A-26-1198', req: 'Deputy Sheriff',    note: 'Out-of-state records request pending since Jul 3',      stage: 'Background',         blocker: 'Records request',    inStage: 58, decision: '14 DAYS' },
-  { id: 'A-26-1221', req: 'Detention Officer', note: 'Board scheduled Aug 20 · panel member on leave',        stage: 'Oral board',         blocker: 'Panel availability', inStage: 17, decision: '10 DAYS' },
+  { id: 'A-26-1184', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'POST job board',  note: 'Competing offer from Cobb County · decision requested', stage: 'Background',         blocker: 'Investigator load',  inStage: 71, decision: 'OVERDUE' },
+  { id: 'A-26-1209', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Prior-employer verification outstanding 24 days',       stage: 'Background',         blocker: 'Investigator load',  inStage: 66, decision: 'OVERDUE' },
+  { id: 'A-26-1156', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Employee referral', note: 'Cleared all stages Jun 18 · waiting on a seat',       stage: 'Academy wait',       blocker: 'No cohort seat',     inStage: 54, decision: 'AT RISK' },
+  { id: 'A-26-1163', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Detention academy has no scheduled start',              stage: 'Academy wait',       blocker: 'Cohort unscheduled', inStage: 47, decision: 'AT RISK' },
+  { id: 'A-26-1247', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Career fair',     note: 'Scheduled Aug 19 · earliest available vendor slot',     stage: 'Poly · psych · med', blocker: 'Vendor slot',        inStage: 31, decision: '7 DAYS'  },
+  { id: 'A-26-1288', req: 'Communications',    track: 'Communications',    source: 'Indeed',          note: 'Offer expires Aug 14 · no response to two contacts',    stage: 'Conditional offer',  blocker: 'Acceptance window',  inStage: 8,  decision: '3 DAYS'  },
+  { id: 'A-26-1198', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'GovernmentJobs',  note: 'Out-of-state records request pending since Jul 3',      stage: 'Background',         blocker: 'Records request',    inStage: 58, decision: '14 DAYS' },
+  { id: 'A-26-1221', req: 'Detention Officer', track: 'Detention officer', source: 'Employee referral', note: 'Board scheduled Aug 20 · panel member on leave',      stage: 'Oral board',         blocker: 'Panel availability', inStage: 17, decision: '10 DAYS' },
+
+  { id: 'A-26-1302', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'Military transition', note: 'SkillBridge candidate · separates Oct 3',           stage: 'Background',         blocker: null, inStage: 22, decision: 'ON TRACK' },
+  { id: 'A-26-1295', req: 'Detention Officer', track: 'Detention officer', source: 'GovernmentJobs',  note: 'Packet complete · queued for adjudication',             stage: 'Background',         blocker: null, inStage: 19, decision: 'ON TRACK' },
+  { id: 'A-26-1311', req: 'Communications',    track: 'Communications',    source: 'Employee referral', note: 'Offer accepted · start date Aug 25',                  stage: 'Conditional offer',  blocker: null, inStage: 4,  decision: 'ON TRACK' },
+  { id: 'A-26-1276', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'POST job board',  note: 'Lateral transfer · academy waiver under review',        stage: 'Academy wait',       blocker: null, inStage: 11, decision: 'ON TRACK' },
+  { id: 'A-26-1318', req: 'Detention Officer', track: 'Detention officer', source: 'Career fair',     note: 'Oral board scheduled Aug 15',                           stage: 'Oral board',         blocker: null, inStage: 6,  decision: 'ON TRACK' },
+  { id: 'A-26-1324', req: 'Fleet Technician',  track: 'Civilian',          source: 'Indeed',          note: 'ASE certification verified',                            stage: 'Conditional offer',  blocker: null, inStage: 3,  decision: 'ON TRACK' },
+  { id: 'A-26-1330', req: 'Records Technician', track: 'Civilian',         source: 'GovernmentJobs',  note: 'Background packet returned Aug 6',                      stage: 'Background',         blocker: null, inStage: 9,  decision: 'ON TRACK' },
+  { id: 'A-26-1341', req: 'Deputy Sheriff',    track: 'Deputy sheriff',    source: 'GovernmentJobs',  note: 'Written exam Aug 22',                                   stage: 'Written examination', blocker: null, inStage: 12, decision: 'ON TRACK' },
+  { id: 'A-26-1347', req: 'Detention Officer', track: 'Detention officer', source: 'Employee referral', note: 'Physical assessment passed Aug 4',                    stage: 'Physical assessment', blocker: null, inStage: 5,  decision: 'ON TRACK' },
+  { id: 'A-26-1352', req: 'Communications',    track: 'Communications',    source: 'Career fair',     note: 'Minimum qualifications cleared',                        stage: 'Application received', blocker: null, inStage: 2, decision: 'ON TRACK' },
 ];
+
+const ROSTER_FILTERS = ['Requires action', 'Background', 'Academy wait', 'Offer out', 'All shown'];
 
 // ── Right column ───────────────────────────────────────────────
 
@@ -156,7 +172,8 @@ const flagTone = {
   WAITING:    'border-amber-500/60 text-amber-400',
 };
 const decisionTone = (d) =>
-  d === 'OVERDUE' ? 'text-red-400' : d === 'AT RISK' ? 'text-amber-400' : 'text-amber-400/80';
+  d === 'OVERDUE' ? 'text-red-400' : d === 'AT RISK' ? 'text-amber-400'
+    : d === 'ON TRACK' ? 'text-slate-500' : 'text-amber-400/80';
 
 const dotTone = { emerald: 'bg-emerald-400', amber: 'bg-amber-400', red: 'bg-red-500', slate: 'bg-slate-600' };
 const textTone = { emerald: 'text-emerald-400', amber: 'text-amber-400', red: 'text-red-400', slate: 'text-slate-400' };
@@ -182,6 +199,8 @@ export default function HiringPipeline() {
   const navigate = useNavigate();
   const [openStage, setOpenStage] = useState('Background investigation');
   const [track, setTrack] = useState('All tracks');
+  const [roster, setRoster] = useState('Requires action');
+  const [query, setQuery] = useState('');
 
   // ── Pipeline roll-up ────────────────────────────────────────
   const withTotals = stages.map((s) => ({
@@ -218,6 +237,25 @@ export default function HiringPipeline() {
 
   const pastDecision = candidates.filter((c) => c.decision === 'OVERDUE').length;
   const atRisk = candidates.filter((c) => c.decision === 'AT RISK').length;
+
+  // Roster: "requires action" is exactly the rows carrying a blocker, so the
+  // chip count and the filtered list are the same predicate.
+  const matchesFilter = (c) =>
+    roster === 'All shown' ? true
+      : roster === 'Requires action' ? !!c.blocker
+        : roster === 'Background' ? c.stage === 'Background'
+          : roster === 'Academy wait' ? c.stage === 'Academy wait'
+            : c.stage === 'Conditional offer';
+  const rosterCount = (f) => candidates.filter((c) =>
+    f === 'All shown' ? true
+      : f === 'Requires action' ? !!c.blocker
+        : f === 'Background' ? c.stage === 'Background'
+          : f === 'Academy wait' ? c.stage === 'Academy wait'
+            : c.stage === 'Conditional offer').length;
+  const q = query.trim().toLowerCase();
+  const rosterRows = candidates
+    .filter(matchesFilter)
+    .filter((c) => !q || `${c.id} ${c.req} ${c.stage} ${c.source} ${c.note}`.toLowerCase().includes(q));
 
   const cards = intelligence.map((c) => {
     if (c.body) return c;
@@ -407,7 +445,7 @@ export default function HiringPipeline() {
                             </div>
                             <div className="flex items-center gap-2.5 mt-4 flex-wrap">
                               <button
-                                onClick={() => navigate('/hr/applicants')}
+                                onClick={() => navigate('/hr/jobs')}
                                 className="px-3 py-1.5 border border-amber-500/60 bg-amber-500/10 rounded text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors"
                               >
                                 Review candidates
@@ -427,23 +465,49 @@ export default function HiringPipeline() {
                 </p>
               </div>
 
-              {/* Candidates requiring action */}
+              {/* Candidate roster */}
               <div className="mt-7">
-                <SectionLabel right={<span className="text-[10px] text-red-400/90">{pastDecision} overdue · {atRisk} at risk</span>}>
-                  Candidates requiring action
+                <SectionLabel right={
+                  <span className="text-[10px] text-red-400/90">{pastDecision} overdue · {atRisk} at risk</span>
+                }>
+                  Candidate roster
                 </SectionLabel>
+
+                <div className="flex items-center gap-3 flex-wrap mb-3">
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search identifier, requisition, stage, or source"
+                    className="w-72 px-3 py-1.5 bg-zinc-900/60 border border-slate-700/60 rounded-lg text-[11.5px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-500"
+                  />
+                  <span className="flex items-center gap-3 flex-wrap">
+                    {ROSTER_FILTERS.map((f) => (
+                      <button
+                        key={f}
+                        onClick={() => setRoster(f)}
+                        className={`text-[11px] transition-colors ${
+                          roster === f ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
+                        }`}
+                      >
+                        {f} <span className="font-mono text-slate-500">{rosterCount(f)}</span>
+                      </button>
+                    ))}
+                  </span>
+                </div>
+
                 <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
                   <span className="flex-1 min-w-0">Candidate / requisition</span>
-                  <span className="w-32 flex-shrink-0">Stage</span>
-                  <span className="w-32 flex-shrink-0">Blocker</span>
+                  <span className="w-28 flex-shrink-0">Stage</span>
+                  <span className="w-28 flex-shrink-0">Blocker</span>
+                  <span className="w-28 flex-shrink-0">Source</span>
                   <span className="w-14 text-right flex-shrink-0">In stage</span>
-                  <span className="w-16 text-right flex-shrink-0">Decision</span>
+                  <span className="w-[72px] text-right flex-shrink-0">Decision</span>
                 </div>
                 <div className="divide-y divide-slate-800/50">
-                  {candidates.map((c) => (
+                  {rosterRows.map((c) => (
                     <button
                       key={c.id}
-                      onClick={() => navigate('/hr/applicants')}
+                      onClick={() => navigate(`/hr/jobs`)}
                       className={`w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors border-l-2 ${
                         c.decision === 'OVERDUE' ? 'border-red-500/70' : c.decision === 'AT RISK' ? 'border-amber-500/60' : 'border-transparent'
                       }`}
@@ -455,16 +519,23 @@ export default function HiringPipeline() {
                         </span>
                         <p className="text-[10px] text-slate-500 truncate mt-0.5">{c.note}</p>
                       </div>
-                      <span className="w-32 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.stage}</span>
-                      <span className="w-32 text-[11px] text-amber-400 flex-shrink-0 truncate">{c.blocker}</span>
+                      <span className="w-28 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.stage}</span>
+                      <span className={`w-28 text-[11px] flex-shrink-0 truncate ${c.blocker ? 'text-amber-400' : 'text-slate-600'}`}>
+                        {c.blocker ?? '—'}
+                      </span>
+                      <span className="w-28 text-[10.5px] text-slate-500 flex-shrink-0 truncate">{c.source}</span>
                       <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${c.inStage > 45 ? 'text-red-400' : 'text-slate-400'}`}>{c.inStage}d</span>
-                      <span className={`w-16 text-right text-[10.5px] font-bold tracking-wider flex-shrink-0 ${decisionTone(c.decision)}`}>{c.decision}</span>
+                      <span className={`w-[72px] text-right text-[10.5px] font-bold tracking-wider whitespace-nowrap flex-shrink-0 ${decisionTone(c.decision)}`}>{c.decision}</span>
                     </button>
                   ))}
+                  {rosterRows.length === 0 && (
+                    <p className="py-6 text-[11.5px] text-slate-500 text-center">No candidates match that search in this filter.</p>
+                  )}
                 </div>
                 <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
                   Rows open the applicant record — stage history, background packet, assigned staff, and contact log. Identifiers
-                  are used at command level; opening a record is logged.
+                  are used at command level; opening a record is logged. The roster lists candidates with an open item or activity
+                  in the last fourteen days; all {inProcess} in process are searchable.
                 </p>
               </div>
 

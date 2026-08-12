@@ -7,7 +7,6 @@ import { Users, Briefcase, UserPlus, TrendingUp, FileCheck, GraduationCap, FileT
 export const hrNavigation = [
   { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, route: '/hr/dashboard' },
   { id: 'job-postings', label: 'Job Postings', icon: Briefcase, route: '/hr/jobs' },
-  { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, route: '/hr/applicants' },
   { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, route: '/hr/pipeline' },
   { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, route: '/hr/onboarding' },
   { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, route: '/hr/training' },

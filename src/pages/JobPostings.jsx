@@ -419,7 +419,7 @@ export default function JobPostings() {
                             </div>
                             <div className="flex items-center gap-2.5 mt-4 flex-wrap">
                               <button
-                                onClick={() => navigate('/hr/applicants')}
+                                onClick={() => navigate('/hr/pipeline')}
                                 className="px-3 py-1.5 border border-amber-500/60 bg-amber-500/10 rounded text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors"
                               >
                                 Review candidates

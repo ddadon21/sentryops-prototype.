@@ -24,7 +24,7 @@ export function createPageUrl(pageName: string): string {
     // HR Module
     HRCalendar: '/hr/calendar',
     HRDashboard: '/hr/dashboard',
-    ApplicantTracking: '/hr/applicants',
+    ApplicantTracking: '/hr/pipeline',
     JobPostings: '/hr/jobs',
     HiringPipeline: '/hr/pipeline',
     NewHireOnboarding: '/hr/onboarding',

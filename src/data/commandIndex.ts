@@ -64,7 +64,7 @@ export const commandIndex: CommandEntry[] = [
   // ── Human Resources ──────────────────────────────────────────
   { id: 'hr-dashboard', label: 'HR Dashboard', group: 'Human Resources', route: '/hr/dashboard', keywords: ['hr', 'human resources', 'overview'] },
   { id: 'hr-jobs', label: 'Job Postings', group: 'Human Resources', route: '/hr/jobs', keywords: ['jobs', 'postings', 'recruiting', 'vacancy', 'open positions'] },
-  { id: 'hr-applicants', label: 'Applicant Tracking', group: 'Human Resources', route: '/hr/applicants', keywords: ['applicants', 'recruiting', 'candidates'] },
+  { id: 'hr-applicants', label: 'Applicant Tracking', group: 'Human Resources', route: '/hr/pipeline', keywords: ['applicants', 'recruiting', 'candidates'] },
   { id: 'hr-pipeline', label: 'Hiring Pipeline', group: 'Human Resources', route: '/hr/pipeline', keywords: ['hiring', 'pipeline', 'recruiting', 'vacancies', 'vacancy', 'hiring approvals', 'workforce planning', 'staffing shortages'] },
   { id: 'hr-onboarding', label: 'New Hire Onboarding', group: 'Human Resources', route: '/hr/onboarding', keywords: ['onboarding', 'new hire'] },
   { id: 'hr-records', label: 'Employee Records', group: 'Human Resources', route: '/hr/records', keywords: ['employees', 'records', 'personnel files', 'employee profile', 'position history'] },

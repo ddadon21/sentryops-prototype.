@@ -90,7 +90,7 @@ const SEED_EVENTS: ActivityEvent[] = [
     message: 'Background investigation closed with no disqualifying findings.',
     severity: 'success',
     actor: 'HR — Background Investigations',
-    route: '/hr/applicants',
+    route: '/hr/pipeline',
     read: true,
   },
   {
@@ -210,7 +210,7 @@ const SYNTHETIC_EVENTS: Omit<ActivityEvent, 'id' | 'timestamp' | 'read'>[] = [
     message: 'Application closed following failed physical agility test.',
     severity: 'info',
     actor: 'HR — Applicant Tracking',
-    route: '/hr/applicants',
+    route: '/hr/pipeline',
   },
   {
     module: 'hr',

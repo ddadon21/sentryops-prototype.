@@ -33,7 +33,7 @@ const Header = () => {
     ],
     hr: [
       { to: '/hr/dashboard', label: 'Dashboard' },
-      { to: '/hr/applicants', label: 'Applicant Tracking' },
+      { to: '/hr/pipeline', label: 'Hiring Pipeline' },
       { to: '/hr/jobs', label: 'Job Postings' },
       { to: '/hr/pipeline', label: 'Hiring Pipeline' },
       { to: '/hr/onboarding', label: 'New Hire Onboarding' },
