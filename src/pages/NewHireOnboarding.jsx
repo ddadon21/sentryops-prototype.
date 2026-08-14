@@ -1,1168 +1,644 @@
 import React, { useState } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, Calendar, Phone, Mail, MapPin, Star, FileCheck, Upload, CheckCircle2, Circle, AlertTriangle, ClipboardCheck, GraduationCap, ChevronDown, ChevronUp, Car, Radio, Target, Heart, FileWarning, Building, BadgeCheck, Clipboard, UserCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 
+// ── Field training ─────────────────────────────────────────────
+// A pairing holds only when a certified trainer works the trainee's own shift.
+// That single rule decides the pairing status, the at-risk banner, the not-paired
+// tab and the lost-day count, so none of them can disagree:
+//
+//   no trainer    — nobody assigned at all
+//   cross-shift   — a trainer is assigned but works a different shift
+//   paired        — trainer and trainee on the same shift
+//
+// A shift spent with an uncertified officer produces no observation report and
+// does not count toward the phase. That is why lost days matter: the probation
+// clock keeps running while the program does not.
+
+const BELOW_STANDARD = 4.0;
+
+const trainees = [
+  {
+    id: 'T-26-118', name: 'Dep. Sarah Mitchell', note: 'Solo evaluation scheduled Sep 2',
+    assignment: 'Patrol · Shift C', shift: 'Shift C', phase: '3 — Independence', week: 11, ofWeeks: 16,
+    trainer: 'Dep. Rodriguez', trainerShift: 'Shift C', dor: 5.2,
+  },
+  {
+    id: 'T-26-104', name: 'Dep. Marcus Johnson', note: 'Phase 2 extension expires Aug 20 · second extension needs a board', noteTone: 'amber',
+    assignment: 'Patrol · Shift A', shift: 'Shift A', phase: '2 — Instruction', week: 10, ofWeeks: 16,
+    trainer: 'Cpl. J. Williams', trainerShift: 'Shift A', dor: 3.4,
+  },
+  {
+    id: 'T-26-092', name: 'Dep. Alicia Boateng', note: 'Trainer recommends solo authorization · signature due Aug 18',
+    assignment: 'Patrol · Shift B', shift: 'Shift B', phase: '4 — Evaluation', week: 16, ofWeeks: 16,
+    trainer: 'Dep. Kirkland', trainerShift: 'Shift B', dor: 5.9,
+  },
+  {
+    id: 'T-26-131', name: 'Dep. Ruben Ortega', note: 'Assigned trainer works Shift B · 3 shifts with no report', noteTone: 'amber',
+    assignment: 'Patrol · Shift D', shift: 'Shift D', phase: '1 — Observation', week: 2, ofWeeks: 16,
+    trainer: 'Dep. Kirkland', trainerShift: 'Shift B', dor: 4.6,
+  },
+  {
+    id: 'T-26-127', name: 'Dep. Callum Byrne', note: 'Solo authorization recommendation due Aug 15',
+    assignment: 'Patrol · Shift A', shift: 'Shift A', phase: '4 — Evaluation', week: 15, ofWeeks: 16,
+    trainer: 'Cpl. J. Williams', trainerShift: 'Shift A', dor: 5.5,
+  },
+  {
+    id: 'T-26-121', name: 'Ofc. Devon Castellanos', note: 'Eligible for Phase 3 on Aug 17',
+    assignment: 'Detention · Tower 2', shift: 'Watch 2', phase: '2 — Instruction', week: 6, ofWeeks: 12,
+    trainer: 'Sgt. Amaya', trainerShift: 'Watch 2', dor: 4.9,
+  },
+  {
+    id: 'T-26-129', name: 'Ofc. Renata Villalobos', note: 'Booking floor rotation · first phase',
+    assignment: 'Detention · Intake', shift: 'Watch 1', phase: '1 — Observation', week: 3, ofWeeks: 12,
+    trainer: 'Cpl. Deshmukh', trainerShift: 'Watch 1', dor: 4.4,
+  },
+  {
+    id: 'T-26-113', name: 'Ofc. Tobias Lindgren', note: 'No certified trainer since Aug 4 · 7 consecutive lost days', noteTone: 'red',
+    assignment: 'Detention · Tower 1', shift: 'Watch 2', phase: '3 — Independence', week: 8, ofWeeks: 12,
+    trainer: null, trainerShift: null, dor: 4.7,
+  },
+  {
+    id: 'T-26-116', name: 'Ofc. Priya Raghunathan', note: 'Written remedial plan due Aug 19 · trainer on another watch', noteTone: 'amber',
+    assignment: 'Detention · Medical', shift: 'Watch 3', phase: '2 — Instruction', week: 9, ofWeeks: 12,
+    trainer: 'Sgt. Amaya', trainerShift: 'Watch 2', dor: 3.8,
+  },
+  {
+    id: 'T-26-134', name: 'Ofc. Miriam Castellano', note: 'Started Aug 8 · first report due Aug 15 · trainer on Watch 1', noteTone: 'amber',
+    assignment: 'Detention · Tower 3', shift: 'Watch 3', phase: '1 — Observation', week: 1, ofWeeks: 12,
+    trainer: 'Cpl. Deshmukh', trainerShift: 'Watch 1', dor: null,
+  },
+  {
+    id: 'T-26-124', name: 'Disp. Alina Petrosyan', note: 'Radio console next · certified on call-taking',
+    assignment: 'Comms · A Watch', shift: 'A Watch', phase: '2 — Instruction', week: 5, ofWeeks: 10,
+    trainer: 'Supv. Delacroix', trainerShift: 'A Watch', dor: 5.4,
+  },
+  {
+    id: 'T-26-132', name: 'Disp. Hollis Nakamura', note: 'Trainer works A Watch · 2 shifts with no report', noteTone: 'amber',
+    assignment: 'Comms · C Watch', shift: 'C Watch', phase: '1 — Observation', week: 2, ofWeeks: 10,
+    trainer: 'Supv. Delacroix', trainerShift: 'A Watch', dor: 4.2,
+  },
+];
+
+// ── Observation reports ────────────────────────────────────────
+
+const reports = [
+  {
+    trainee: 'Dep. Marcus Johnson', context: 'Patrol · Shift A · 2 — Instruction', score: 3.4,
+    flag: 'Officer safety 3.0 — third occurrence this phase',
+    text: 'Approached a vehicle stop on the driver side without clearing the rear seat. Corrected on scene. Third occurrence documented in this phase.',
+    filed: 'Filed Aug 12 23:41 by Cpl. J. Williams · Shift A', action: 'Open board packet',
+  },
+  {
+    trainee: 'Ofc. Priya Raghunathan', context: 'Detention · Medical · 2 — Instruction', score: 3.8,
+    flag: 'Medical emergency response 3.5 — fourth consecutive decline',
+    text: 'Did not recognize alcohol withdrawal presentation during medication pass. Nurse initiated protocol. Trainee documented the event after prompting.',
+    filed: 'Filed Aug 12 22:08 by Sgt. Amaya · Watch 1 overlap', action: 'Issue remedial plan',
+  },
+  {
+    trainee: 'Dep. Alicia Boateng', context: 'Patrol · Shift B · 4 — Evaluation', score: 5.9,
+    text: 'Shadow phase, second week. Made all decisions without prompting including a pursuit termination consistent with policy. Recommend solo authorization.',
+    filed: 'Filed Aug 12 19:22 by Dep. Kirkland · Shift B', action: 'Recommend authorization',
+  },
+  {
+    trainee: 'Dep. Sarah Mitchell', context: 'Patrol · Shift C · 3 — Independence', score: 5.4,
+    text: 'Handled a domestic call as primary with no coaching. Report submitted before end of shift with no corrections required.',
+    filed: 'Filed Aug 12 15:37 by Dep. Rodriguez · Shift C',
+  },
+  {
+    trainee: 'Ofc. Devon Castellanos', context: 'Detention · Tower 2 · 2 — Instruction', score: 4.9,
+    text: 'Housing unit rounds and count accurate. Handled an inmate grievance within policy and documented it correctly.',
+    filed: 'Filed Aug 12 14:50 by Sgt. Amaya · Watch 2',
+  },
+];
+
+const notFiled = [
+  { trainee: 'Ofc. Tobias Lindgren',  reason: 'No certified trainer on Watch 2 since Aug 4', trainer: '— unassigned',    shifts: 7 },
+  { trainee: 'Dep. Ruben Ortega',     reason: 'Trainer works Shift B, trainee on Shift D',   trainer: 'Dep. Kirkland',   shifts: 3 },
+  { trainee: 'Ofc. Miriam Castellano', reason: 'No certified trainer on Watch 3',            trainer: 'Cpl. Deshmukh',   shifts: 3 },
+  { trainee: 'Disp. Hollis Nakamura', reason: 'No watch overlap with certified trainer',     trainer: 'Supv. Delacroix', shifts: 2 },
+];
+
+// ── Decisions ──────────────────────────────────────────────────
+// Ordered by the date the decision becomes irreversible, not by when it was
+// raised — `days` is that horizon.
+
+const decisions = [
+  {
+    kind: 'ASSIGN', title: 'Field trainer — Ofc. Tobias Lindgren', days: 0,
+    body: 'Seven consecutive shifts with no report. He is above standard in every competency and the phase clock is running without documented progress.',
+    route: 'Coordinator assignment · requires a Watch 2 certified trainer',
+  },
+  {
+    kind: 'AUTHORIZE', title: 'Solo authorization — Dep. Callum Byrne', days: 2,
+    body: 'Sixteenth week of a sixteen-week program. Without the recommendation he stays paired to Cpl. Williams, who also carries the remedial trainee on Shift A.',
+    route: 'Coordinator recommendation, then division commander signature',
+  },
+  {
+    kind: 'ADVANCE', title: 'Phase 3 advancement — Ofc. Devon Castellanos', days: 4,
+    body: 'Eligible Aug 17. Advancing frees Sgt. Amaya to take the Tower 1 trainee who currently has none.',
+    route: 'Coordinator signature',
+  },
+  {
+    kind: 'AUTHORIZE', title: 'Solo authorization — Dep. Alicia Boateng', days: 5,
+    body: 'Trainer recommends authorization. Every competency has improved across four reports and no remedial plan exists on the file.',
+    route: 'Coordinator recommendation, then division commander signature',
+  },
+  {
+    kind: 'REMEDIAL', title: 'Written remedial plan — Ofc. Priya Raghunathan', days: 6,
+    body: 'Trainer requested review Aug 9. Policy 5.7 gives ten days for a written plan. Release for failure to progress without one is the agency’s exposure.',
+    route: 'Coordinator signature · policy 5.7',
+  },
+  {
+    kind: 'BOARD', title: 'Second extension — Dep. Marcus Johnson', days: 7,
+    body: 'The Phase 2 extension expires Aug 20. A second extension requires a documented board finding; without one he must advance below standard or be released.',
+    route: 'Review board · packet due Aug 18',
+  },
+];
+
+// ── Right column ───────────────────────────────────────────────
+
+const lostDays = [
+  { cause: 'Trainer pulled to overtime post',        days: 14, note: 'Detention · one trainee affected for 7 consecutive shifts', tone: 'red'   },
+  { cause: 'Trainer and trainee on different shifts', days: 9, note: 'Shift D, Watch 3, C Watch have no certified trainer',        tone: 'red'   },
+  { cause: 'Trainer on leave, no substitute certified', days: 5, note: 'Patrol · substitute must also be FTO-certified',           tone: 'amber' },
+  { cause: 'Trainer in court or in-service',         days: 3,  note: 'Patrol · scheduled, foreseeable',                            tone: 'slate' },
+  { cause: 'Trainee call-out',                       days: 2,  note: 'Not recoverable',                                            tone: 'slate' },
+];
+
+const SLOTS_PER_TRAINER = 2;
+const trainers = [
+  { name: 'Cpl. J. Williams',  assignment: 'Patrol · Shift A',    carrying: 'Johnson, Byrne',            used: 2, recert: 'Mar 2027', recertSoon: false },
+  { name: 'Dep. Rodriguez',    assignment: 'Patrol · Shift C',    carrying: 'Mitchell',                  used: 1, recert: 'Oct 2026', recertSoon: true  },
+  { name: 'Dep. Kirkland',     assignment: 'Patrol · Shift B',    carrying: '1 trainee on another shift', used: 2, recert: 'Jan 2027', recertSoon: false, split: true },
+  { name: 'Sgt. Amaya',        assignment: 'Detention · Watch 2', carrying: '1 trainee on another shift', used: 2, recert: 'Apr 2027', recertSoon: false, split: true },
+  { name: 'Cpl. Deshmukh',     assignment: 'Detention · Watch 1', carrying: '1 trainee on another shift', used: 2, recert: 'Sep 2026', recertSoon: true,  split: true },
+  { name: 'Supv. Delacroix',   assignment: 'Comms · A Watch',     carrying: '1 trainee on another shift', used: 2, recert: 'Jun 2027', recertSoon: false, split: true },
+];
+
+const UNCOVERED_SHIFTS = ['Patrol · Shift D', 'Detention · Watch 3', 'Comms · B Watch', 'Comms · C Watch'];
+
+// `days` is days from today; anything inside a week is this week's work.
+const documentation = [
+  { item: 'Lindgren — 7 shifts with no report',        due: 'now',    days: 0,  tone: 'red',
+    note: 'An undocumented gap cannot be reconstructed. Seven shifts of a twelve-week program have no evaluative record.' },
+  { item: 'Byrne — solo authorization recommendation', due: 'Aug 15', days: 2,  tone: 'amber',
+    note: 'Program week 16 of 16. A trainee held past program length without a documented reason is a grievance.' },
+  { item: 'Johnson — board packet for second extension', due: 'Aug 18', days: 5, tone: 'amber',
+    note: 'Extension expires Aug 20. Release without a board finding and a plan review is the agency’s exposure.' },
+  { item: 'Raghunathan — written remedial plan',       due: 'Aug 19', days: 6,  tone: 'amber',
+    note: 'Policy 5.7 gives ten days from the trainer’s request. Day nine is Aug 18.' },
+  { item: 'Johnson — 30-day remedial plan review',     due: 'Aug 20', days: 7,  tone: 'amber',
+    note: 'Plan signed Jul 21. The review must be signed before any release decision.' },
+  { item: 'Deshmukh — FTO recertification',            due: 'Sep 30', days: 48, tone: 'slate',
+    note: 'On expiry, Watch 1 loses its only certified trainer and two files stall.' },
+];
+
+const arriving = [
+  { cohort: 'Deputy Academy 26-C graduates', note: 'Sep 12 · Shifts A and C have capacity, D has none', count: 5, status: '2 TRAINERS',  tone: 'amber'   },
+  { cohort: 'Detention Academy 26-B',        note: 'No start date · instructor position vacant',        count: 0, status: 'UNSCHEDULED', tone: 'red'     },
+  { cohort: 'Communications 26-A',           note: 'Sep 8 · both assigned to A Watch by default',       count: 2, status: '1 TRAINER',   tone: 'amber'   },
+  { cohort: 'Lateral transfers — certified', note: 'Abbreviated 4-week program · Sep 2',                count: 2, status: 'READY',       tone: 'emerald' },
+];
+
+// ── Helpers ────────────────────────────────────────────────────
+
+const pairingOf = (t) =>
+  !t.trainer ? 'NO TRAINER' : t.trainerShift !== t.shift ? 'CROSS-SHIFT' : 'PAIRED';
+
+const pairingTone = { PAIRED: 'text-emerald-400', 'CROSS-SHIFT': 'text-red-400', 'NO TRAINER': 'text-red-400' };
+
+const kindTone = {
+  ASSIGN:    'border-red-500/60 text-red-400',
+  AUTHORIZE: 'border-emerald-500/60 text-emerald-400',
+  ADVANCE:   'border-emerald-500/60 text-emerald-400',
+  REMEDIAL:  'border-amber-500/60 text-amber-400',
+  BOARD:     'border-red-500/60 text-red-400',
+};
+
+const dotTone = { emerald: 'bg-emerald-400', amber: 'bg-amber-400', red: 'bg-red-500', slate: 'bg-slate-600' };
+const textTone = { emerald: 'text-emerald-400', amber: 'text-amber-400', red: 'text-red-400', slate: 'text-slate-400' };
+const barTone = { red: 'bg-red-500', amber: 'bg-amber-400', slate: 'bg-slate-600', emerald: 'bg-emerald-500' };
+
+const dorTone = (d) => (d === null ? 'text-slate-600' : d < BELOW_STANDARD ? 'text-red-400' : d >= 5 ? 'text-emerald-400' : 'text-slate-300');
+
+function SectionLabel({ children, right }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 mb-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">{children}</p>
+      {right}
+    </div>
+  );
+}
+
+function Meter({ value, tone = 'bg-slate-600' }) {
+  return (
+    <span className="block h-1 bg-zinc-800/70 rounded-full">
+      <span className={`block h-full rounded-full ${tone}`} style={{ width: `${Math.min(value, 100)}%` }} />
+    </span>
+  );
+}
+
 export default function NewHireOnboarding() {
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('onboarding');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('active');
-  const [selectedNewHire, setSelectedNewHire] = useState(null);
-  const [expandedSection, setExpandedSection] = useState({});
-  const [filterPositionType, setFilterPositionType] = useState('all');
+  const [tab, setTab] = useState('All');
 
-  const navigation = [
-    { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, page: 'HRDashboard' },
-    { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
-    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
-    { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
-    { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
-    { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck },
-    { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, page: 'TrainingCertifications' },
-    { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
-    { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
-    { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
-    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' },
-    { id: 'settings', label: 'Settings', icon: Settings, page: 'HRSettings' }
+  // ── Pairings ────────────────────────────────────────────────
+  const withPairing = trainees.map((t) => ({ ...t, pairing: pairingOf(t) }));
+  const holding = withPairing.filter((t) => t.pairing === 'PAIRED').length;
+  const noTrainer = withPairing.filter((t) => t.pairing === 'NO TRAINER').length;
+  const crossShift = withPairing.filter((t) => t.pairing === 'CROSS-SHIFT').length;
+  const notPaired = noTrainer + crossShift;
+  const belowStandard = withPairing.filter((t) => t.dor !== null && t.dor < BELOW_STANDARD).length;
+
+  const tabs = [
+    { id: 'All',            label: 'All',            n: withPairing.length },
+    { id: 'Not paired',     label: 'Not paired',     n: notPaired },
+    { id: 'Below standard', label: 'Below standard', n: belowStandard },
+    { id: 'Decision due',   label: 'Decision due',   n: decisions.length },
   ];
+  const decisionNames = new Set(decisions.map((d) => d.title.split('— ')[1]));
+  const shown = withPairing.filter((t) =>
+    tab === 'All' ? true
+      : tab === 'Not paired' ? t.pairing !== 'PAIRED'
+        : tab === 'Below standard' ? t.dor !== null && t.dor < BELOW_STANDARD
+          : decisionNames.has(t.name));
 
-  const notifications = [
-    { id: 1, title: 'FTO Evaluation Due Tomorrow', message: 'Deputy C. Lee Week 8 evaluation due 02/07/2026', time: '1 hour ago', urgent: true },
-    { id: 2, title: 'Onboarding Not Started', message: 'Emily Johnson - Records Investigator start date approaching', time: '2 hours ago', urgent: true },
-    { id: 3, title: 'CJIS Training Scheduled', message: 'Deputy C. Lee scheduled for 02/15/2026', time: '3 hours ago', urgent: false }
-  ];
+  // ── Reports and gaps ────────────────────────────────────────
+  const unreviewed = reports.length;
+  const gapShifts = notFiled.reduce((a, r) => a + r.shifts, 0);
+  const lostTotal = lostDays.reduce((a, r) => a + r.days, 0);
+  const lostMax = Math.max(...lostDays.map((r) => r.days));
 
-  // Detailed new hire data with law enforcement onboarding requirements
-  const [newHires] = useState([
-    {
-      id: 1,
-      name: 'Christopher Lee',
-      position: 'Deputy Sheriff',
-      positionType: 'sworn',
-      department: 'Patrol Division',
-      shift: 'A-Shift (06:00-18:00)',
-      unitNumber: '3-Alpha-47',
-      hireAuthority: "Sheriff's Order #2024-089",
-      hireDate: 'October 28, 2024',
-      startDate: '2024-11-14',
-      startDateDisplay: 'November 14, 2024',
-      email: 'christopher.lee@gwinnettsso.gov',
-      phone: '(555) 123-4567',
-      status: 'in-progress',
-      daysEmployed: 84,
-      hireClassification: {
-        type: 'Lateral Transfer',
-        priorAgency: 'Metro Atlanta Police Department',
-        priorExperience: '5 years (2019-2024)',
-        postCertified: true,
-        postCertNumber: 'GA POST Basic #48291',
-        postVerifiedDate: '11/01/2024',
-        postExpiration: '06/15/2027',
-        startingSalary: '$55,200 (Step 5 - 5 years experience)'
-      },
-      ftoProgram: {
-        enrolled: true,
-        fto: 'Deputy M. Rodriguez (#2847)',
-        ftoExperience: 'A-Shift, 8-year veteran',
-        coordinator: 'Sgt. R. Martinez (Training Division)',
-        duration: '12 weeks',
-        startDate: '11/18/2024',
-        endDate: '02/10/2026',
-        currentWeek: 8,
-        currentPhase: 'Phase 3: Increased Independence',
-        phases: [
-          { phase: 1, name: 'Observation and Introduction', weeks: '1-3', status: 'completed', rating: 'Satisfactory progress' },
-          { phase: 2, name: 'Supervised Performance', weeks: '4-6', status: 'completed', rating: 'Meets expectations, improving report writing' },
-          { phase: 3, name: 'Increased Independence', weeks: '7-9', status: 'in-progress', rating: 'Week 8 evaluation pending (due 02/07/2026)' },
-          { phase: 4, name: 'Final Evaluation and Solo Prep', weeks: '10-12', status: 'pending', rating: 'Anticipated completion: February 10, 2026' }
-        ],
-        evaluationsOnFile: 'Weeks 1-7 (all satisfactory)',
-        nextEvaluation: 'Week 8 (due 02/07/2026)',
-        anticipatedCompletion: 'February 10, 2026',
-        anticipatedSoloPatrol: 'February 11, 2026'
-      },
-      tasks: {
-        preEmployment: [
-          { id: 'bg', name: 'Background Investigation Clearance', status: 'completed', completedDate: '10/25/2024', details: 'Investigator: Lt. K. Hayes (IA)', result: 'CLEARED - No disqualifying issues', notes: 'Report filed in personnel file' },
-          { id: 'medical', name: 'Medical Examination', status: 'completed', completedDate: '10/30/2024', details: 'Physician: Dr. R. Kumar, MD', result: 'Medically cleared for full duty' },
-          { id: 'psych', name: 'Psychological Evaluation', status: 'completed', completedDate: '11/01/2024', details: 'Psychologist: Dr. S. Martinez, PsyD', result: 'Psychologically suited for LE duties' },
-          { id: 'post', name: 'POST Certification Verification', status: 'completed', completedDate: '11/01/2024', details: 'GA POST Basic Cert #48291', result: 'Expiration: 06/15/2027 (current and valid)', notes: 'Copy on file in personnel records' }
-        ],
-        firstDay: [
-          { id: 'i9', name: 'I-9 Employment Eligibility Verification', status: 'completed', completedDate: '11/14/2024', details: 'Section 1: Employee completed | Section 2: HR verified (GA DL + SSN card)', notes: 'I-9 form filed (retain 3 years after hire or 1 year after termination)' },
-          { id: 'w4', name: 'W-4 Federal Tax Withholding', status: 'completed', completedDate: '11/14/2024', details: 'Submitted to payroll' },
-          { id: 'g4', name: 'GA G-4 State Tax Withholding', status: 'completed', completedDate: '11/14/2024', details: 'Submitted to payroll' },
-          { id: 'oath', name: 'Oath of Office (Sworn Personnel)', status: 'completed', completedDate: '11/14/2024', details: 'Administered by: Sheriff Keybo Taylor', location: 'GCSO Headquarters, Sheriff\'s Office, 08:00 AM', witnesses: 'HR Director, Major R. Davis', notes: 'Deputy Lee authorized to perform law enforcement duties' },
-          { id: 'direct-deposit', name: 'Direct Deposit Authorization', status: 'completed', completedDate: '11/14/2024', details: 'Bank: Wells Fargo', notes: 'First paycheck: 11/30/2024 (verified deposited)' },
-          { id: 'emergency', name: 'Emergency Contact Information', status: 'completed', completedDate: '11/14/2024', details: 'Contact: Spouse - J. Lee | Phone: (555) 789-0123' }
-        ],
-        prePatrol: [
-          { id: 'uniform', name: 'Uniform Issue', status: 'completed', completedDate: '11/13/2024', details: 'Full patrol uniform (5 sets), body armor (Level IIIA), duty belt, handcuffs (2), OC spray, baton, flashlight, rain gear, winter jacket', notes: 'All equipment signed for and documented' },
-          { id: 'weapon', name: 'Duty Weapon Assignment', status: 'completed', completedDate: '11/14/2024', details: 'Glock 17 Gen5, Serial #GC48291 | 50 rounds duty ammo (9mm Federal HST 147gr)', notes: 'Qualification: 11/15/2024 (scored 287/300, PASS) | Weapons card filed' },
-          { id: 'taser', name: 'TASER Issue and Certification', status: 'completed', completedDate: '11/15/2024', details: 'TASER X26P, Serial #T-4829 | 4-hour certification course', instructor: 'Sgt. R. Martinez (TASER Instructor)', notes: 'Certification valid through: 11/15/2026' },
-          { id: 'dt', name: 'Defensive Tactics Refresher', status: 'completed', completedDate: '11/16/2024', details: '8-hour refresher for lateral transfer', instructor: 'Deputy M. Johnson (DT Instructor)', notes: 'Topics: GCSO control tactics, handcuffing procedures, defensive techniques' },
-          { id: 'uof', name: 'Use of Force Policy Training', status: 'completed', completedDate: '11/16/2024', details: 'GCSO Policy 3.12 - Use of Force | 4-hour classroom', notes: 'Case studies, legal standards, GCSO force continuum, reporting requirements | Acknowledgment signed' },
-          { id: 'vehicle', name: 'Patrol Vehicle Assignment', status: 'completed', completedDate: '11/17/2024', details: 'Unit 347 (2023 Ford Explorer, marked patrol)', notes: 'Vehicle inspection completed with FTO | Emergency equipment check: Lights, siren, MDT, radio | Take-home eligibility: After FTO completion' },
-          { id: 'radio', name: 'Radio Procedures and Call Sign', status: 'completed', completedDate: '11/17/2024', details: 'Call Sign: Unit 3-Alpha-47 (A-Shift patrol) | Motorola APX8000, ID #R-4729', notes: '4-hour Communications training | Radio check completed with dispatch' },
-          { id: 'policies', name: 'GCSO Policies and Procedures Training', status: 'completed', completedDate: '11/14-11/18/2024', details: 'Week 1 orientation', topics: ['GCSO organization and chain of command', 'Patrol procedures and shift operations', 'Report writing (GCSO format)', 'Evidence handling and chain of custody', 'Court procedures and testimony', 'Community policing and public relations', 'Disciplinary process and grievance procedures'], notes: 'All policies reviewed and signed' },
-          { id: 'fto-assign', name: 'Field Training Officer (FTO) Assignment', status: 'completed', completedDate: '11/18/2024', details: 'FTO: Deputy M. Rodriguez (#2847) - A-Shift, 8-year veteran', notes: 'Program Duration: 12 weeks (11/18/2024 - 02/10/2026) | Coordinator: Sgt. Martinez' }
-        ],
-        benefits: [
-          { id: 'benefits', name: 'Benefits Enrollment', status: 'completed', completedDate: '11/20/2024', details: 'Health: BCBS PPO (Employee + Spouse) | Dental: Delta Dental | Vision: VSP | Life: $50,000 (employer-provided)', notes: 'Retirement: Georgia Sheriff\'s Retirement System (GSRS) - 6% employee contribution | All elections confirmed' },
-          { id: 'handbook', name: 'Employee Handbook Acknowledgment', status: 'completed', completedDate: '11/14/2024', details: 'GCSO Employee Handbook (2024 edition)', notes: 'Signed acknowledgment of receipt, review, and agreement to comply' }
-        ],
-        administrative: [
-          { id: 'email', name: 'Email and Computer Account Setup', status: 'completed', completedDate: '11/13/2024', details: 'Email: christopher.lee@gwinnettsso.gov', notes: 'Network access: Active Directory created | Systems: CAD/RMS, MDT access granted' },
-          { id: 'badge', name: 'ID Badge and Access Cards', status: 'completed', completedDate: '11/14/2024', details: 'Photo ID Badge: Deputy C. Lee, Badge #3847', notes: 'Building Access: GCSO HQ, Training Center, Detention' },
-          { id: 'parking', name: 'Parking Permit', status: 'completed', completedDate: '11/14/2024', details: 'Permit #P-847', notes: 'Employee lot until take-home vehicle after FTO' },
-          { id: 'cjis', name: 'CJIS Security Training', status: 'pending', dueDate: '02/15/2026', details: '4-hour FBI CJIS Security Policy training', location: 'GCSO Training Center', instructor: 'Lt. K. Hayes (CJIS Security Officer)', notes: 'REQUIRED for GCIC/NCIC access | Current workaround: FTO runs queries, Deputy Lee observes', actionRequired: 'Complete training by 02/15/2026' },
-          { id: 'tour', name: 'Department Tour and Orientation', status: 'completed', completedDate: '11/14/2024', details: 'Tour conducted by: HR Specialist J. Martinez', locations: 'GCSO HQ, Patrol Division, Detention Center, Training Center, Communications/Dispatch, Records Division', notes: 'Met Sheriff Keybo Taylor, Major R. Davis (Patrol Commander), division supervisors' }
-        ]
-      },
-      pendingActions: [
-        { action: 'CJIS Security Training', deadline: '02/15/2026', responsible: 'HR Director', status: 'scheduled' },
-        { action: 'FTO Week 8 Evaluation', deadline: '02/07/2026', responsible: 'Deputy M. Rodriguez (FTO)', status: 'due-tomorrow' },
-        { action: 'FTO Weeks 9-12', deadline: '02/10/2026', responsible: 'FTO Program', status: 'in-progress' }
-      ],
-      completionSummary: {
-        preEmployment: { completed: 4, total: 4 },
-        firstDay: { completed: 6, total: 6 },
-        prePatrol: { completed: 9, total: 9 },
-        benefits: { completed: 2, total: 2 },
-        administrative: { completed: 4, total: 5 }
-      }
-    },
-    {
-      id: 2,
-      name: 'Nicole Brown',
-      position: 'Detention Officer',
-      positionType: 'sworn',
-      department: 'Detention Center',
-      shift: 'B-Shift (18:00-06:00)',
-      hireAuthority: "Sheriff's Order #2025-012",
-      hireDate: 'January 15, 2025',
-      startDate: '2025-02-03',
-      startDateDisplay: 'February 03, 2025',
-      email: 'nicole.brown@gwinnettsso.gov',
-      phone: '(555) 234-5678',
-      status: 'in-progress',
-      daysEmployed: 3,
-      hireClassification: {
-        type: 'New Hire (POST Certified)',
-        priorAgency: 'None - Academy Graduate',
-        priorExperience: 'None (recent POST Academy graduate)',
-        postCertified: true,
-        postCertNumber: 'GA POST Corrections #52918',
-        postVerifiedDate: '01/20/2025',
-        postExpiration: '01/15/2028',
-        startingSalary: '$42,500 (Step 1 - Entry Level)'
-      },
-      ftoProgram: {
-        enrolled: true,
-        fto: 'Sgt. L. Williams (#1892)',
-        ftoExperience: 'B-Shift, 12-year veteran',
-        coordinator: 'Lt. M. Thompson (Detention Training)',
-        duration: '8 weeks',
-        startDate: '02/03/2025',
-        endDate: '03/31/2025',
-        currentWeek: 1,
-        currentPhase: 'Phase 1: Orientation and Observation',
-        phases: [
-          { phase: 1, name: 'Orientation and Observation', weeks: '1-2', status: 'in-progress', rating: 'Day 3 - Learning facility layout and procedures' },
-          { phase: 2, name: 'Supervised Inmate Contact', weeks: '3-4', status: 'pending', rating: 'Not started' },
-          { phase: 3, name: 'Increased Responsibility', weeks: '5-6', status: 'pending', rating: 'Not started' },
-          { phase: 4, name: 'Solo Post Assignment Prep', weeks: '7-8', status: 'pending', rating: 'Anticipated completion: March 31, 2025' }
-        ],
-        evaluationsOnFile: 'None yet (Week 1)',
-        nextEvaluation: 'Week 1 (due 02/10/2025)',
-        anticipatedCompletion: 'March 31, 2025',
-        anticipatedSoloPost: 'April 01, 2025'
-      },
-      tasks: {
-        preEmployment: [
-          { id: 'bg', name: 'Background Investigation Clearance', status: 'completed', completedDate: '01/10/2025', details: 'Investigator: Sgt. K. Davis (IA)', result: 'CLEARED - No disqualifying issues' },
-          { id: 'medical', name: 'Medical Examination', status: 'completed', completedDate: '01/12/2025', details: 'Physician: Dr. R. Kumar, MD', result: 'Medically cleared for detention duties' },
-          { id: 'psych', name: 'Psychological Evaluation', status: 'completed', completedDate: '01/14/2025', details: 'Psychologist: Dr. S. Martinez, PsyD', result: 'Psychologically suited for detention duties' },
-          { id: 'post', name: 'POST Corrections Certification Verification', status: 'completed', completedDate: '01/20/2025', details: 'GA POST Corrections Cert #52918', result: 'Expiration: 01/15/2028 (current and valid)' }
-        ],
-        firstDay: [
-          { id: 'i9', name: 'I-9 Employment Eligibility Verification', status: 'completed', completedDate: '02/03/2025', details: 'Section 1 & 2 completed', notes: 'Documents verified: GA DL + Birth Certificate' },
-          { id: 'w4', name: 'W-4 Federal Tax Withholding', status: 'completed', completedDate: '02/03/2025', details: 'Submitted to payroll' },
-          { id: 'g4', name: 'GA G-4 State Tax Withholding', status: 'completed', completedDate: '02/03/2025', details: 'Submitted to payroll' },
-          { id: 'oath', name: 'Oath of Office (Sworn Personnel)', status: 'completed', completedDate: '02/03/2025', details: 'Administered by: Sheriff Keybo Taylor', location: 'GCSO Headquarters, Sheriff\'s Office, 08:00 AM', notes: 'Officer Brown authorized to perform detention duties' },
-          { id: 'direct-deposit', name: 'Direct Deposit Authorization', status: 'completed', completedDate: '02/03/2025', details: 'Bank: Bank of America', notes: 'First paycheck: 02/15/2025' },
-          { id: 'emergency', name: 'Emergency Contact Information', status: 'completed', completedDate: '02/03/2025', details: 'Contact: Mother - R. Brown | Phone: (555) 345-6789' }
-        ],
-        prePatrol: [
-          { id: 'uniform', name: 'Detention Uniform Issue', status: 'pending', dueDate: '02/07/2025', details: 'Detention uniform (5 sets), body armor, duty belt, handcuffs, OC spray, radio', actionRequired: 'Uniform fitting scheduled 02/07/2025 - SIZE MEASUREMENTS NEEDED' },
-          { id: 'uof', name: 'Use of Force Policy Training (Detention)', status: 'completed', completedDate: '02/04/2025', details: 'GCSO Policy 3.12A - Detention Use of Force | 4-hour classroom', notes: 'Acknowledgment signed' },
-          { id: 'dt', name: 'Defensive Tactics Training (Detention)', status: 'completed', completedDate: '02/05/2025', details: '8-hour defensive tactics for detention environment', instructor: 'Deputy M. Johnson (DT Instructor)' },
-          { id: 'cpr', name: 'CPR/First Aid Certification', status: 'pending', dueDate: '02/10/2025', details: '8-hour certification course', location: 'GCSO Training Center', actionRequired: 'REQUIRED before unsupervised inmate contact' },
-          { id: 'radio', name: 'Radio Communication Training', status: 'pending', dueDate: '02/08/2025', details: 'Detention radio procedures and codes', notes: '2-hour training with Communications' },
-          { id: 'fto-assign', name: 'FTO Assignment', status: 'completed', completedDate: '02/03/2025', details: 'FTO: Sgt. L. Williams (#1892) - B-Shift, 12-year veteran', notes: 'Program: 8 weeks (02/03/2025 - 03/31/2025)' }
-        ],
-        benefits: [
-          { id: 'benefits', name: 'Benefits Enrollment', status: 'pending', dueDate: '03/03/2025', details: 'Must enroll within 30 days of hire', notes: 'Benefits orientation packet provided 02/03/2025', actionRequired: 'Deadline: 03/03/2025 - Schedule with HR' },
-          { id: 'handbook', name: 'Employee Handbook Acknowledgment', status: 'completed', completedDate: '02/03/2025', details: 'GCSO Employee Handbook (2025 edition)', notes: 'Signed acknowledgment received' }
-        ],
-        administrative: [
-          { id: 'email', name: 'Email and Computer Account Setup', status: 'completed', completedDate: '02/02/2025', details: 'Email: nicole.brown@gwinnettsso.gov', notes: 'Network access created' },
-          { id: 'badge', name: 'ID Badge and Access Cards', status: 'completed', completedDate: '02/03/2025', details: 'Photo ID Badge: Officer N. Brown', notes: 'Detention Center access only (restricted until FTO Phase 2)' },
-          { id: 'cjis', name: 'CJIS Security Training', status: 'pending', dueDate: '02/12/2025', details: '4-hour FBI CJIS Security Policy training', notes: 'REQUIRED before accessing inmate records/GCIC', actionRequired: 'Scheduled for 02/12/2025' },
-          { id: 'tour', name: 'Facility Tour and Orientation', status: 'completed', completedDate: '02/03/2025', details: 'Detention Center full tour with FTO', notes: 'Housing units, booking, control room, medical, visitation areas' }
-        ]
-      },
-      pendingActions: [
-        { action: 'Detention Uniform Issue', deadline: '02/07/2025', responsible: 'Quartermaster', status: 'due-tomorrow' },
-        { action: 'Radio Communication Training', deadline: '02/08/2025', responsible: 'Communications Division', status: 'upcoming' },
-        { action: 'CPR/First Aid Certification', deadline: '02/10/2025', responsible: 'Training Division', status: 'upcoming' },
-        { action: 'CJIS Security Training', deadline: '02/12/2025', responsible: 'HR/Lt. Hayes', status: 'scheduled' }
-      ],
-      completionSummary: {
-        preEmployment: { completed: 4, total: 4 },
-        firstDay: { completed: 6, total: 6 },
-        prePatrol: { completed: 3, total: 6 },
-        benefits: { completed: 1, total: 2 },
-        administrative: { completed: 3, total: 4 }
-      }
-    },
-    {
-      id: 3,
-      name: 'Emily Johnson',
-      position: 'Records Investigator',
-      positionType: 'civilian',
-      department: 'Human Resources - Background Investigations',
-      shift: 'Day Shift (08:00-17:00)',
-      hireAuthority: "HR Requisition #2025-BI-003",
-      hireDate: 'January 28, 2025',
-      startDate: '2025-02-10',
-      startDateDisplay: 'February 10, 2025',
-      email: 'emily.johnson@gwinnettsso.gov',
-      phone: '(555) 345-6789',
-      status: 'not-started',
-      daysUntilStart: 4,
-      hireClassification: {
-        type: 'New Hire (Civilian)',
-        priorAgency: 'N/A - Corporate background',
-        priorExperience: '3 years HR/Background verification (corporate sector)',
-        postCertified: false,
-        postCertNumber: 'N/A - Civilian position',
-        startingSalary: '$45,000 (Civilian Grade 7)'
-      },
-      ftoProgram: {
-        enrolled: false,
-        notes: 'Civilian position - 30-day training/shadowing period with senior investigator'
-      },
-      tasks: {
-        preEmployment: [
-          { id: 'bg', name: 'Background Investigation Clearance', status: 'completed', completedDate: '01/22/2025', details: 'Investigator: Sgt. K. Davis (IA)', result: 'CLEARED - Position requires GCIC/NCIC access' },
-          { id: 'references', name: 'Reference Checks', status: 'completed', completedDate: '01/20/2025', details: '3 professional references verified', result: 'All references positive' }
-        ],
-        firstDay: [
-          { id: 'i9', name: 'I-9 Employment Eligibility Verification', status: 'pending', dueDate: '02/10/2025', details: 'MUST complete on first day (federal requirement)', actionRequired: 'Bring acceptable documents (List A or List B+C)' },
-          { id: 'w4', name: 'W-4 Federal Tax Withholding', status: 'pending', dueDate: '02/10/2025', details: 'Complete before first payroll' },
-          { id: 'g4', name: 'GA G-4 State Tax Withholding', status: 'pending', dueDate: '02/10/2025', details: 'Complete before first payroll' },
-          { id: 'direct-deposit', name: 'Direct Deposit Authorization', status: 'pending', dueDate: '02/10/2025', details: 'Bring voided check or bank letter' },
-          { id: 'emergency', name: 'Emergency Contact Information', status: 'pending', dueDate: '02/10/2025', details: 'Required for personnel file' }
-        ],
-        prePatrol: [], // N/A for civilian
-        benefits: [
-          { id: 'benefits', name: 'Benefits Enrollment', status: 'pending', dueDate: '03/10/2025', details: 'Must enroll within 30 days of hire', notes: 'Benefits orientation scheduled for first day afternoon' },
-          { id: 'handbook', name: 'Employee Handbook Acknowledgment', status: 'pending', dueDate: '02/10/2025', details: 'GCSO Employee Handbook (2025 edition)' }
-        ],
-        administrative: [
-          { id: 'email', name: 'Email and Computer Account Setup', status: 'pending', dueDate: '02/10/2025', details: 'IT to create accounts before start date', actionRequired: 'IT ticket submitted 01/30/2025' },
-          { id: 'badge', name: 'ID Badge and Access Cards', status: 'pending', dueDate: '02/10/2025', details: 'Photo to be taken first day', notes: 'HR building access only initially' },
-          { id: 'cjis', name: 'CJIS Security Training', status: 'pending', dueDate: '02/17/2025', details: '4-hour FBI CJIS Security Policy training', notes: 'REQUIRED before accessing GCIC/NCIC for background investigations', actionRequired: 'Must complete within first week' },
-          { id: 'office', name: 'Office/Workspace Setup', status: 'pending', dueDate: '02/10/2025', details: 'Desk, computer, phone in HR/BI office', notes: 'Facilities notified - workspace being prepared' },
-          { id: 'training', name: 'Background Investigation Procedures Training', status: 'pending', dueDate: '02/10-02/21/2025', details: '2-week training with Senior Investigator Lt. K. Hayes', notes: 'Topics: GCSO BI procedures, GCIC/NCIC queries, interview techniques, report writing' }
-        ]
-      },
-      pendingActions: [
-        { action: 'Send Onboarding Packet Reminder', deadline: '02/06/2025', responsible: 'HR Director', status: 'overdue' },
-        { action: 'Confirm Start Date', deadline: '02/07/2025', responsible: 'HR Director', status: 'upcoming' },
-        { action: 'First Day Orientation', deadline: '02/10/2025', responsible: 'HR Specialist', status: 'scheduled' }
-      ],
-      completionSummary: {
-        preEmployment: { completed: 2, total: 2 },
-        firstDay: { completed: 0, total: 5 },
-        prePatrol: { completed: 0, total: 0 },
-        benefits: { completed: 0, total: 2 },
-        administrative: { completed: 0, total: 5 }
-      },
-      alertMessage: 'ONBOARDING NOT STARTED - Start date 02/10/2025 (4 days). HR Director must send reminder and confirm new hire is prepared.'
-    },
-    {
-      id: 4,
-      name: 'Daniel Wilson',
-      position: 'Deputy Sheriff',
-      positionType: 'sworn',
-      department: 'Patrol Division',
-      shift: 'C-Shift (14:00-02:00)',
-      unitNumber: '3-Charlie-22',
-      hireAuthority: "Sheriff's Order #2024-076",
-      hireDate: 'September 15, 2024',
-      startDate: '2024-10-01',
-      startDateDisplay: 'October 01, 2024',
-      email: 'daniel.wilson@gwinnettsso.gov',
-      phone: '(555) 456-7890',
-      status: 'completed',
-      daysEmployed: 128,
-      completedDate: '2024-12-15',
-      hireClassification: {
-        type: 'Lateral Transfer',
-        priorAgency: 'DeKalb County Police Department',
-        priorExperience: '7 years (2017-2024)',
-        postCertified: true,
-        postCertNumber: 'GA POST Basic #41872',
-        postVerifiedDate: '09/20/2024',
-        postExpiration: '03/15/2026',
-        startingSalary: '$58,500 (Step 7 - 7 years experience)'
-      },
-      ftoProgram: {
-        enrolled: true,
-        fto: 'Sgt. R. Martinez (#1547)',
-        coordinator: 'Sgt. R. Martinez (Training Division)',
-        duration: '10 weeks (shortened for 7-year lateral)',
-        startDate: '10/07/2024',
-        endDate: '12/15/2024',
-        currentWeek: 'COMPLETED',
-        currentPhase: 'COMPLETED - Solo Patrol Authorized',
-        completionDate: '12/15/2024',
-        finalRating: 'Exceeds Expectations - Ready for solo patrol',
-        notes: 'Deputy Wilson completed FTO program ahead of schedule. Strong performance in all phases. Recommended for take-home vehicle.'
-      },
-      completionSummary: {
-        preEmployment: { completed: 4, total: 4 },
-        firstDay: { completed: 6, total: 6 },
-        prePatrol: { completed: 9, total: 9 },
-        benefits: { completed: 2, total: 2 },
-        administrative: { completed: 5, total: 5 }
-      },
-      personnelActivated: true,
-      activationDate: '12/16/2024',
-      currentAssignment: 'Solo Patrol - C-Shift, Beat 22',
-      takeHomeVehicle: 'Unit 322 (2024 Ford Explorer, marked patrol)'
-    }
-  ]);
+  // ── Trainer capacity ────────────────────────────────────────
+  const slotsUsed = trainers.reduce((a, t) => a + t.used, 0);
+  const slotsTotal = trainers.length * SLOTS_PER_TRAINER;
+  const slotsFree = slotsTotal - slotsUsed;
 
-  const handleNavigation = (item) => {
-    if (item.page) {
-      navigate(createPageUrl(item.page));
-    } else {
-      setActivePage(item.id);
-      setSidebarOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
-  };
-
-  const getStatusConfig = (status) => {
-    const configs = {
-      'not-started': { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'NOT STARTED', icon: AlertTriangle },
-      'in-progress': { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30', label: 'IN PROGRESS', icon: Clock },
-      'completed': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'PERSONNEL ACTIVATED', icon: CheckCircle2 }
-    };
-    return configs[status] || configs['not-started'];
-  };
-
-  const getTaskStatusIcon = (status) => {
-    if (status === 'completed') return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-    if (status === 'pending') return <Circle className="w-4 h-4 text-amber-700" />;
-    if (status === 'overdue') return <AlertTriangle className="w-4 h-4 text-red-400" />;
-    return <Clock className="w-4 h-4 text-blue-400" />;
-  };
-
-  const toggleSection = (hireId, section) => {
-    const key = `${hireId}-${section}`;
-    setExpandedSection(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const isSectionExpanded = (hireId, section) => {
-    return expandedSection[`${hireId}-${section}`];
-  };
-
-  const calculateOverallProgress = (hire) => {
-    const summary = hire.completionSummary;
-    const totalCompleted = Object.values(summary).reduce((acc, s) => acc + s.completed, 0);
-    const totalTasks = Object.values(summary).reduce((acc, s) => acc + s.total, 0);
-    return totalTasks > 0 ? Math.round((totalCompleted / totalTasks) * 100) : 0;
-  };
-
-  const filteredNewHires = newHires.filter(hire => {
-    const statusMatch = activeTab === 'all' ? true :
-      activeTab === 'active' ? (hire.status === 'in-progress' || hire.status === 'not-started') :
-      hire.status === activeTab;
-
-    const positionMatch = filterPositionType === 'all' ? true : hire.positionType === filterPositionType;
-
-    return statusMatch && positionMatch;
-  });
-
-  const statusCounts = {
-    all: newHires.length,
-    active: newHires.filter(h => h.status === 'in-progress' || h.status === 'not-started').length,
-    'in-progress': newHires.filter(h => h.status === 'in-progress').length,
-    'not-started': newHires.filter(h => h.status === 'not-started').length,
-    completed: newHires.filter(h => h.status === 'completed').length
-  };
-
-  const positionCounts = {
-    all: newHires.length,
-    sworn: newHires.filter(h => h.positionType === 'sworn').length,
-    civilian: newHires.filter(h => h.positionType === 'civilian').length
-  };
+  // ── Clocks ──────────────────────────────────────────────────
+  const dueThisWeek = documentation.filter((d) => d.days <= 7).length;
+  const irreversibleSoon = decisions.filter((d) => d.days <= 2).length;
+  const arrivingTotal = arriving.reduce((a, c) => a + c.count, 0);
 
   return (
     <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
-      <div className="p-4 lg:p-6 min-h-full">
-          <div className="max-w-7xl mx-auto">
-            {/* GCSO Header */}
-            <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">New Hire Onboarding & Personnel Activation</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-secondary">
-                <span>Gwinnett County Sheriff's Office</span>
-                <span className="text-slate-700">•</span>
-                <span>Lawrenceville, Georgia</span>
-                <span className="text-slate-700">•</span>
-                <span>Thursday, February 06, 2026 • 1:21 PM EST</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
-                <span>Sheriff: Keybo Taylor</span>
-                <span className="text-slate-700">|</span>
-                <span>Training Division: Sgt. R. Martinez</span>
-                <span className="text-slate-700">|</span>
-                <span>System: GCSO-HRIS v4.2</span>
-              </div>
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
+        <div className="max-w-[1600px] mx-auto">
+
+          {/* ── Header ─────────────────────────────────────── */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-[19px] font-bold text-slate-100">Field Training</h1>
+              <span className="text-[11px] text-slate-500">
+                Field training from academy graduation to solo authorization · {trainees.length} trainees ·
+                {' '}{trainers.length} certified trainers across 10 shifts
+              </span>
             </div>
-
-            {/* Critical Alerts Banner */}
-            <div className="mb-6 space-y-3">
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-red-400 mb-1">Emily Johnson (Records Investigator): Onboarding NOT STARTED</p>
-                    <p className="text-xs text-secondary">Start date 02/10/2025 (4 days) - HR Director must send reminder and confirm new hire is prepared with required documents</p>
-                  </div>
-                  <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded-lg text-xs font-medium transition-all">
-                    Send Reminder
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-700 mb-1">Christopher Lee (Deputy): FTO Week 8 Evaluation Due Tomorrow (02/07/2026)</p>
-                    <p className="text-xs text-secondary">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-700 mb-1">Nicole Brown (Detention): 4 Pending Tasks with Approaching Deadlines</p>
-                    <p className="text-xs text-secondary">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-2.5 lg:ml-auto flex-wrap">
+              <button className="px-3.5 py-2 border border-amber-500/60 bg-amber-500/10 rounded-lg text-[11.5px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors">
+                Resolve today&rsquo;s pairings
+              </button>
+              <button
+                onClick={() => window.print()}
+                className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors"
+              >
+                Lost-day memo
+              </button>
             </div>
+          </div>
 
-            {/* Summary Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                    <UserPlus className="w-5 h-5 text-blue-400" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-primary mb-1">{statusCounts.active}</p>
-                <p className="text-sm text-secondary">Active New Hires</p>
-                <p className="text-xs text-slate-500 mt-1">In onboarding process</p>
-              </div>
+          {/* ── At-risk banner ─────────────────────────────── */}
+          <div className="mt-4 border border-red-500/40 bg-red-500/[0.07] rounded-xl px-5 py-3.5 flex items-baseline gap-4 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 flex-shrink-0">Training day at risk</span>
+            <p className="text-[12px] text-slate-200 flex-1 min-w-[320px] leading-relaxed">
+              {notPaired} of {trainees.length} trainees have no certified trainer on their shift today — {noTrainer} with none
+              assigned at all and {crossShift} paired across shifts. {gapShifts} shifts this month produced no observation report.
+            </p>
+            <span className="text-[10.5px] font-mono text-slate-500 flex-shrink-0">
+              {holding} of {trainees.length} pairings hold
+            </span>
+          </div>
 
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-primary mb-1">{statusCounts.completed}</p>
-                <p className="text-sm text-secondary">Personnel Activated</p>
-                <p className="text-xs text-slate-500 mt-1">This month (FTO complete)</p>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <GraduationCap className="w-5 h-5 text-amber-700" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-primary mb-1">2</p>
-                <p className="text-sm text-secondary">In FTO Program</p>
-                <p className="text-xs text-slate-500 mt-1">Sworn personnel training</p>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-red-400" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-primary mb-1">{statusCounts['not-started']}</p>
-                <p className="text-sm text-secondary">Not Started</p>
-                <p className="text-xs text-slate-500 mt-1">Requires immediate action</p>
-              </div>
+          {/* ── Metrics ────────────────────────────────────── */}
+          <div className="mt-4 border border-slate-800/80 rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60">
+            <div className="px-5 py-4">
+              <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />Pairings holding today
+              </p>
+              <p className="leading-none">
+                <span className="text-[24px] font-bold text-red-400">{holding} of {trainees.length}</span>
+                <span className="text-[11.5px] text-slate-400 ml-2">trainees</span>
+              </p>
+              <p className="text-[10.5px] text-amber-400/90 mt-2">{noTrainer} with no trainer · {crossShift} cross-shift</p>
             </div>
+            <div className="px-5 py-4">
+              <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />Reports to review
+              </p>
+              <p className="leading-none">
+                <span className="text-[24px] font-bold text-amber-400">{unreviewed}</span>
+                <span className="text-[11.5px] text-slate-400 ml-2">filed yesterday</span>
+              </p>
+              <p className="text-[10.5px] text-amber-400/90 mt-2">{gapShifts} shifts this month produced no report at all</p>
+            </div>
+            <div className="px-5 py-4">
+              <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />Lost training days
+              </p>
+              <p className="leading-none">
+                <span className="text-[24px] font-bold text-amber-400">{lostTotal}</span>
+                <span className="text-[11.5px] text-slate-400 ml-2">this month</span>
+              </p>
+              <p className="text-[10.5px] text-amber-400/90 mt-2">
+                roughly {Math.round(lostTotal / trainees.length)} trainees standing down for August
+              </p>
+            </div>
+            <div className="px-5 py-4">
+              <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />Decisions on my desk
+              </p>
+              <p className="leading-none">
+                <span className="text-[24px] font-bold text-amber-400">{decisions.length}</span>
+                <span className="text-[11.5px] text-slate-400 ml-2">this week</span>
+              </p>
+              <p className="text-[10.5px] text-amber-400/90 mt-2">{irreversibleSoon} become irreversible within 48 hours</p>
+            </div>
+          </div>
 
-            {/* Filters */}
-            <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-              <div className="flex gap-2 border-b border-border overflow-x-auto">
-                {[
-                  { id: 'all', label: 'All New Hires', count: statusCounts.all },
-                  { id: 'active', label: 'Active', count: statusCounts.active },
-                  { id: 'in-progress', label: 'In Progress', count: statusCounts['in-progress'] },
-                  { id: 'not-started', label: 'Not Started', count: statusCounts['not-started'] },
-                  { id: 'completed', label: 'Completed', count: statusCounts.completed }
-                ].map(tab => (
+          {/* ── Today's pairings ───────────────────────────── */}
+          <div className="mt-7">
+            <SectionLabel right={
+              <span className="flex items-center gap-4 flex-wrap">
+                {tabs.map((t) => (
                   <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeTab === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
+                    key={t.id}
+                    onClick={() => setTab(t.id)}
+                    className={`text-[11px] transition-colors ${
+                      tab === t.id ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
                     }`}
                   >
-                    {tab.label}
-                    <span className={`px-2 py-0.5 rounded-full text-xs ${
-                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
-                    }`}>{tab.count}</span>
-                    {activeTab === tab.id && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                    )}
+                    {t.label} <span className="font-mono text-slate-500">{t.n}</span>
                   </button>
                 ))}
-              </div>
+              </span>
+            }>
+              Today&rsquo;s pairings — Thursday, Aug 13
+            </SectionLabel>
 
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500">Position Type:</span>
-                <select
-                  value={filterPositionType}
-                  onChange={(e) => setFilterPositionType(e.target.value)}
-                  className="px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-amber-500/50"
-                >
-                  <option value="all">All Positions ({positionCounts.all})</option>
-                  <option value="sworn">Sworn Personnel ({positionCounts.sworn})</option>
-                  <option value="civilian">Civilian Personnel ({positionCounts.civilian})</option>
-                </select>
-              </div>
+            <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+              <span className="flex-1 min-w-0">Trainee</span>
+              <span className="w-36 flex-shrink-0">Assignment</span>
+              <span className="w-36 flex-shrink-0">Phase</span>
+              <span className="w-32 flex-shrink-0">Field trainer</span>
+              <span className="w-28 flex-shrink-0">Trainer shift</span>
+              <span className="w-28 text-right flex-shrink-0">Pairing today</span>
+              <span className="w-16 text-right flex-shrink-0">DOR avg</span>
             </div>
-
-            {/* New Hires List */}
-            <div className="space-y-6">
-              {filteredNewHires.map(hire => {
-                const statusConfig = getStatusConfig(hire.status);
-                const StatusIcon = statusConfig.icon;
-                const overallProgress = calculateOverallProgress(hire);
-
+            <div className="divide-y divide-slate-800/50">
+              {shown.map((t) => {
+                const cross = t.pairing === 'CROSS-SHIFT';
+                const none = t.pairing === 'NO TRAINER';
                 return (
-                  <div
-                    key={hire.id}
-                    className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden"
-                  >
-                    {/* Header */}
-                    <div className="p-5 border-b border-border dark:border-slate-700/30">
-                      <div className="flex items-start justify-between gap-4 flex-wrap">
-                        <div className="flex items-start gap-4 flex-1 min-w-0">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
-                            hire.positionType === 'sworn' ? 'bg-blue-500/20' : 'bg-purple-500/20'
-                          }`}>
-                            {hire.positionType === 'sworn' ? (
-                              <Shield className={`w-6 h-6 ${hire.positionType === 'sworn' ? 'text-blue-400' : 'text-purple-400'}`} />
-                            ) : (
-                              <Users className="w-6 h-6 text-purple-400" />
-                            )}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 mb-2 flex-wrap">
-                              <h3 className="text-lg font-semibold text-primary">{hire.name}</h3>
-                              <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
-                                {statusConfig.label}
-                              </span>
-                              {hire.positionType === 'sworn' && (
-                                <span className="px-2 py-1 bg-blue-500/20 border border-blue-500/30 rounded text-xs text-blue-400">
-                                  SWORN
-                                </span>
-                              )}
-                              {hire.positionType === 'civilian' && (
-                                <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-400">
-                                  CIVILIAN
-                                </span>
-                              )}
-                            </div>
-
-                            <p className="text-sm text-secondary mb-2">{hire.position} • {hire.department}</p>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-secondary">
-                              <div className="flex items-center gap-2">
-                                <Mail className="w-3 h-3" />
-                                <span className="truncate">{hire.email}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Phone className="w-3 h-3" />
-                                <span>{hire.phone}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Calendar className="w-3 h-3" />
-                                <span>Start: {hire.startDateDisplay}</span>
-                              </div>
-                              {hire.shift && (
-                                <div className="flex items-center gap-2">
-                                  <Clock className="w-3 h-3" />
-                                  <span>{hire.shift}</span>
-                                </div>
-                              )}
-                            </div>
-
-                            {hire.hireAuthority && (
-                              <div className="mt-2 text-xs text-slate-500">
-                                Hire Authority: {hire.hireAuthority} ({hire.hireDate})
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col items-end gap-2">
-                          <div className="text-right">
-                            <p className="text-sm text-secondary">Critical Path Progress</p>
-                            <p className="text-2xl font-bold text-primary">{overallProgress}%</p>
-                          </div>
-                          <div className="w-32 h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
-                            <div
-                              className={`h-full transition-all ${
-                                overallProgress === 100 ? 'bg-green-500' :
-                                overallProgress >= 75 ? 'bg-blue-500' :
-                                overallProgress >= 50 ? 'bg-amber-500' : 'bg-red-500'
-                              }`}
-                              style={{ width: `${overallProgress}%` }}
-                            />
-                          </div>
-                        </div>
-                      </div>
+                  <div key={t.id} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${
+                    none || cross ? 'border-red-500/70' : t.noteTone === 'amber' ? 'border-amber-500/60' : 'border-transparent'
+                  }`}>
+                    <div className="flex-1 min-w-0">
+                      <span className="flex items-baseline gap-2">
+                        <span className="text-[12.5px] font-semibold text-slate-100">{t.name}</span>
+                        <span className="text-[10px] font-mono text-slate-500">{t.id}</span>
+                      </span>
+                      <p className={`text-[10px] truncate mt-0.5 ${
+                        t.noteTone === 'red' ? 'text-red-400/90' : t.noteTone === 'amber' ? 'text-amber-400/80' : 'text-slate-500'
+                      }`}>{t.note}</p>
                     </div>
-
-                    {/* Hire Classification */}
-                    {hire.hireClassification && (
-                      <div className="px-5 py-3 bg-slate-50 dark:bg-zinc-950/30 border-b border-border dark:border-slate-700/30">
-                        <div className="flex flex-wrap gap-4 text-xs">
-                          <div>
-                            <span className="text-slate-500">Classification:</span>
-                            <span className="ml-1 text-secondary">{hire.hireClassification.type}</span>
-                          </div>
-                          {hire.hireClassification.priorAgency && hire.hireClassification.priorAgency !== 'N/A - Corporate background' && hire.hireClassification.priorAgency !== 'None - Academy Graduate' && (
-                            <div>
-                              <span className="text-slate-500">Prior Agency:</span>
-                              <span className="ml-1 text-secondary">{hire.hireClassification.priorAgency}</span>
-                            </div>
-                          )}
-                          {hire.hireClassification.postCertified && (
-                            <div>
-                              <span className="text-slate-500">POST Cert:</span>
-                              <span className="ml-1 text-green-400">{hire.hireClassification.postCertNumber}</span>
-                            </div>
-                          )}
-                          <div>
-                            <span className="text-slate-500">Salary:</span>
-                            <span className="ml-1 text-secondary">{hire.hireClassification.startingSalary}</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* FTO Program Status (for sworn personnel) */}
-                    {hire.ftoProgram && hire.ftoProgram.enrolled && (
-                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-border dark:border-slate-700/30">
-                        <div className="flex items-center gap-2 mb-3">
-                          <GraduationCap className="w-4 h-4 text-amber-700" />
-                          <h4 className="text-sm font-semibold text-amber-700">Field Training Officer (FTO) Program</h4>
-                          {hire.ftoProgram.currentWeek !== 'COMPLETED' && (
-                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700">
-                              Week {hire.ftoProgram.currentWeek} of {hire.ftoProgram.duration.split(' ')[0]}
-                            </span>
-                          )}
-                          {hire.ftoProgram.currentWeek === 'COMPLETED' && (
-                            <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400">
-                              COMPLETED
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                          <div>
-                            <span className="text-slate-500">FTO:</span>
-                            <span className="ml-1 text-secondary">{hire.ftoProgram.fto}</span>
-                          </div>
-                          <div>
-                            <span className="text-slate-500">Current Phase:</span>
-                            <span className="ml-1 text-secondary">{hire.ftoProgram.currentPhase}</span>
-                          </div>
-                          <div>
-                            <span className="text-slate-500">{hire.ftoProgram.currentWeek === 'COMPLETED' ? 'Completed:' : 'Anticipated Completion:'}</span>
-                            <span className="ml-1 text-secondary">{hire.ftoProgram.completionDate || hire.ftoProgram.anticipatedCompletion}</span>
-                          </div>
-                        </div>
-
-                        {hire.ftoProgram.phases && (
-                          <div className="mt-3 flex gap-2">
-                            {hire.ftoProgram.phases.map((phase, idx) => (
-                              <div
-                                key={idx}
-                                className={`flex-1 p-2 rounded-lg text-center ${
-                                  phase.status === 'completed' ? 'bg-green-500/20 border border-green-500/30' :
-                                  phase.status === 'in-progress' ? 'bg-blue-500/20 border border-blue-500/30' :
-                                  'bg-slate-100 dark:bg-zinc-800/30 border border-slate-600/30'
-                                }`}
-                              >
-                                <p className={`text-xs font-medium ${
-                                  phase.status === 'completed' ? 'text-green-400' :
-                                  phase.status === 'in-progress' ? 'text-blue-400' :
-                                  'text-slate-500'
-                                }`}>
-                                  Phase {phase.phase}
-                                </p>
-                                <p className="text-[10px] text-slate-500 mt-0.5">Weeks {phase.weeks}</p>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Completion Summary */}
-                    <div className="px-5 py-4 border-b border-border dark:border-slate-700/30">
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                        {[
-                          { key: 'preEmployment', label: 'Pre-Employment', icon: FileCheck },
-                          { key: 'firstDay', label: 'First Day', icon: Calendar },
-                          { key: 'prePatrol', label: hire.positionType === 'sworn' ? 'Pre-Duty' : 'Training', icon: Target },
-                          { key: 'benefits', label: 'Benefits', icon: Heart },
-                          { key: 'administrative', label: 'Administrative', icon: Clipboard }
-                        ].map(section => {
-                          const data = hire.completionSummary[section.key];
-                          if (!data || data.total === 0) return null;
-                          const SectionIcon = section.icon;
-                          const isComplete = data.completed === data.total;
-
-                          return (
-                            <button
-                              key={section.key}
-                              onClick={() => toggleSection(hire.id, section.key)}
-                              className={`p-3 rounded-lg border transition-all text-left ${
-                                isComplete
-                                  ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
-                                  : data.completed > 0
-                                    ? 'bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20'
-                                    : 'bg-slate-100 dark:bg-zinc-800/30 border-slate-600/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between mb-1">
-                                <SectionIcon className={`w-4 h-4 ${
-                                  isComplete ? 'text-green-400' : data.completed > 0 ? 'text-blue-400' : 'text-slate-500'
-                                }`} />
-                                {isSectionExpanded(hire.id, section.key) ? (
-                                  <ChevronUp className="w-3 h-3 text-slate-500" />
-                                ) : (
-                                  <ChevronDown className="w-3 h-3 text-slate-500" />
-                                )}
-                              </div>
-                              <p className="text-xs font-medium text-secondary">{section.label}</p>
-                              <p className={`text-sm font-bold ${
-                                isComplete ? 'text-green-400' : data.completed > 0 ? 'text-blue-400' : 'text-slate-500'
-                              }`}>
-                                {data.completed}/{data.total}
-                              </p>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Expanded Task Sections */}
-                    {['preEmployment', 'firstDay', 'prePatrol', 'benefits', 'administrative'].map(sectionKey => {
-                      if (!isSectionExpanded(hire.id, sectionKey)) return null;
-                      const tasks = hire.tasks?.[sectionKey];
-                      if (!tasks || tasks.length === 0) return null;
-
-                      const sectionLabels = {
-                        preEmployment: 'Pre-Employment Requirements',
-                        firstDay: 'First Day Requirements',
-                        prePatrol: hire.positionType === 'sworn' ? 'Pre-Duty Requirements' : 'Training Requirements',
-                        benefits: 'Benefits & Payroll',
-                        administrative: 'Administrative Tasks'
-                      };
-
-                      return (
-                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-zinc-950/30 border-b border-border dark:border-slate-700/30">
-                          <h4 className="text-sm font-semibold text-secondary mb-3">{sectionLabels[sectionKey]}</h4>
-                          <div className="space-y-2">
-                            {tasks.map(task => (
-                              <div
-                                key={task.id}
-                                className={`p-3 rounded-lg border ${
-                                  task.status === 'completed'
-                                    ? 'bg-green-500/5 border-green-500/20'
-                                    : task.status === 'overdue'
-                                      ? 'bg-red-500/5 border-red-500/20'
-                                      : 'bg-slate-100/80 dark:bg-zinc-900/30 border-border'
-                                }`}
-                              >
-                                <div className="flex items-start gap-3">
-                                  {getTaskStatusIcon(task.status)}
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                      <p className={`text-sm font-medium ${
-                                        task.status === 'completed' ? 'text-green-400' : 'text-primary'
-                                      }`}>
-                                        {task.name}
-                                      </p>
-                                      {task.status === 'completed' && task.completedDate && (
-                                        <span className="text-xs text-green-400/70">
-                                          Completed: {task.completedDate}
-                                        </span>
-                                      )}
-                                      {task.status === 'pending' && task.dueDate && (
-                                        <span className="text-xs text-amber-700">
-                                          Due: {task.dueDate}
-                                        </span>
-                                      )}
-                                    </div>
-                                    {task.details && (
-                                      <p className="text-xs text-secondary mt-1">{task.details}</p>
-                                    )}
-                                    {task.result && (
-                                      <p className="text-xs text-green-400/80 mt-1">{task.result}</p>
-                                    )}
-                                    {task.notes && (
-                                      <p className="text-xs text-slate-500 mt-1">{task.notes}</p>
-                                    )}
-                                    {task.actionRequired && (
-                                      <p className="text-xs text-amber-700 mt-1 font-medium">Action Required: {task.actionRequired}</p>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                    {/* Pending Actions */}
-                    {hire.pendingActions && hire.pendingActions.length > 0 && hire.status !== 'completed' && (
-                      <div className="px-5 py-4 bg-amber-500/5">
-                        <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
-                          <AlertCircle className="w-4 h-4" />
-                          Pending Action Items
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                          {hire.pendingActions.map((action, idx) => (
-                            <div
-                              key={idx}
-                              className={`p-3 rounded-lg border ${
-                                action.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' :
-                                action.status === 'due-tomorrow' ? 'bg-amber-500/10 border-amber-500/30' :
-                                'bg-slate-100/80 dark:bg-zinc-900/30 border-border'
-                              }`}
-                            >
-                              <p className={`text-sm font-medium ${
-                                action.status === 'overdue' ? 'text-red-400' :
-                                action.status === 'due-tomorrow' ? 'text-amber-700' :
-                                'text-slate-500'
-                              }`}>
-                                {action.action}
-                              </p>
-                              <p className="text-xs text-slate-500 mt-1">
-                                Deadline: {action.deadline} • {action.responsible}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Completed Personnel - Activation Info */}
-                    {hire.status === 'completed' && hire.personnelActivated && (
-                      <div className="px-5 py-4 bg-green-500/5">
-                        <div className="flex items-center gap-2 mb-3">
-                          <BadgeCheck className="w-5 h-5 text-green-400" />
-                          <h4 className="text-sm font-semibold text-green-400">Personnel Activated</h4>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                          <div>
-                            <span className="text-slate-500">Activation Date:</span>
-                            <span className="ml-1 text-secondary">{hire.activationDate}</span>
-                          </div>
-                          <div>
-                            <span className="text-slate-500">Current Assignment:</span>
-                            <span className="ml-1 text-secondary">{hire.currentAssignment}</span>
-                          </div>
-                          {hire.takeHomeVehicle && (
-                            <div>
-                              <span className="text-slate-500">Take-Home Vehicle:</span>
-                              <span className="ml-1 text-secondary">{hire.takeHomeVehicle}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Action Buttons */}
-                    <div className="px-5 py-4 flex flex-wrap gap-2">
-                      <button
-                        onClick={() => setSelectedNewHire(hire)}
-                        className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
-                      >
-                        <Eye className="w-4 h-4" />
-                        View Full Details
-                      </button>
-                      {hire.ftoProgram?.enrolled && hire.status === 'in-progress' && (
-                        <button className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-                          <GraduationCap className="w-4 h-4" />
-                          View FTO Evaluations
-                        </button>
-                      )}
-                      <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-                        <Download className="w-4 h-4" />
-                        Export Checklist
-                      </button>
-                      {hire.status !== 'completed' && (
-                        <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-                          <Mail className="w-4 h-4" />
-                          Send Reminder
-                        </button>
-                      )}
-                    </div>
+                    <span className="w-36 text-[11px] text-slate-300 flex-shrink-0 truncate">{t.assignment}</span>
+                    <span className="w-36 flex-shrink-0">
+                      <span className="block text-[11px] text-slate-200 truncate">{t.phase}</span>
+                      <span className="block text-[10px] font-mono text-slate-500">wk {t.week}/{t.ofWeeks}</span>
+                    </span>
+                    <span className={`w-32 text-[11px] flex-shrink-0 truncate ${none ? 'text-red-400' : 'text-slate-300'}`}>
+                      {t.trainer ?? '— none assigned'}
+                    </span>
+                    <span className={`w-28 text-[11px] flex-shrink-0 truncate ${cross ? 'text-red-400' : 'text-slate-400'}`}>
+                      {t.trainerShift ?? '—'}
+                    </span>
+                    <span className={`w-28 text-right text-[10.5px] font-bold tracking-wider flex-shrink-0 ${pairingTone[t.pairing]}`}>
+                      {t.pairing}
+                    </span>
+                    <span className={`w-16 text-right text-[11.5px] font-mono flex-shrink-0 ${dorTone(t.dor)}`}>
+                      {t.dor === null ? '—' : t.dor.toFixed(1)}
+                    </span>
                   </div>
                 );
               })}
             </div>
+            <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
+              A pairing holds only when a certified trainer works the trainee&rsquo;s shift. A shift spent with an uncertified
+              officer produces no report and does not count toward the phase.
+            </p>
           </div>
 
-      {/* Detail Modal */}
-      {selectedNewHire && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedNewHire(null)}
-          />
-          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-4 sm:p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4 mb-6">
-              <div className="min-w-0 flex-1">
-                <h3 className="text-2xl font-bold text-primary mb-2 break-words">{selectedNewHire.name}</h3>
-                <p className="text-sm text-secondary break-words">{selectedNewHire.position} • {selectedNewHire.department}</p>
-                {selectedNewHire.hireAuthority && (
-                  <p className="text-xs text-slate-500 mt-1 break-words">{selectedNewHire.hireAuthority}</p>
-                )}
-              </div>
-              <button
-                onClick={() => setSelectedNewHire(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0 self-end sm:self-auto"
-              >
-                <X className="w-5 h-5 text-secondary" />
-              </button>
-            </div>
+          {/* ── Main grid ──────────────────────────────────── */}
+          <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-8">
 
-            {/* Personnel Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
-              <div>
-                <p className="text-xs text-slate-500 mb-1">Email</p>
-                <p className="text-sm text-secondary">{selectedNewHire.email}</p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 mb-1">Phone</p>
-                <p className="text-sm text-secondary">{selectedNewHire.phone}</p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 mb-1">Start Date</p>
-                <p className="text-sm text-secondary">{selectedNewHire.startDateDisplay}</p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 mb-1">Position Type</p>
-                <p className="text-sm text-secondary capitalize">{selectedNewHire.positionType}</p>
-              </div>
-              {selectedNewHire.shift && (
-                <div>
-                  <p className="text-xs text-slate-500 mb-1">Assigned Shift</p>
-                  <p className="text-sm text-secondary">{selectedNewHire.shift}</p>
-                </div>
-              )}
-              {selectedNewHire.unitNumber && (
-                <div>
-                  <p className="text-xs text-slate-500 mb-1">Unit Number</p>
-                  <p className="text-sm text-secondary">{selectedNewHire.unitNumber}</p>
-                </div>
-              )}
-            </div>
-
-            {/* Classification */}
-            {selectedNewHire.hireClassification && (
-              <div className="mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
-                <h4 className="text-sm font-semibold text-secondary mb-3">Hire Classification</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <span className="text-slate-500">Type:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.type}</span>
-                  </div>
-                  {selectedNewHire.hireClassification.priorExperience && (
-                    <div>
-                      <span className="text-slate-500">Prior Experience:</span>
-                      <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.priorExperience}</span>
-                    </div>
-                  )}
-                  {selectedNewHire.hireClassification.postCertified && (
-                    <>
-                      <div>
-                        <span className="text-slate-500">POST Certification:</span>
-                        <span className="ml-1 text-green-400">{selectedNewHire.hireClassification.postCertNumber}</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-500">POST Expiration:</span>
-                        <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.postExpiration}</span>
-                      </div>
-                    </>
-                  )}
-                  <div className="sm:col-span-2">
-                    <span className="text-slate-500">Starting Salary:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.startingSalary}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* FTO Program Details */}
-            {selectedNewHire.ftoProgram?.enrolled && (
-              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                <h4 className="text-sm font-semibold text-amber-700 mb-3">FTO Program Details</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
-                  <div>
-                    <span className="text-slate-500">FTO:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.fto}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Coordinator:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.coordinator}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Duration:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.duration}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Current Week:</span>
-                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.currentWeek}</span>
-                  </div>
-                </div>
-
-                {selectedNewHire.ftoProgram.phases && (
-                  <div className="space-y-2">
-                    {selectedNewHire.ftoProgram.phases.map((phase, idx) => (
-                      <div
-                        key={idx}
-                        className={`p-3 rounded-lg ${
-                          phase.status === 'completed' ? 'bg-green-500/10' :
-                          phase.status === 'in-progress' ? 'bg-blue-500/10' :
-                          'bg-slate-100/80 dark:bg-zinc-900/30'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className={`text-sm font-medium ${
-                              phase.status === 'completed' ? 'text-green-400' :
-                              phase.status === 'in-progress' ? 'text-blue-400' :
-                              'text-slate-500'
-                            }`}>
-                              Phase {phase.phase}: {phase.name}
-                            </p>
-                            <p className="text-xs text-slate-500">Weeks {phase.weeks}</p>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-xs font-medium ${
-                            phase.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                            phase.status === 'in-progress' ? 'bg-blue-500/20 text-blue-400' :
-                            'bg-white dark:bg-zinc-800/50 text-slate-500'
-                          }`}>
-                            {phase.status.toUpperCase().replace('-', ' ')}
-                          </span>
-                        </div>
-                        <p className="text-xs text-secondary mt-1">{phase.rating}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Quick Progress Summary */}
-            <div className="mb-6">
-              <h4 className="text-sm font-semibold text-secondary mb-3">Onboarding Progress Summary</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                {Object.entries(selectedNewHire.completionSummary).map(([key, value]) => {
-                  if (value.total === 0) return null;
-                  const labels = {
-                    preEmployment: 'Pre-Emp',
-                    firstDay: 'First Day',
-                    prePatrol: 'Pre-Duty',
-                    benefits: 'Benefits',
-                    administrative: 'Admin'
-                  };
-                  const isComplete = value.completed === value.total;
-
+            {/* ══ Left column ═══════════════════════════════ */}
+            <div>
+              {/* Observation reports */}
+              <SectionLabel right={<span className="text-[10px] text-amber-400/90">{unreviewed} of {reports.length} unreviewed</span>}>
+                Observation reports — Wednesday, Aug 12
+              </SectionLabel>
+              <div className="space-y-2.5">
+                {reports.map((r) => {
+                  const below = r.score < BELOW_STANDARD;
                   return (
-                    <div
-                      key={key}
-                      className={`p-3 rounded-lg text-center ${
-                        isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-100 dark:bg-zinc-800/30'
-                      }`}
-                    >
-                      <p className="text-xs text-secondary">{labels[key]}</p>
-                      <p className={`text-lg font-bold ${
-                        isComplete ? 'text-green-400' : value.completed > 0 ? 'text-blue-400' : 'text-slate-500'
-                      }`}>
-                        {value.completed}/{value.total}
-                      </p>
+                    <div key={r.trainee} className={`border rounded-xl px-4 py-3.5 ${below ? 'border-red-500/50' : 'border-slate-800/80'}`}>
+                      <div className="flex items-baseline gap-2.5">
+                        <p className="text-[12.5px] font-bold text-slate-100">{r.trainee}</p>
+                        <span className="text-[10.5px] text-slate-500 truncate">{r.context}</span>
+                        <span className={`ml-auto text-[12.5px] font-mono font-bold flex-shrink-0 ${dorTone(r.score)}`}>{r.score.toFixed(1)}</span>
+                      </div>
+                      {r.flag && (
+                        <p className="flex items-baseline gap-2 mt-2 flex-wrap">
+                          <span className="border border-red-500/60 rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider text-red-400">BELOW STANDARD</span>
+                          <span className="text-[11px] text-amber-400">{r.flag}</span>
+                        </p>
+                      )}
+                      <p className="text-[11.5px] text-slate-300 leading-relaxed mt-2">{r.text}</p>
+                      <div className="flex items-center gap-2.5 mt-3 flex-wrap">
+                        <span className="text-[10px] text-slate-600">{r.filed}</span>
+                        <span className="ml-auto flex items-center gap-2">
+                          <button className="px-2.5 py-1 border border-slate-700/60 rounded text-[10.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Mark reviewed</button>
+                          {r.action && (
+                            <button className="px-2.5 py-1 border border-amber-500/60 rounded text-[10.5px] font-semibold text-amber-400 hover:bg-amber-500/10 transition-colors">{r.action}</button>
+                          )}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
               </div>
+
+              {/* Not filed */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{notFiled.length} trainees · {gapShifts} shifts this month</span>}>
+                  <span className="text-red-400">Not filed</span>
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {notFiled.map((r) => (
+                    <div key={r.trainee} className="flex items-center gap-3 py-3 pl-3 border-l-2 border-red-500/70">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12.5px] font-semibold text-slate-100 truncate">{r.trainee}</p>
+                        <p className="text-[10.5px] text-amber-400/80 truncate">{r.reason}</p>
+                      </div>
+                      <span className="w-32 text-[11px] text-slate-400 flex-shrink-0 truncate">{r.trainer}</span>
+                      <span className="w-20 text-right text-[11.5px] font-mono font-bold text-red-400 flex-shrink-0">{r.shifts} shifts</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-3 leading-relaxed">
+                  A shift with no observation report cannot be reconstructed later. Gaps in a training file are what a
+                  wrongful-termination claim is built on.
+                </p>
+              </div>
+
+              {/* Decisions */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-red-400/90">{irreversibleSoon} within 48 hours</span>}>
+                  Decisions on my desk
+                </SectionLabel>
+                <div className="space-y-2.5">
+                  {decisions.map((d) => (
+                    <div key={d.title} className={`border-l-2 pl-4 py-1 ${d.days <= 2 ? 'border-red-500/70' : 'border-slate-700'}`}>
+                      <div className="flex items-baseline gap-2.5 flex-wrap">
+                        <span className={`border rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider ${kindTone[d.kind]}`}>{d.kind}</span>
+                        <p className="text-[12.5px] font-bold text-slate-100">{d.title}</p>
+                        <span className={`ml-auto text-[11px] font-mono flex-shrink-0 ${d.days === 0 ? 'text-red-400' : d.days <= 2 ? 'text-amber-400' : 'text-slate-500'}`}>
+                          {d.days === 0 ? 'today' : `${d.days}d`}
+                        </span>
+                      </div>
+                      <p className="text-[11.5px] text-slate-300 leading-relaxed mt-1.5">{d.body}</p>
+                      <p className="text-[10px] text-slate-600 mt-1.5">{d.route}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-3">
+                  Ordered by the date the decision becomes irreversible, not by when it was raised.
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
-              <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
-                Print Full Checklist
-              </button>
-              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all">
-                View Personnel File
-              </button>
-              <button
-                onClick={() => setSelectedNewHire(null)}
-                className="px-4 py-3 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all"
-              >
-                Close
-              </button>
+            {/* ══ Right column ══════════════════════════════ */}
+            <div>
+              {/* Lost training days */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">{lostTotal} days</span>}>
+                Lost training days — August
+              </SectionLabel>
+              <div className="divide-y divide-slate-800/50">
+                {lostDays.map((r) => (
+                  <div key={r.cause} className="py-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-[12.5px] text-slate-100 min-w-0 truncate">{r.cause}</span>
+                      <span className={`text-[12.5px] font-mono font-bold flex-shrink-0 ${textTone[r.tone]}`}>{r.days}</span>
+                    </div>
+                    <span className="block mt-2"><Meter value={(r.days / lostMax) * 100} tone={barTone[r.tone]} /></span>
+                    <p className="text-[10.5px] text-slate-500 mt-1.5">{r.note}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                {lostTotal} lost days across {trainees.length} trainees in thirteen days. Every lost day extends the program
+                while the probation clock keeps running.
+              </p>
+
+              {/* Certified trainers */}
+              <div className="mt-7">
+                <SectionLabel right={
+                  <span className="text-[10px] text-red-400/90">
+                    {slotsUsed} of {slotsTotal} slots · {UNCOVERED_SHIFTS.length} shifts uncovered
+                  </span>
+                }>
+                  Certified trainers
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {trainers.map((t) => (
+                    <div key={t.name} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${t.split ? 'border-amber-500/60' : 'border-transparent'}`}>
+                      <div className="flex-1 min-w-0">
+                        <span className="flex items-baseline gap-2">
+                          <span className="text-[12.5px] font-semibold text-slate-100">{t.name}</span>
+                          <span className="text-[10.5px] text-slate-500 truncate">{t.assignment}</span>
+                        </span>
+                        <p className={`text-[10.5px] truncate mt-0.5 ${t.split ? 'text-amber-400/80' : 'text-slate-500'}`}>{t.carrying}</p>
+                      </div>
+                      <span className={`w-14 text-right text-[11.5px] font-mono flex-shrink-0 ${
+                        t.used >= SLOTS_PER_TRAINER ? 'text-slate-200' : 'text-emerald-400'
+                      }`}>
+                        {t.used} / {SLOTS_PER_TRAINER}
+                      </span>
+                      <span className={`w-20 text-right text-[11px] font-mono flex-shrink-0 ${t.recertSoon ? 'text-amber-400' : 'text-slate-500'}`}>
+                        {t.recert}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  Capacity is not the constraint — {trainers.length} trainers at {SLOTS_PER_TRAINER} trainees each covers all
+                  {' '}{trainers.length * SLOTS_PER_TRAINER}. The constraint is distribution: {UNCOVERED_SHIFTS.join(', ')} have
+                  no certified trainer at all.
+                </p>
+              </div>
+
+              {/* Documentation clock */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-amber-400/90">{dueThisWeek} due this week</span>}>
+                  Documentation clock
+                </SectionLabel>
+                <div className="space-y-2.5">
+                  {documentation.map((d) => (
+                    <div key={d.item} className={`border-l-2 pl-3.5 ${d.tone === 'red' ? 'border-red-500/70' : d.tone === 'amber' ? 'border-amber-500/60' : 'border-slate-700'}`}>
+                      <div className="flex items-baseline gap-3">
+                        <p className="text-[12px] font-semibold text-slate-100 flex-1 min-w-0">{d.item}</p>
+                        <span className={`text-[11px] font-mono flex-shrink-0 ${textTone[d.tone]}`}>{d.due}</span>
+                      </div>
+                      <p className={`text-[10.5px] leading-relaxed mt-0.5 ${d.tone === 'red' ? 'text-red-400/90' : d.tone === 'amber' ? 'text-amber-400/80' : 'text-slate-500'}`}>
+                        {d.note}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  Policy 5.7 requires a written remedial plan before any release for failure to progress, and a signed review at
+                  30 days.
+                </p>
+              </div>
+
+              {/* Arriving */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-amber-400/90">{arrivingTotal} arriving · {slotsFree} slot free</span>}>
+                  Arriving — next 30 days
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {arriving.map((c) => (
+                    <div key={c.cohort} className="flex items-center gap-3 py-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12.5px] font-semibold text-slate-100 truncate">{c.cohort}</p>
+                        <p className={`text-[10.5px] truncate ${c.tone === 'red' ? 'text-red-400/90' : c.tone === 'amber' ? 'text-amber-400/80' : 'text-slate-500'}`}>
+                          {c.note}
+                        </p>
+                      </div>
+                      <span className="w-8 text-right text-[13px] font-mono font-bold text-slate-100 flex-shrink-0">{c.count}</span>
+                      <span className={`w-28 text-right text-[10.5px] font-bold tracking-wider flex-shrink-0 ${textTone[c.tone]}`}>{c.status}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5 leading-relaxed">
+                  {arrivingTotal} arrivals in thirty days against {slotsFree} free trainer slot. Certifying trainers on Shift D,
+                  Watch 3, and C Watch has to precede the September cohorts.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      )}
       </div>
     </DashboardLayout>
   );
